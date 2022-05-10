@@ -1,29 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4bcc2a25-ce2c-4992-8d79-fcb88a7ea7d0" name="Changes" comment="Update git ignore">
-      <change afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/codeception.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_data/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_output/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/AcceptanceTester.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/FunctionalTester.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/Helper/Acceptance.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/Helper/Functional.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/Helper/Unit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/UnitTester.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/_support/_generated/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/acceptance.suite.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/acceptance/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/bootstrap.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/functional.suite.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/functional/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit.suite.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="4bcc2a25-ce2c-4992-8d79-fcb88a7ea7d0" name="Changes" comment="Add EasyAdmin">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +97,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652171693798</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add Codeception">
+      <created>1652172212024</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652172212025</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add EasyAdmin">
+      <created>1652172288846</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1652172288846</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,6 +132,8 @@
     <MESSAGE value="remove the content from the main branch" />
     <MESSAGE value="Update project info&#10;Update php version to 8" />
     <MESSAGE value="Update git ignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update git ignore" />
+    <MESSAGE value="Add Codeception" />
+    <MESSAGE value="Add EasyAdmin" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add EasyAdmin" />
   </component>
 </project>
