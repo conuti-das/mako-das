@@ -1,6 +1,8 @@
 {
     "type": "project",
     "license": "proprietary",
+    "description": "Conuti MPSync App",
+    "homepage": "https://www.conuti.de",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
