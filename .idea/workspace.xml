@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4bcc2a25-ce2c-4992-8d79-fcb88a7ea7d0" name="Changes" comment="Add EasyAdmin">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-    </list>
+    <list default="true" id="4bcc2a25-ce2c-4992-8d79-fcb88a7ea7d0" name="Changes" comment="Add Admin controller" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +105,28 @@
       <option name="project" value="LOCAL" />
       <updated>1652172288846</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add Api Platform">
+      <created>1652172516731</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1652172516731</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add Doctrine Fixtures">
+      <created>1652172611699</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1652172611699</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add Admin controller">
+      <created>1652172741391</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1652172741391</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +149,9 @@
     <MESSAGE value="Update git ignore" />
     <MESSAGE value="Add Codeception" />
     <MESSAGE value="Add EasyAdmin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add EasyAdmin" />
+    <MESSAGE value="Add Api Platform" />
+    <MESSAGE value="Add Doctrine Fixtures" />
+    <MESSAGE value="Add Admin controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Admin controller" />
   </component>
 </project>
