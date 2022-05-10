@@ -2,9 +2,11 @@
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
+    "description": "Conuti MPSync App",
+    "homepage": "https://www.conuti.de",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.0",
