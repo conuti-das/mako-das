@@ -1,21 +1,41 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+  db:
+    build: ./docker/mysql
+    container_name: MPSync_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
-
-volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 4306:3306
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    container_name: MPSync_phpmyadmin
+    links:
+      - db
+    ports:
+      - 8010:80
+    volumes:
+      - /docker/storage/sessions
+  webserver:
+    build: ./docker/webserver
+    container_name: MPSync_app
+    depends_on:
+      - db
+      - phpmyadmin
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8009:80
+  memcached:
+    image: memcached:latest
+    hostname: memcached
+    depends_on:
+      - db
+      - phpmyadmin
+      - webserver
