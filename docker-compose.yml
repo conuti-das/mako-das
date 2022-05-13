@@ -34,8 +34,10 @@ services:
       - 8009:80
   memcached:
     image: memcached:latest
-    hostname: memcached
+    container_name: MPSync_memcached
     depends_on:
       - db
       - phpmyadmin
       - webserver
+    ports:
+      - '8011:11211'
