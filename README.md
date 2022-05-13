@@ -16,4 +16,28 @@ git clone git@gitlab.com:cu-powercloud/MPSync.git
 
 ## Start the project
 
-to be continued
+Use the prepared Docker environment to run the project
+
+#### Build the docker compose stack
+
+```bash
+make build
+```
+
+#### Start the application for local development
+
+```bash
+make start
+```
+
+#### Stop the entire docker compose stack
+
+```bash
+make stop
+```
+
+#### Stop and removes all containers from the docker compose stack
+
+```bash
+make clean
+```
