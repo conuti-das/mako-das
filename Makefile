@@ -10,5 +10,5 @@ clean: ## Stops and removes all containers from the docker compose stack
 stop: ## Stop the entire docker compose stack
 	@docker-compose down
 
-rebuild: ## build docker
+build: ## build docker
 	@docker-compose build
