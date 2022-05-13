@@ -1,0 +1,9 @@
+/vendor/*
+/web/cache
+/.idea/.idea
+.idea
+/tmp/
+/logfail/
+/src/preload.php
+/var/
+/web/sitemap/
