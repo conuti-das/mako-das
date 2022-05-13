@@ -41,3 +41,30 @@ make stop
 ```bash
 make clean
 ```
+
+## Endpoints
+
+#### The Application
+
+http://localhost:8009/
+
+#### The Backend / Admin
+
+http://localhost:8009/admin
+
+#### The API
+
+http://localhost:8009/api
+
+#### phpMyAdmin
+
+http://localhost:8010
+
+#### Mysql
+
+* host: localhost
+* port: 4306
+* user: root
+* password: root
+* database: MPSync
+
