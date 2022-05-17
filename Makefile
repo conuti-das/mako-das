@@ -74,4 +74,4 @@ doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=dev --full-database --force
 
 doctrine-fixtures-load: ## Run doctrine:fixtures:load
-	@docker-compose exec $(WEBSERVER_SERVICE) php bin/console doctrine:fixtures:load
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_SERVICE) php bin/console doctrine:fixtures:load
