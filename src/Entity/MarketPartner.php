@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\MarketPartnerRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\IsNull;
 
 #[ORM\Entity(repositoryClass: MarketPartnerRepository::class)]
 class MarketPartner
@@ -12,110 +14,104 @@ class MarketPartner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'integer')]
-    private $active;
+    private int $active;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $deleted;
+    #[ORM\Column(type: 'integer')]
+    private int $deleted;
 
     #[ORM\Column(type: 'datetime')]
-    private $createdAt;
-
-    #[ORM\Column(type: 'json')]
-    private $type = [];
-
-    #[ORM\Column(type: 'json')]
-    private $energy = [];
-
-    #[ORM\Column(type: 'bigint')]
-    private $partnerId;
-
-    #[ORM\Column(type: 'json', nullable: true)]
-    private $partnerIdType = [];
-
-    #[ORM\Column(type: 'bigint', nullable: true)]
-    private $partnerIdGmsb;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $organization;
-
-    #[ORM\Column(type: 'integer')]
-    private $zip;
-
-    #[ORM\Column(type: 'string', length: 100)]
-    private $city;
-
-    #[ORM\Column(type: 'string', length: 100)]
-    private $street;
-
-    #[ORM\Column(type: 'string', length: 35, nullable: true)]
-    private $houseNumber;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $accountId;
-
-    #[ORM\Column(type: 'string', length: 34, nullable: true)]
-    private $iban;
-
-    #[ORM\Column(type: 'string', length: 15, nullable: true)]
-    private $bic;
-
-    #[ORM\Column(type: 'string', length: 200, nullable: true)]
-    private $bank;
-
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    private $accountHolder;
-
-    #[ORM\Column(type: 'string', length: 70, nullable: true)]
-    private $phone;
-
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private $registerCourt;
-
-    #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    private $registerNumber;
-
-    #[ORM\Column(type: 'integer')]
-    private $sign;
-
-    #[ORM\Column(type: 'integer')]
-    private $compress;
-
-    #[ORM\Column(type: 'integer')]
-    private $encrypt;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $reminderEmailAddress;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $usingTumCatalog;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $aboDARef;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $aboBgmNr;
+    private DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $aboSendDate;
+    private ?DateTimeInterface $updatedAt;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private $aboIsSent;
+    #[ORM\Column(type: 'json')]
+    private array $type = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $energy = [];
+
+    #[ORM\Column(type: 'string')]
+    private string $partnerId;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $partnerIdType = [];
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $partnerIdGmsb;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $organization;
+
+    #[ORM\Column(type: 'string')]
+    private string $zip;
+
+    #[ORM\Column(type: 'string', length: 100)]
+    private string $city;
+
+    #[ORM\Column(type: 'string', length: 100)]
+    private string $street;
+
+    #[ORM\Column(type: 'string', length: 35, nullable: true)]
+    private ?string $houseNumber;
+
+    #[ORM\Column(type: 'string', length: 34, nullable: true)]
+    private ?string $iban;
+
+    #[ORM\Column(type: 'string', length: 15, nullable: true)]
+    private ?string $bic;
+
+    #[ORM\Column(type: 'string', length: 200, nullable: true)]
+    private ?string $bank;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private ?string $accountHolder;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private ?string $phone;
+
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $registerCourt;
+
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $registerNumber;
 
     #[ORM\Column(type: 'integer')]
-    private $lockPayoutsRemadv;
+    private int $sign;
 
     #[ORM\Column(type: 'integer')]
-    private $syncNotWithMaster;
+    private int $compress;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'integer')]
+    private int $encrypt;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private string $reminderEmailAddress;
+
+    #[ORM\Column(type: 'integer')]
+    private int $usingTumCatalog;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $aboDARef;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $aboBgmNr;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTimeInterface $aboSendDate;
+
+    #[ORM\Column(type: 'integer')]
+    private int $syncNotWithMaster;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getActive(): ?int
+    public function getActive(): int
     {
         return $this->active;
     }
@@ -127,7 +123,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getDeleted(): ?int
+    public function getDeleted(): int
     {
         return $this->deleted;
     }
@@ -139,19 +135,31 @@ class MarketPartner
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getType(): ?array
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getType(): array
     {
         return $this->type;
     }
@@ -163,7 +171,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getEnergy(): ?array
+    public function getEnergy(): array
     {
         return $this->energy;
     }
@@ -175,7 +183,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getPartnerId(): ?string
+    public function getPartnerId(): string
     {
         return $this->partnerId;
     }
@@ -211,7 +219,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getOrganization(): ?string
+    public function getOrganization(): string
     {
         return $this->organization;
     }
@@ -223,19 +231,19 @@ class MarketPartner
         return $this;
     }
 
-    public function getZip(): ?int
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    public function setZip(int $zip): self
+    public function setZip(string $zip): self
     {
         $this->zip = $zip;
 
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -247,7 +255,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getStreet(): ?string
+    public function getStreet(): string
     {
         return $this->street;
     }
@@ -267,18 +275,6 @@ class MarketPartner
     public function setHouseNumber(?string $houseNumber): self
     {
         $this->houseNumber = $houseNumber;
-
-        return $this;
-    }
-
-    public function getAccountId(): ?int
-    {
-        return $this->accountId;
-    }
-
-    public function setAccountId(?int $accountId): self
-    {
-        $this->accountId = $accountId;
 
         return $this;
     }
@@ -367,7 +363,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getSign(): ?int
+    public function getSign(): int
     {
         return $this->sign;
     }
@@ -379,7 +375,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getCompress(): ?int
+    public function getCompress(): int
     {
         return $this->compress;
     }
@@ -391,7 +387,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getEncrypt(): ?int
+    public function getEncrypt(): int
     {
         return $this->encrypt;
     }
@@ -403,7 +399,7 @@ class MarketPartner
         return $this;
     }
 
-    public function getReminderEmailAddress(): ?string
+    public function getReminderEmailAddress(): string
     {
         return $this->reminderEmailAddress;
     }
@@ -415,12 +411,12 @@ class MarketPartner
         return $this;
     }
 
-    public function getUsingTumCatalog(): ?int
+    public function getUsingTumCatalog(): int
     {
         return $this->usingTumCatalog;
     }
 
-    public function setUsingTumCatalog(?int $usingTumCatalog): self
+    public function setUsingTumCatalog(int $usingTumCatalog): self
     {
         $this->usingTumCatalog = $usingTumCatalog;
 
@@ -451,43 +447,19 @@ class MarketPartner
         return $this;
     }
 
-    public function getAboSendDate(): ?\DateTimeInterface
+    public function getAboSendDate(): ?DateTimeInterface
     {
         return $this->aboSendDate;
     }
 
-    public function setAboSendDate(?\DateTimeInterface $aboSendDate): self
+    public function setAboSendDate(?DateTimeInterface $aboSendDate): self
     {
         $this->aboSendDate = $aboSendDate;
 
         return $this;
     }
 
-    public function getAboIsSent(): ?int
-    {
-        return $this->aboIsSent;
-    }
-
-    public function setAboIsSent(?int $aboIsSent): self
-    {
-        $this->aboIsSent = $aboIsSent;
-
-        return $this;
-    }
-
-    public function getLockPayoutsRemadv(): ?int
-    {
-        return $this->lockPayoutsRemadv;
-    }
-
-    public function setLockPayoutsRemadv(int $lockPayoutsRemadv): self
-    {
-        $this->lockPayoutsRemadv = $lockPayoutsRemadv;
-
-        return $this;
-    }
-
-    public function getSyncNotWithMaster(): ?int
+    public function getSyncNotWithMaster(): int
     {
         return $this->syncNotWithMaster;
     }
