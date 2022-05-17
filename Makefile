@@ -69,3 +69,6 @@ doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 
 doctrine-schema-update: ## Run doctrine:schema:update
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
+
+doctrine-fixtures-load: ## Run doctrine:fixtures:load
+	@docker-compose exec $(WEBSERVER_SERVICE) php bin/console doctrine:fixtures:load
