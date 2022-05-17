@@ -69,3 +69,9 @@ doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 
 doctrine-schema-update: ## Run doctrine:schema:update
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
+
+doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without the database
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=dev --full-database --force
+
+doctrine-fixtures-load: ## Run doctrine:fixtures:load
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:fixtures:load --env=dev
