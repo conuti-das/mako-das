@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\User;
@@ -12,14 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         EntityManagerInterface $entityManager
     ) {
@@ -34,15 +30,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()
-            ->setTitle('MPSync');
+        return Dashboard::new()->setTitle('MPSync');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text','certificate-all');
-        yield MenuItem::linkToRoute('User', 'fa fa-user','admin_user_list');
+        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text', 'certificate-all');
+        yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
     }
 
     #[Route('/admin/certificate/all', name: 'certificate-all')]
