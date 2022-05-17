@@ -15,3 +15,6 @@ stop: ## Stop the entire docker compose stack
 
 build: ## build docker
 	@docker-compose build
+
+update-db:
+	@docker-compose exec -T $(WEBSERVER_SERVICE) php bin/console doctrine:schema:update --env=app --force
