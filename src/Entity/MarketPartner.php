@@ -11,15 +11,28 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MarketPartnerRepository::class)]
 class MarketPartner
 {
+    public const TYPE_NET = 'net';
+    public const TYPE_PROVIDER = 'provider';
+    public const TYPE_MSB = 'msb';
+    public const TYPE_TSO = 'tso';
+
+    public const ENERGY_ELECTRICITY = 'electricity';
+    public const ENERGY_GAS = 'gas';
+    public const ENERGY_WATER_SEWAGE = 'water_sewage';
+
+    public const NUMBER_BDEW = 'bdew';
+    public const NUMBER_ILN = 'iln';
+    public const NUMBER_DVGW = 'dvgw';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $active;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $deleted;
 
     #[ORM\Column(type: 'datetime')]
@@ -28,17 +41,17 @@ class MarketPartner
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $updatedAt;
 
-    #[ORM\Column(type: 'json')]
-    private array $type = [];
+    #[ORM\Column(type: 'string')]
+    private string $type;
 
-    #[ORM\Column(type: 'json')]
-    private array $energy = [];
+    #[ORM\Column(type: 'string')]
+    private string $energy;
 
     #[ORM\Column(type: 'string')]
     private string $partnerId;
 
-    #[ORM\Column(type: 'json', nullable: true)]
-    private ?array $partnerIdType = [];
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $partnerIdType;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $partnerIdGmsb;
@@ -79,32 +92,20 @@ class MarketPartner
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private ?string $registerNumber;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $sign;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $compress;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $encrypt;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $reminderEmailAddress;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', length: 1)]
     private int $usingTumCatalog;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $aboDARef;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $aboBgmNr;
-
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTimeInterface $aboSendDate;
-
-    #[ORM\Column(type: 'integer')]
-    private int $syncNotWithMaster;
 
     public function getId(): int
     {
@@ -159,24 +160,24 @@ class MarketPartner
         return $this;
     }
 
-    public function getType(): array
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(array $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getEnergy(): array
+    public function getEnergy(): string
     {
         return $this->energy;
     }
 
-    public function setEnergy(array $energy): self
+    public function setEnergy(string $energy): self
     {
         $this->energy = $energy;
 
@@ -195,12 +196,12 @@ class MarketPartner
         return $this;
     }
 
-    public function getPartnerIdType(): ?array
+    public function getPartnerIdType(): ?string
     {
         return $this->partnerIdType;
     }
 
-    public function setPartnerIdType(?array $partnerIdType): self
+    public function setPartnerIdType(?string $partnerIdType): self
     {
         $this->partnerIdType = $partnerIdType;
 
@@ -419,54 +420,6 @@ class MarketPartner
     public function setUsingTumCatalog(int $usingTumCatalog): self
     {
         $this->usingTumCatalog = $usingTumCatalog;
-
-        return $this;
-    }
-
-    public function getAboDARef(): ?string
-    {
-        return $this->aboDARef;
-    }
-
-    public function setAboDARef(?string $aboDARef): self
-    {
-        $this->aboDARef = $aboDARef;
-
-        return $this;
-    }
-
-    public function getAboBgmNr(): ?string
-    {
-        return $this->aboBgmNr;
-    }
-
-    public function setAboBgmNr(?string $aboBgmNr): self
-    {
-        $this->aboBgmNr = $aboBgmNr;
-
-        return $this;
-    }
-
-    public function getAboSendDate(): ?DateTimeInterface
-    {
-        return $this->aboSendDate;
-    }
-
-    public function setAboSendDate(?DateTimeInterface $aboSendDate): self
-    {
-        $this->aboSendDate = $aboSendDate;
-
-        return $this;
-    }
-
-    public function getSyncNotWithMaster(): int
-    {
-        return $this->syncNotWithMaster;
-    }
-
-    public function setSyncNotWithMaster(int $syncNotWithMaster): self
-    {
-        $this->syncNotWithMaster = $syncNotWithMaster;
 
         return $this;
     }
