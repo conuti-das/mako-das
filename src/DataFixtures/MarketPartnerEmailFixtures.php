@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\MarketPartnerEmail;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Exception;
 
 class MarketPartnerEmailFixtures extends Fixture
 {
@@ -13,7 +16,7 @@ class MarketPartnerEmailFixtures extends Fixture
      * @param ObjectManager $manager
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function load(ObjectManager $manager): void
     {
