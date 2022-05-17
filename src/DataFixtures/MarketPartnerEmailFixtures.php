@@ -20,15 +20,17 @@ class MarketPartnerEmailFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $nowDate = new DateTime('now');
+
         $marketPartnerEmail = new MarketPartnerEmail();
         $marketPartnerEmail->setMarketPartnerId(1);
-        $marketPartnerEmail->setCreatedAt(new DateTime(date("Y-m-d h:i:s")));
+        $marketPartnerEmail->setCreatedAt($nowDate);
         $marketPartnerEmail->setEmail('test123@gmail.com');
-        $marketPartnerEmail->setType(['edifact','reminder']);
+        $marketPartnerEmail->setType(['edifact', 'reminder']);
         $marketPartnerEmail->setSslCertificate('long text');
-        $marketPartnerEmail->setSslCertificateExpiration(new DateTime(date("Y-m-d h:i:s")));
-        $marketPartnerEmail->setActiveFrom(new DateTime(date("Y-m-d h:i:s")));
-        $marketPartnerEmail->setActiveUntil(new DateTime(date("Y-m-d h:i:s")));
+        $marketPartnerEmail->setSslCertificateExpiration($nowDate);
+        $marketPartnerEmail->setActiveFrom($nowDate);
+        $marketPartnerEmail->setActiveUntil($nowDate);
         $manager->persist($marketPartnerEmail);
         $manager->flush();
     }
