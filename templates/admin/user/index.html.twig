@@ -1,0 +1,38 @@
+{# templates/admin/my-custom-page.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{#{% block content_title %}#}
+{#    User List#}
+{#{% endblock %}#}
+
+{% block page_action %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h2>User List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Username</th>
+{#                    <th>Role</th>#}
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+{#                        <td>#}
+{#                            {% for role in user.roles %}#}
+{#                                {{ role }}#}
+{#                            {% endfor %}#}
+{#                        </td>#}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
