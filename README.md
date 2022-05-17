@@ -14,20 +14,16 @@ cd ~/projects
 git clone git@gitlab.com:cu-powercloud/MPSync.git
 ```
 
-## Start the project
-
-Use the prepared Docker environment to run the project
-
-#### Build the docker compose stack
-
-```bash
-make build
-```
-
-#### Start the application for local development
+#### Start the project
 
 ```bash
 make start
+```
+
+#### Run composer install
+
+```bash
+make install
 ```
 
 #### Stop the entire docker compose stack
@@ -41,6 +37,8 @@ make stop
 ```bash
 make clean
 ```
+
+To check all available make commands please open **Makefile**
 
 ## Endpoints
 
