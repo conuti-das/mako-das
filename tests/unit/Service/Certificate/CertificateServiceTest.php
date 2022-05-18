@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\unit\Service\Certificate;
 
+use App\Exception\Certificate\CertificateEmptyException;
+use App\Exception\Certificate\CertificateReadException;
 use App\Service\Certificate\CertificateService;
 use App\Tests\UnitTester;
 use Codeception\Test\Unit;
@@ -92,5 +94,21 @@ class CertificateServiceTest extends Unit
             '{"name":"\/emailAddress=bes_vertrieb@bigge-energie.de\/CN=bes_vertrieb\/O=BIGGE Energie GmbH & Co. KG\/L=Attendorn\/C=DE","hash":"6b7f2420","serialNumber":"0x056C0E37A7984B3DC3AB73EB3411988D49C2460A","emailAddress":"bes_vertrieb@bigge-energie.de","validFrom":{"date":"2022-03-18 14:55:55.000000","timezone_type":3,"timezone":"UTC"},"validUntil":{"date":"2022-07-18 14:55:55.000000","timezone_type":3,"timezone":"UTC"},"subjectName":"bes_vertrieb","subjectOrganisation":"BIGGE Energie GmbH & Co. KG","subjectLocation":"Attendorn","subjectCountry":"DE","issuerName":"procilon GROUP Customer CA - EDIFACT 03","issuerOrganisation":"SPI-CLOUD","issuerOrganisationUnit":"Sub CA","issuerCountry":"DE","isActive":true}',
             $certificateDto->toJson()
         );
+    }
+
+    public function testCertificateEmptyException(): void
+    {
+        $this->expectException(CertificateEmptyException::class);
+
+        $certificateService = new CertificateService();
+        $certificateService->decode('');
+    }
+
+    public function testCertificateReadException(): void
+    {
+        $this->expectException(CertificateReadException::class);
+
+        $certificateService = new CertificateService();
+        $certificateService->decode('---------');
     }
 }
