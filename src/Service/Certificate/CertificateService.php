@@ -9,6 +9,7 @@ use App\Exception\Certificate\CertificateEmptyException;
 use App\Exception\Certificate\CertificateParseException;
 use App\Exception\Certificate\CertificateReadException;
 use DateTime;
+use Exception;
 use OpenSSLCertificate;
 
 class CertificateService
@@ -26,13 +27,21 @@ class CertificateService
             throw new CertificateEmptyException('Given certificate is empty.');
         }
 
-        $decodedCertificate = openssl_x509_read($certificate);
-        if (!$decodedCertificate instanceof OpenSSLCertificate) {
+        try {
+            $decodedCertificate = openssl_x509_read($certificate);
+            if (!$decodedCertificate instanceof OpenSSLCertificate) {
+                throw new CertificateReadException('Given certificate could not be read.');
+            }
+        } catch (Exception $exception) {
             throw new CertificateReadException('Given certificate could not be read.');
         }
 
-        $decodedCertificateData = openssl_x509_parse($decodedCertificate);
-        if (empty($decodedCertificateData)) {
+        try {
+            $decodedCertificateData = openssl_x509_parse($decodedCertificate);
+            if (empty($decodedCertificateData)) {
+                throw new CertificateParseException('Given certificate could not be parsed.');
+            }
+        } catch (Exception $exception) {
             throw new CertificateParseException('Given certificate could not be parsed.');
         }
 
