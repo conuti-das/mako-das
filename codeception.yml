@@ -10,4 +10,8 @@ extensions:
     enabled:
         - Codeception\Extension\RunFailed
 params:
-    - .env
+    - .env.test
+coverage:
+    enabled: true
+    include:
+        - src/*

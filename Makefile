@@ -75,3 +75,13 @@ doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without
 
 doctrine-fixtures-load: ## Run doctrine:fixtures:load
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:fixtures:load --env=dev
+
+################################################################
+## Codeception
+################################################################
+
+codeception-unit: ## Run codeception unit tests
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test unit
+
+codeception-functional: ## Run codeception functional tests
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test functional
