@@ -9,6 +9,7 @@
         "php": ">=8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-openssl": "*",
         "api-platform/core": "^2.6",
         "codeception/module-symfony": "*",
         "doctrine/annotations": "^1.0",
