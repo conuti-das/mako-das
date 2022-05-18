@@ -6,6 +6,6 @@ namespace App\Exception\Certificate;
 
 use Exception;
 
-class CertificateValidationException extends Exception
+class CertificateParseException extends Exception
 {
 }

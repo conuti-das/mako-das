@@ -6,6 +6,6 @@ namespace App\Exception\Certificate;
 
 use Exception;
 
-class CertificateDecodeException extends Exception
+class CertificateReadException extends Exception
 {
 }
