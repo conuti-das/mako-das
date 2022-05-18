@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MarketPartnerEmailRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MarketPartnerEmailRepository::class)]
+#[ApiResource]
 class MarketPartnerEmail
 {
     public const TYPE_EDIFACT = 'edifact';
