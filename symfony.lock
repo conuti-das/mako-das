@@ -52,6 +52,9 @@
     "codeception/module-asserts": {
         "version": "2.0.1"
     },
+    "codeception/module-doctrine2": {
+        "version": "2.0.1"
+    },
     "codeception/module-symfony": {
         "version": "2.1.1"
     },

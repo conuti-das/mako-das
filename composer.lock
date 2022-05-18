@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf0dc653d500f496db967b3888d024f3",
+    "content-hash": "e1d9f3b8219cfafe8c417471e44138ab",
     "packages": [
         {
             "name": "api-platform/core",
@@ -11351,6 +11351,64 @@
                 "source": "https://github.com/Codeception/module-asserts/tree/2.0.1"
             },
             "time": "2021-12-18T17:10:04+00:00"
+        },
+        {
+            "name": "codeception/module-doctrine2",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/module-doctrine2.git",
+                "reference": "8f6c868fbda0671f8b1cc3f983ef704b64ea706a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/module-doctrine2/zipball/8f6c868fbda0671f8b1cc3f983ef704b64ea706a",
+                "reference": "8f6c868fbda0671f8b1cc3f983ef704b64ea706a",
+                "shasum": ""
+            },
+            "require": {
+                "codeception/codeception": "^4.0",
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "php": "^7.4 | ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1",
+                "doctrine/data-fixtures": "^1",
+                "doctrine/orm": "^2.10",
+                "phpstan/phpstan": "^0.12",
+                "ramsey/uuid-doctrine": "^1.5",
+                "symfony/cache": "^4.4 | ^5.4 | ^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Bodnarchuk"
+                },
+                {
+                    "name": "Alex Kunin"
+                }
+            ],
+            "description": "Doctrine2 module for Codeception",
+            "homepage": "https://codeception.com/",
+            "keywords": [
+                "codeception",
+                "doctrine2"
+            ],
+            "support": {
+                "issues": "https://github.com/Codeception/module-doctrine2/issues",
+                "source": "https://github.com/Codeception/module-doctrine2/tree/2.0.1"
+            },
+            "time": "2022-01-28T18:19:43+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
