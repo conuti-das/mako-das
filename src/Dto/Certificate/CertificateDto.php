@@ -201,6 +201,7 @@ class CertificateDto
     }
 
     /**
+     * @return string
      * @throws JsonException
      */
     public function toJson(): string

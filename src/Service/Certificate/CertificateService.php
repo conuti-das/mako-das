@@ -14,10 +14,11 @@ use OpenSSLCertificate;
 class CertificateService
 {
     /**
+     * @param string $certificate
+     * @return CertificateDto
      * @throws CertificateEmptyException
-     * @throws CertificateReadException
      * @throws CertificateParseException
-     * @throws \Exception
+     * @throws CertificateReadException
      */
     public function decode(string $certificate): CertificateDto
     {
