@@ -26,7 +26,7 @@ security:
             jwt: ~
         main:
             json_login:
-                check_path: /api/token
+                check_path: /authentication_token
                 username_path: username
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -34,7 +34,7 @@ security:
 
     access_control:
         - { path: ^/admin, roles: PUBLIC_ACCESS }
-        - { path: ^/api/token, roles: PUBLIC_ACCESS }
+        - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: ROLE_USER_API }
 
