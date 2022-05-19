@@ -4,5 +4,5 @@
 
 # api/config/routes.yaml
 authentication_token:
-  path: /api/token
+  path: /authentication_token
   methods: ['POST']
