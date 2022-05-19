@@ -85,3 +85,13 @@ codeception-unit: ## Run codeception unit tests
 
 codeception-functional: ## Run codeception functional tests
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test functional
+
+################################################################
+## API Platform
+################################################################
+
+jwt-generate-keypair: ## Run lexik:jwt:generate-keypair
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) bin/console lexik:jwt:generate-keypair
+
+jwt-overwrite-keypair: ## Run lexik:jwt:generate-keypair with overwrite
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) bin/console lexik:jwt:generate-keypair --overwrite
