@@ -46,6 +46,16 @@ class UserFixtures extends Fixture
             $user->setCreatedAt(new DateTime('now'));
             $manager->persist($user);
         }
+
+        //add API User
+        $user = new User();
+        $password = $this->passwordEncoder->hashPassword($user, static::TEST_PASSWORD);
+        $user->setUsername("api@conuti.de");
+        $user->setRoles(["ROLE_USER_API"]);
+        $user->setPassword($password);
+        $user->setCreatedAt(new DateTime('now'));
+        $manager->persist($user);
+
         $manager->flush();
     }
 }
