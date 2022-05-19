@@ -24,6 +24,7 @@ class CertificateDto
     private string $issuerOrganisation;
     private string $issuerOrganisationUnit;
     private string $issuerCountry;
+    private ?string $certificateFile = null;
 
     public function getName(): string
     {
@@ -210,5 +211,25 @@ class CertificateDto
         $objectVars['isActive'] = $this->isActive();
 
         return json_encode($objectVars, JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCertificateFile(): ?string
+    {
+        return $this->certificateFile;
+    }
+
+    /**
+     * @param string|null $certificateFile
+     *
+     * @return $this
+     */
+    public function setCertificateFile(?string $certificateFile): self
+    {
+        $this->certificateFile = $certificateFile;
+
+        return $this;
     }
 }
