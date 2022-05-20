@@ -1,9 +1,8 @@
 <?php
-// api/src/OpenApi/JwtDecorator.php
 
 declare(strict_types=1);
 
-namespace App\OpenApi;
+namespace App\Decorator\OpenApi;
 
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\Core\OpenApi\OpenApi;
@@ -13,7 +12,8 @@ final class JwtDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
         private OpenApiFactoryInterface $decorated
-    ) {}
+    ) {
+    }
 
     public function __invoke(array $context = []): OpenApi
     {
@@ -35,11 +35,11 @@ final class JwtDecorator implements OpenApiFactoryInterface
             'properties' => [
                 'username' => [
                     'type' => 'string',
-                    'example' => 'johndoe@example.com',
+                    'example' => 'api@conuti.de',
                 ],
                 'password' => [
                     'type' => 'string',
-                    'example' => 'apassword',
+                    'example' => 'test',
                 ],
             ],
         ]);
@@ -78,5 +78,4 @@ final class JwtDecorator implements OpenApiFactoryInterface
 
         return $openApi;
     }
-
 }
