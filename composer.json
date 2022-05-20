@@ -107,6 +107,7 @@
         "codeception/module-asserts": "*",
         "codeception/module-doctrine2": "*",
         "codeception/module-phpbrowser": "*",
+        "codeception/module-rest": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/debug-bundle": "5.4.*",
         "symfony/maker-bundle": "^1.0",

@@ -58,6 +58,9 @@
     "codeception/module-phpbrowser": {
         "version": "2.0.2"
     },
+    "codeception/module-rest": {
+        "version": "2.0.2"
+    },
     "codeception/module-symfony": {
         "version": "2.1.1"
     },
@@ -186,6 +189,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "2.2.1"
+    },
+    "justinrainbow/json-schema": {
+        "version": "5.2.12"
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
@@ -368,6 +374,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "softcreatr/jsonpath": {
+        "version": "0.7.5"
     },
     "stella-maris/clock": {
         "version": "0.1.4"
