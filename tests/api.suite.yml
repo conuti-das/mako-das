@@ -1,4 +1,6 @@
 actor: ApiTester
+params:
+    - env.test
 modules:
     enabled:
         - Symfony:
@@ -13,6 +15,6 @@ modules:
             depends: PhpBrowser
             part: Json
         - PhpBrowser:
-              url: 'http://127.0.0.1'
+              url: '%API_HOST%'
         - Asserts
         - \App\Tests\Helper\Api
