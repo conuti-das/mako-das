@@ -1,0 +1,20 @@
+actor: ApiTester
+params:
+    - env.test
+modules:
+    enabled:
+        - Symfony:
+            app_path: 'src'
+            environment: 'test'
+            kernel_class: App\Kernel
+            rebootable_client: false
+        - Doctrine2:
+            depends: Symfony
+            cleanup: true
+        - REST:
+            depends: PhpBrowser
+            part: Json
+        - PhpBrowser:
+              url: '%API_TEST_HOST%'
+        - Asserts
+        - \App\Tests\Helper\Api

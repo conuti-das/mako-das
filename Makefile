@@ -80,11 +80,17 @@ doctrine-fixtures-load: ## Run doctrine:fixtures:load
 ## Codeception
 ################################################################
 
+codeception-build: ## Run codeception build by config changes
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept build
+
 codeception-unit: ## Run codeception unit tests
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test unit
 
 codeception-functional: ## Run codeception functional tests
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test functional
+
+codeception-api: ## Run codeception api tests
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test api
 
 ################################################################
 ## API Platform
