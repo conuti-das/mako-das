@@ -5,12 +5,28 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Api\Dto\MarketPartner\MarketPartnerAllResponse;
 use App\Repository\MarketPartnerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    collectionOperations: [
+        'market_partners_all' => [
+            'method' => 'GET',
+            'path'=>'/market-partners',
+            'output' => MarketPartnerAllResponse::class,
+            'normalization_context' => ['groups' => ['market-partners-all:read']],
+        ],
+    ],
+    itemOperations: [
+        'market_partners_single' => [
+            'method' => 'GET',
+            'path'=>'/market-partners/{id}',
+        ],
+    ],
+)]
 #[ORM\Entity(repositoryClass: MarketPartnerRepository::class)]
-#[ApiResource]
 class MarketPartner
 {
     public const TYPE_NET = 'net';
