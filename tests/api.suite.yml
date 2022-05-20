@@ -15,6 +15,6 @@ modules:
             depends: PhpBrowser
             part: Json
         - PhpBrowser:
-              url: '%API_HOST%'
+              url: '%API_TEST_HOST%'
         - Asserts
         - \App\Tests\Helper\Api

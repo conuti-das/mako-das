@@ -30,8 +30,8 @@ class ApiTester extends Actor
         $this->sendPost(
             '/api/authorization',
             [
-                'username' => 'api@conuti.de',
-                'password' => 'test',
+                'username' => $_ENV['API_TEST_USERNAME'],
+                'password' => $_ENV['API_TEST_PASSWORD'],
             ]
         );
         $this->seeResponseCodeIs(200);
