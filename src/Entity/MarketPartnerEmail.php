@@ -10,7 +10,6 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MarketPartnerEmailRepository::class)]
-#[ApiResource]
 class MarketPartnerEmail
 {
     public const TYPE_EDIFACT = 'edifact';
