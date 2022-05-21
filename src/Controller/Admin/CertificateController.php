@@ -4,44 +4,93 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Dto\Certificate\UploadCertificateDto;
 use App\Entity\MarketPartnerEmail;
+use App\Form\CertificateFormType;
+use App\Service\Certificate\CertificateService;
 use App\Service\Certificate\UploadService;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Interfaces\HttpStatusCodesInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
 use DateTime;
 
 class CertificateController extends AbstractController
 {
+    /**
+     * @var EntityManager
+     */
+    private EntityManagerInterface $entityManager;
+
+    /**
+     * @var UploadService
+     */
+    private UploadService $uploadService;
+
+    /**
+     * @var CertificateService
+     */
+    private CertificateService $certificateService;
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param UploadService $uploadService
+     * @param CertificateService $certificateService
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UploadService $uploadService,
+        CertificateService $certificateService
+    ) {
+        $this->uploadService = $uploadService;
+        $this->certificateService = $certificateService;
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/admin/certificates/decode', name: 'certificates_decode')]
     public function certificateDecode(Request $request): Response
     {
-       $brochureFile = $request->files->get('file');
-       $uploadService = new UploadService();
-       $certificate_json = $uploadService->upload($brochureFile, $this->getParameter('certificate_directory'));
-       return new Response($certificate_json, 200, array('Content-Type' => 'text/html'));
+        $certificateFile = $request->files->get('file');
+        $certificateJson = $this->uploadService->upload($certificateFile, $this->getParameter('certificate_directory'));
+        $certificateService = $this->certificateService->decode($certificateJson);
+
+        return new Response(
+            $certificateService->toJson(),
+            HttpStatusCodesInterface::HTTP_SUCCESS,
+            array('Content-Type' => 'text/html')
+        );
     }
 
-    #[Route('/admin/certificates/add', name: 'certificates_add')]
-    public function addCertificate(Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/admin/certificate/all', name: 'certificate-all')]
+    public function certificate(Request $request): Response
     {
-        $partnerId = (int)$request->request->get('certificate_form_partnerId');
-        $activeFrom = new DateTime($request->request->get('certificate_form_validFrom'));
-        $activeUntil = new DateTime($request->request->get('certificate_form_validUntil'));
-        $entityManager = $doctrine->getManager();
-        $marketPartnerEmail = new MarketPartnerEmail();
-        $marketPartnerEmail->setMarketPartnerId($partnerId);
-        $marketPartnerEmail->setCreatedAt(new DateTime('now'));
-        $marketPartnerEmail->setEmail($request->request->get('certificate_form_email'));
-        $marketPartnerEmail->setType('edifact');
-        $marketPartnerEmail->setSslCertificate($request->request->get('certificate_form_certificateFile'));
-        $marketPartnerEmail->setSslCertificateExpiration(new DateTime('now'));
-        $marketPartnerEmail->setActiveFrom($activeFrom);
-        $marketPartnerEmail->setActiveUntil($activeUntil);
-        $entityManager->persist($marketPartnerEmail);
-        $entityManager->flush();
-        return $this->redirect('/admin/certificate/all');
+        $modalCertificateForm = $this->createForm(CertificateFormType::class);
+        $modalCertificateForm->handleRequest($request);
+
+        if ($modalCertificateForm->isSubmitted() && $modalCertificateForm->isValid()) {
+            $marketPartnerEmail = (new MarketPartnerEmail());
+            $certificateForm = $request->request->get('certificate_form');
+            $uploadCertificateDto = new UploadCertificateDto();
+            $partnerId = (int)$certificateForm['partnerId'];
+            $activeFrom = new DateTime($certificateForm['validFrom']);
+            $activeUntil = new DateTime($certificateForm['validUntil']);
+            $uploadCertificateDto->setPartnerId($partnerId);
+            $uploadCertificateDto->setEmailAddress($certificateForm['email']);
+            $uploadCertificateDto->setValidFrom($activeFrom);
+            $uploadCertificateDto->setValidUntil($activeUntil);
+            $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
+            $this->entityManager->getRepository($marketPartnerEmail::class)
+                ->addCertificate($uploadCertificateDto);
+        }
+
+        return $this->render(
+            'admin/certificate/index.html.twig',
+            [
+                'modalCertificateForm' => $modalCertificateForm->createView()
+            ]
+        );
     }
 }
