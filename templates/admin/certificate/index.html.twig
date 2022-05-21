@@ -4,185 +4,244 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         {% block stylesheets %}
-            <style> .certificate-open-modal{display: flex;justify-content: space-between;height: 40px;}  .modal-footer-btn{width: 75%;margin: auto;display: flex;justify-content: space-between;}  .modal-dialog{max-width: 55%;}  .form-group{padding: 0;display: flex;}  .form-group input{background: none;color: black;border: none;width: 80%;}  .form-group-date input{width: 100%;}  .partner_inp input{ /*background: black;*/border: 1px solid black;border-radius: 5px;}  .form-group-label{width: 200px;text-align: right;margin-right: 50px;}  .form-group-hide{display: none;}  .upload-certificate{display: flex;justify-content: center;}  .upload-certificate h1{font-size: 25px;}</style>
+            <style> .certificate-open-modal {
+                    display: flex;
+                    justify-content: space-between;
+                    height: 40px;
+                }
+
+                .modal-footer-btn {
+                    width: 75%;
+                    margin: auto;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                .modal-dialog {
+                    max-width: 55%;
+                }
+
+                .form-group {
+                    padding: 0;
+                    display: flex;
+                }
+
+                .form-group input {
+                    background: none;
+                    color: black;
+                    border: none;
+                    width: 80%;
+                }
+
+                .form-group-date input {
+                    width: 100%;
+                }
+
+                .partner_inp input {
+                    border: 1px solid black;
+                    border-radius: 5px;
+                }
+
+                .form-group-label {
+                    width: 200px;
+                    text-align: right;
+                    margin-right: 50px;
+                }
+
+                .form-group-hide {
+                    display: none;
+                }
+
+                .upload-certificate {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .upload-certificate h1 {
+                    font-size: 25px;
+                }</style>
         {% endblock %}
     </head>
     <body>
 
-{% block page_action %}
+    {% block page_action %}
 
-{% endblock %}
-        <div class="container">
-            <div class="certificate-open-modal">
-                <h1>All Certificate</h1>
-                <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                    Add Certificate
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="upload-certificate">
-                                    <h1>Uploading Certificate</h1>
+    {% endblock %}
+    <div class="container">
+        <div class="certificate-open-modal">
+            <h1>All Certificate</h1>
+            <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
+                    data-target="#exampleModal">
+                Add Certificate
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="upload-certificate">
+                                <h1>Uploading Certificate</h1>
+                            </div>
+                            <div>
+                                {{ form_start(modalCertificateForm) }}
+                                <div class="form-group partner_inp">
+                                    <div class="form-group-label">
+                                        <label for="certificate_form_partnerId">PartnerId</label>
+                                    </div>
+                                    <div>
+                                        {{ form_widget(modalCertificateForm.partnerId) }}
+                                    </div>
                                 </div>
-                               <div>
-                                   <form method="post" action="/admin/certificates/add" enctype="multipart/form-data">
-                                        <div class="form-group partner_inp">
-                                            <div class="form-group-label">
-                                                <label for="certificate_form_partnerId">PartnerId</label>
-                                            </div>
-                                            <div>
-                                                <input type="text" id="certificate_form_partnerId" name="certificate_form_partnerId">
-                                            </div>
+                                <div class="form-group">
+                                    <div class="form-group-label">
+                                        <label>Upload File</label>
+                                    </div>
+                                    <div>
+                                        {{ form_widget(modalCertificateForm.uploadFile) }}
+                                    </div>
+                                </div>
+                                <div class="form-group-hide">
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_isActive">Active</label>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="form-group-label">
-                                                <label>Upload File</label>
-                                            </div>
-                                            <div>
-                                                <input type="file" id="certificate_form_upload">
-                                            </div>
+                                        <div>
+                                            <p id="certificate_form_isActive"></p>
                                         </div>
-                                       <div class="form-group-hide">
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_isActive">Active</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_isActive"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_validFrom">Active From</label>
-                                               </div>
-                                               <div class="form-group-date">
-                                                   <p id="certificate_form_validFrom"></p>
-                                                   <input type="hidden" id="certificate_form_validFrom_hidden" name="certificate_form_validFrom" value="">
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_validUntil">Active Until</label>
-                                               </div>
-                                               <div class="form-group-date">
-                                                   <p id="certificate_form_validUntil"></p>
-                                                   <input type="hidden" id="certificate_form_validUntil_hidden" name="certificate_form_validUntil" value="">
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_issuerName">IssuerName</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_issuerName"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_name">Name</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_name"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_email">Email</label>
-                                               </div>
-                                               <div class="form-group-date">
-                                                   <p id="certificate_form_email"></p>
-                                                   <input type="hidden" id="certificate_form_email_hidden" name="certificate_form_email" value="">
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_hash">Hash</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_hash"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_issuerCountry">issuerCountry</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_issuerCountry"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_issuerOrganisation">issuerOrganisation</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_issuerOrganisation"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_issuerOrganisationUnit">issuerOrganisationUnit</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_issuerOrganisationUnit"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_serialNumber">serialNumber</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_serialNumber"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_subjectCountry">subjectCountry</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_subjectCountry"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_subjectLocation">subjectLocation</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_subjectLocation"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_subjectName">subjectName</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_subjectName"></p>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                               <div class="form-group-label">
-                                                   <label for="certificate_form_subjectOrganisation">subjectOrganisation</label>
-                                               </div>
-                                               <div>
-                                                   <p id="certificate_form_subjectOrganisation"></p>
-                                               </div>
-                                           </div>
-                                           <input type="hidden" name="certificate_form_certificateFile" id="certificate_form_certificateFile_hidden" value="">
-                                       </div>
-                                       <div class="modal-footer-btn">
-                                           <button type="submit" id="save-disable" disabled class="btn btn-success">Save</button>
-                                           <button type="button" class="btn btn-secondary" id="cancel-upload" data-dismiss="modal">Cancel</button>
-                                       </div>
-                                   </form>
-                               </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_validFrom">Active From</label>
+                                        </div>
+                                        <div class="form-group-date">
+                                            <p id="certificate_form_validFrom_hidden"></p>
+                                            {{ form_widget(modalCertificateForm.validFrom) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_validUntil">Active Until</label>
+                                        </div>
+                                        <div class="form-group-date">
+                                            <p id="certificate_form_validUntil_hidden"></p>
+                                            {{ form_widget(modalCertificateForm.validUntil) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_issuerName">IssuerName</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_issuerName"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_name">Name</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_name"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_email">Email</label>
+                                        </div>
+                                        <div class="form-group-date">
+                                            <p id="certificate_form_email_hidden"></p>
+                                            {{ form_widget(modalCertificateForm.email) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_hash">Hash</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_hash"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_issuerCountry">issuerCountry</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_issuerCountry"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_issuerOrganisation">issuerOrganisation</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_issuerOrganisation"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_issuerOrganisationUnit">issuerOrganisationUnit</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_issuerOrganisationUnit"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_serialNumber">serialNumber</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_serialNumber"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_subjectCountry">subjectCountry</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_subjectCountry"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_subjectLocation">subjectLocation</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_subjectLocation"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_subjectName">subjectName</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_subjectName"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_subjectOrganisation">subjectOrganisation</label>
+                                        </div>
+                                        <div>
+                                            <p id="certificate_form_subjectOrganisation"></p>
+                                        </div>
+                                    </div>
+                                    {{ form_widget(modalCertificateForm.certificateFile) }}
+                                </div>
+                                <div class="modal-footer-btn">
+                                    <button type="submit" id="save-disable" disabled class="btn btn-success">Save
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-upload"
+                                            data-dismiss="modal">Cancel
+                                    </button>
+                                </div>
+                                {{ form_end(modalCertificateForm) }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     {% block javascripts %}
         <script defer src="{{ asset('assets/app/js/certificate.js') }}"></script>
     {% endblock %}
