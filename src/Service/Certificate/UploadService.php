@@ -4,31 +4,39 @@ declare(strict_types=1);
 
 namespace App\Service\Certificate;
 
-use Exception;
+use App\Exception\Certificate\CertificateParseException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Twig\Error\Error;
+use Exception;
 
 class UploadService
 {
     /**
      * @param UploadedFile $file
-     * @param $directoryName
+     * @param string $directoryName
      *
      * @return string
-     * @throws Error
+     * @throws CertificateParseException
      */
-    public function upload(UploadedFile $file, $directoryName): string
+    public function upload(UploadedFile $file, string $directoryName): string
     {
         try {
-            $certificateService = new CertificateService();
-            $fileName = uniqid().'-'.$file->getClientOriginalName();
+            $fileName = $this->generateName($file->getClientOriginalName());
             $file->move($directoryName, $fileName);
-            $uploaded_certificate = file_get_contents($directoryName.'/'.$fileName);
-            $certificateService = $certificateService->decode($uploaded_certificate);
-            $certificateService->setCertificateFile($uploaded_certificate);
-            return $certificateService->toJson();
+            $uploadedCertificate = file_get_contents($directoryName . '/' . $fileName);
+
+            return $uploadedCertificate;
         } catch (Exception $exception) {
-            throw new Error("This certificate cannot be loaded.");
+            throw new CertificateParseException('Given certificate could not be uploaded.');
         }
+    }
+
+    /**
+     * @param string $originalName
+     *
+     * @return string
+     */
+    public function generateName(string $originalName): string
+    {
+        return uniqid() . '-' . $originalName;
     }
 }
