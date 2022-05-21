@@ -1,13 +1,14 @@
-$(document).ready(function() {
-    $( "#certificateModal" ).click(function() {
+$(document).ready(function () {
+    $("#certificateModal").click(function () {
+        $("#certificate_form_partnerId").val("");
         $("#exampleModal").modal('show');
     });
     $("#cancel-upload").click(function () {
         $("#exampleModal").modal('hide');
     })
 
-    $("#certificate_form_upload").change(function (e){
-        if ($('#certificate_form_upload').val()) {
+    $("#certificate_form_uploadFile").change(function (e) {
+        if ($('#certificate_form_uploadFile').val()) {
             $('#save-disable').removeAttr("disabled")
             $('.form-group-hide').css("display", 'block')
         }
@@ -22,22 +23,22 @@ $(document).ready(function() {
             processData: false,
             data: form_data,
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 let validFromDate = response.validFrom.date.split('.')[0];
                 let validUntilDate = response.validUntil.date.split('.')[0];
-                $("#certificate_form_email").html(response.emailAddress)
-                $("#certificate_form_certificateFile_hidden").val(response.certificateFile)
-                $("#certificate_form_email_hidden").val(response.emailAddress)
-                $("#certificate_form_validFrom").html(validFromDate)
-                $("#certificate_form_validFrom_hidden").val(validFromDate)
-                $("#certificate_form_validUntil").html(validUntilDate)
-                $("#certificate_form_validUntil_hidden").val(validUntilDate)
+                $("#certificate_form_email_hidden").html(response.emailAddress)
+                $("#certificate_form_certificateFile").val(response.certificateFile)
+                $("#certificate_form_email").val(response.emailAddress)
+                $("#certificate_form_validFrom_hidden").html(validFromDate)
+                $("#certificate_form_validFrom").val(validFromDate)
+                $("#certificate_form_validUntil_hidden").html(validUntilDate)
+                $("#certificate_form_validUntil").val(validUntilDate)
                 $("#certificate_form_issuerName").html(response.issuerName)
                 $("#certificate_form_name").html(response.name)
                 $("#certificate_form_hash").html(response.hash)
-                if(response.isActive) {
+                if (response.isActive) {
                     $("#certificate_form_isActive").html(response.isActive).css('color', 'green')
-                }else {
+                } else {
                     $("#certificate_form_isActive").html(response.isActive).css('color', 'red')
                 }
                 $("#certificate_form_issuerCountry").html(response.issuerCountry)
@@ -49,7 +50,7 @@ $(document).ready(function() {
                 $("#certificate_form_subjectName").html(response.subjectName)
                 $("#certificate_form_subjectOrganisation").html(response.subjectOrganisation)
             },
-            error: function(error) {
+            error: function (error) {
                 console.log(error);
             }
         });
