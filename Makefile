@@ -2,16 +2,20 @@ include .env
 
 WEBSERVER_CONTAINER := webserver
 DOCKER_COMPOSE := docker-compose
+MAKE := make
 HOST := http://localhost
-
+EGREP := egrep
 ################################################################
 ## Docker
 ################################################################
 
 start: ## Starts the application for local development
 	$(DOCKER_COMPOSE) up --remove-orphans -d
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) composer install
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) composer dumpautoload
 	@echo "The App is available at ${HOST}:${WEBSERVER_PORT}"
 	@echo "The Api is available at ${HOST}:${WEBSERVER_PORT}/api"
+	@echo "The Api Swagger UI is available at ${HOST}:${WEBSERVER_PORT}/api/docs"
 	@echo "The Admin is available at ${HOST}:${WEBSERVER_PORT}/admin"
 	@echo "The phpMyAdmin is available at ${HOST}:${PHPMYADMIN_PORT}"
 	@echo "The Database port is ${DB_PORT}"
@@ -28,9 +32,6 @@ clean: ## Shutdown and removes all containers from the docker compose stack
 
 clean-dist: ## Stops and removes all containers from the docker compose stack, as well as their images
 	$(DOCKER_COMPOSE) down --rmi all -v
-
-build: ## Build docker
-	$(DOCKER_COMPOSE) build
 
 shell: ## Run a shell inside the webserver container
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) bash
@@ -69,6 +70,9 @@ doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 
 doctrine-schema-update: ## Run doctrine:schema:update
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
+
+doctrine-schema-update-test: ## Run doctrine:schema:update --env=test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=test --force
 
 doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without the database
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=dev --full-database --force
