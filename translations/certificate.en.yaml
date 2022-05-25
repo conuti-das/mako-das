@@ -1,0 +1,19 @@
+Uploading Certificate: Uploading Certificate
+PartnerId: PartnerId
+Active: Active
+Active From: Active From
+Active Until: Active Until
+IssuerName: IssuerName
+Name: Name
+Email: Email
+Hash: Hash
+issuerCountry: issuerCountry
+issuerOrganisation: issuerOrganisation
+issuerOrganisationUnit: issuerOrganisationUnit
+serialNumber: serialNumber
+subjectCountry: subjectCountry
+subjectLocation: subjectLocation
+subjectName: subjectName
+subjectOrganisation: subjectOrganisation
+Save: Save
+Cancel: Cancel
