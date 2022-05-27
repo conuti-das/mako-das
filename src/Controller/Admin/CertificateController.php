@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Dto\Certificate\UploadCertificateDto;
-use App\Entity\MarketPartnerEmail;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Certificate\UploadService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +26,8 @@ class CertificateController extends AbstractController
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
         private CertificateService $certificateService
-    ) { }
+    ) {
+    }
 
     #[Route('/admin/certificates/decode', name: 'certificates_decode')]
     public function certificateDecode(Request $request): Response
@@ -61,7 +60,7 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
-            $this->marketPartnerEmailRepository->addCertificate(new MarketPartnerEmail(), $uploadCertificateDto, true);
+            $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
         }
 
         return $this->render(
