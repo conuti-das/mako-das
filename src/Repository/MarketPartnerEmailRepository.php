@@ -16,7 +16,7 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         parent::__construct($registry, MarketPartnerEmail::class);
     }
 
-    public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
+    public function addCertificate($uploadCertificateDto, bool $flush = false): object
     {
         $marketPartnerEmail = new MarketPartnerEmail();
 
