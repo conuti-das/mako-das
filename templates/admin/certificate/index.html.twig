@@ -15,10 +15,10 @@
     {% endblock %}
     <div class="container">
         <div class="certificate-open-modal">
-            <h1>All Certificate</h1>
+            <h1>{{ 'All Certificate'|trans }}</h1>
             <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
                     data-target="#exampleModal">
-                Add Certificate
+                {{ 'Add Certificate'|trans }}
             </button>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -32,7 +32,7 @@
                                 {{ form_start(modalCertificateForm) }}
                                 <div class="form-group partner_inp">
                                     <div class="form-group-label">
-                                        <label for="certificate_form_partnerId">{{ 'PartnerId'|trans }}</label>
+                                        <label for="certificate_form_partnerId">{{ 'Partner Id'|trans }}</label>
                                     </div>
                                     <div>
                                         {{ form_widget(modalCertificateForm.partnerId) }}
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group-label">
-                                        <label>Upload File</label>
+                                        <label>{{ 'Upload File'|trans }}</label>
                                     </div>
                                     <div>
                                         {{ form_widget(modalCertificateForm.uploadFile) }}
@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_issuerName">{{ 'IssuerName'|trans }}</label>
+                                            <label for="certificate_form_issuerName">{{ 'Issuer Name'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_issuerName"></p>
@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_issuerCountry">{{ 'issuerCountry'|trans }}</label>
+                                            <label for="certificate_form_issuerCountry">{{ 'issuer Country'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_issuerCountry"></p>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_issuerOrganisation">{{ 'issuerOrganisation'|trans }}</label>
+                                            <label for="certificate_form_issuerOrganisation">{{ 'issuer Organisation'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_issuerOrganisation"></p>
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_issuerOrganisationUnit">{{ 'issuerOrganisationUnit'|trans }}</label>
+                                            <label for="certificate_form_issuerOrganisationUnit">{{ 'issuer Organisation Unit'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_issuerOrganisationUnit"></p>
@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_serialNumber">{{ 'serialNumber'|trans }}</label>
+                                            <label for="certificate_form_serialNumber">{{ 'serial Number'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_serialNumber"></p>
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_subjectCountry">{{ 'subjectCountry'|trans }}</label>
+                                            <label for="certificate_form_subjectCountry">{{ 'subject Country'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_subjectCountry"></p>
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_subjectLocation">{{ 'subjectLocation'|trans }}</label>
+                                            <label for="certificate_form_subjectLocation">{{ 'subject Location'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_subjectLocation"></p>
@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_subjectName">{{ 'subjectName'|trans }}</label>
+                                            <label for="certificate_form_subjectName">{{ 'subject Name'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_subjectName"></p>
@@ -164,7 +164,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group-label">
-                                            <label for="certificate_form_subjectOrganisation">{{ 'subjectOrganisation'|trans }}</label>
+                                            <label for="certificate_form_subjectOrganisation">{{ 'subject Organisation'|trans }}</label>
                                         </div>
                                         <div>
                                             <p id="certificate_form_subjectOrganisation"></p>
