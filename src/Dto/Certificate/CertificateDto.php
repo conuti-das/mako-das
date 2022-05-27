@@ -213,19 +213,11 @@ class CertificateDto
         return json_encode($objectVars, JSON_THROW_ON_ERROR);
     }
 
-    /**
-     * @return string|null
-     */
     public function getCertificateFile(): ?string
     {
         return $this->certificateFile;
     }
 
-    /**
-     * @param string|null $certificateFile
-     *
-     * @return $this
-     */
     public function setCertificateFile(?string $certificateFile): self
     {
         $this->certificateFile = $certificateFile;
