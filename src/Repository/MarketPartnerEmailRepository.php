@@ -16,23 +16,25 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         parent::__construct($registry, MarketPartnerEmail::class);
     }
 
-    public function addCertificate($entity, $uploadCertificateDto, bool $flush = false)
+    public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
-        $this->getEntityManager()->persist($entity);
+        $marketPartnerEmail = new MarketPartnerEmail();
+
+        $this->getEntityManager()->persist($marketPartnerEmail);
+        $marketPartnerEmail->setMarketPartnerId($uploadCertificateDto->getPartnerId());
+        $marketPartnerEmail->setCreatedAt(new DateTime('now'));
+        $marketPartnerEmail->setEmail($uploadCertificateDto->getEmailAddress());
+        $marketPartnerEmail->setType($marketPartnerEmail::TYPE_EDIFACT);
+        $marketPartnerEmail->setSslCertificate($uploadCertificateDto->getCertificateFile());
+        $marketPartnerEmail->setSslCertificateExpiration($uploadCertificateDto->getValidUntil());
+        $marketPartnerEmail->setActiveFrom($uploadCertificateDto->getValidUntil());
+        $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidFrom());
 
         if ($flush) {
-            $entity->setMarketPartnerId($uploadCertificateDto->getPartnerId());
-            $entity->setCreatedAt(new DateTime('now'));
-            $entity->setEmail($uploadCertificateDto->getEmailAddress());
-            $entity->setType($entity::TYPE_EDIFACT);
-            $entity->setSslCertificate($uploadCertificateDto->getCertificateFile());
-            $entity->setSslCertificateExpiration($uploadCertificateDto->getValidUntil());
-            $entity->setActiveFrom($uploadCertificateDto->getValidUntil());
-            $entity->setActiveUntil($uploadCertificateDto->getValidFrom());
             $this->getEntityManager()->flush();
-
-            return $entity;
         }
+
+        return $marketPartnerEmail;
     }
 
     public function remove(MarketPartnerEmail $entity, bool $flush = false): void
