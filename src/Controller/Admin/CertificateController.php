@@ -33,13 +33,13 @@ class CertificateController extends AbstractController
     public function certificateDecode(Request $request): Response
     {
         $certificateFile = $request->files->get('file');
-        $certificateJson = $this->uploadService->upload($certificateFile, $this->getParameter('certificate_directory'));
+        $certificateJson = $this->uploadService->upload($certificateFile, $this->getParameter('certificateDirectory'));
         $certificateService = $this->certificateService->decode($certificateJson);
 
         return new Response(
             $certificateService->toJson(),
             Response::HTTP_OK,
-            array('Content-Type' => 'text/html')
+            array('Content-Type' => 'application/json')
         );
     }
 
