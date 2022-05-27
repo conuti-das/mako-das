@@ -37,11 +37,6 @@ class UploadService
         }
     }
 
-    /**
-     * @param string $originalName
-     *
-     * @return string
-     */
     public function generateName(string $originalName): string
     {
         return uniqid() . '-' . $originalName;
