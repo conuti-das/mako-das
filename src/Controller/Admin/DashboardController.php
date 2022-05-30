@@ -41,9 +41,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
     }
 
-    /**
-     * @return Assets
-     */
     public function configureAssets(): Assets
     {
         return Assets::new()
