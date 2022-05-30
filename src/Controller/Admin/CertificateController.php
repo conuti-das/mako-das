@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Dto\Certificate\UploadCertificateDto;
+use App\Entity\MarketPartnerEmail;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Certificate\UploadService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +21,7 @@ class CertificateController extends AbstractController
 {
 
     public function __construct(
+        private EntityManagerInterface $entityManager,
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
         private CertificateService $certificateService
@@ -42,6 +45,8 @@ class CertificateController extends AbstractController
     #[Route('/admin/certificate/all', name: 'certificate-all')]
     public function certificate(Request $request): Response
     {
+        $marketPartnerEmail = $this->entityManager->getRepository(MarketPartnerEmail::class)->findAll();
+
         $modalCertificateForm = $this->createForm(CertificateFormType::class);
         $modalCertificateForm->handleRequest($request);
 
@@ -62,7 +67,8 @@ class CertificateController extends AbstractController
         return $this->render(
             'admin/certificate/index.html.twig',
             [
-                'modalCertificateForm' => $modalCertificateForm->createView()
+                'modalCertificateForm' => $modalCertificateForm->createView(),
+                'marketPartnerEmails' => $marketPartnerEmail,
             ]
         );
     }
