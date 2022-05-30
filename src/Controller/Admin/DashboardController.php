@@ -44,7 +44,9 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js");
+            ->addCssFile('https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css')
+            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+            ->addJsFile('https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js');
     }
 
     #[Route('/admin/user/list', name: 'admin_user_list')]
