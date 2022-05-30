@@ -71,6 +71,12 @@ doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 doctrine-schema-update: ## Run doctrine:schema:update
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
 
+doctrine-migrations-migrate: ## Run doctrine:migrations:migrate
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev
+
+migration: ## Make migration
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=dev
+
 doctrine-schema-update-test: ## Run doctrine:schema:update --env=test
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=test --force
 
