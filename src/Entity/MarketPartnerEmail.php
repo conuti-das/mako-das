@@ -44,6 +44,10 @@ class MarketPartnerEmail
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTimeInterface $activeUntil;
 
+    #[ORM\ManyToOne(targetEntity: MarketPartner::class, inversedBy: 'marketPartnerEmails')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $marketPartner;
+
     public function getId(): int
     {
         return $this->id;
@@ -148,6 +152,18 @@ class MarketPartnerEmail
     public function setActiveUntil(?DateTimeInterface $activeUntil): self
     {
         $this->activeUntil = $activeUntil;
+
+        return $this;
+    }
+
+    public function getMarketPartner(): ?MarketPartner
+    {
+        return $this->marketPartner;
+    }
+
+    public function setMarketPartner(?MarketPartner $marketPartner): self
+    {
+        $this->marketPartner = $marketPartner;
 
         return $this;
     }
