@@ -16,6 +16,7 @@ class CertificateService
 {
     /**
      * @param string $certificate
+     *
      * @return CertificateDto
      * @throws CertificateEmptyException
      * @throws CertificateParseException
@@ -58,6 +59,7 @@ class CertificateService
         $certificateDto->setIssuerOrganisation($decodedCertificateData['issuer']['O']);
         $certificateDto->setIssuerOrganisationUnit($decodedCertificateData['issuer']['OU']);
         $certificateDto->setIssuerCountry($decodedCertificateData['issuer']['C']);
+        $certificateDto->setCertificateFile($certificate);
         $certificateDto->setValidFrom((new DateTime)->setTimestamp((int)$decodedCertificateData['validFrom_time_t']));
         $certificateDto->setValidUntil((new DateTime)->setTimestamp((int)$decodedCertificateData['validTo_time_t']));
 

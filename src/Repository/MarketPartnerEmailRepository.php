@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\MarketPartnerEmail;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,13 +16,25 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         parent::__construct($registry, MarketPartnerEmail::class);
     }
 
-    public function add(MarketPartnerEmail $entity, bool $flush = false): void
+    public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
-        $this->getEntityManager()->persist($entity);
+        $marketPartnerEmail = new MarketPartnerEmail();
+
+        $this->getEntityManager()->persist($marketPartnerEmail);
+        $marketPartnerEmail->setMarketPartnerId($uploadCertificateDto->getPartnerId());
+        $marketPartnerEmail->setCreatedAt(new DateTime('now'));
+        $marketPartnerEmail->setEmail($uploadCertificateDto->getEmailAddress());
+        $marketPartnerEmail->setType($marketPartnerEmail::TYPE_EDIFACT);
+        $marketPartnerEmail->setSslCertificate($uploadCertificateDto->getCertificateFile());
+        $marketPartnerEmail->setSslCertificateExpiration($uploadCertificateDto->getValidUntil());
+        $marketPartnerEmail->setActiveFrom($uploadCertificateDto->getValidUntil());
+        $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidFrom());
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+
+        return $marketPartnerEmail;
     }
 
     public function remove(MarketPartnerEmail $entity, bool $flush = false): void

@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -40,10 +41,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
     }
 
-    #[Route('/admin/certificate/all', name: 'certificate-all')]
-    public function certificate(): Response
+    public function configureAssets(): Assets
     {
-        return $this->render('admin/certificate/index.html.twig');
+        return Assets::new()
+            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js");
     }
 
     #[Route('/admin/user/list', name: 'admin_user_list')]
