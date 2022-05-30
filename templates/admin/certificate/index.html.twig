@@ -14,177 +14,217 @@
 
     {% endblock %}
     <div class="container">
-        <div class="certificate-open-modal">
-            <h1>{{ 'All Certificate'|trans }}</h1>
-            <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
-                    data-target="#exampleModal">
-                {{ 'Add Certificate'|trans }}
-            </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="upload-certificate">
-                                <h1>{{ 'Uploading Certificate'|trans }}</h1>
-                            </div>
-                            <div>
-                                {{ form_start(modalCertificateForm) }}
-                                <div class="form-group partner_inp">
-                                    <div class="form-group-label">
-                                        <label for="certificate_form_partnerId">{{ 'Partner Id'|trans }}</label>
-                                    </div>
-                                    <div>
-                                        {{ form_widget(modalCertificateForm.partnerId) }}
-                                    </div>
+        <div class="certificateModal-parents">
+            <div class="certificate-open-modal">
+                <h1>{{ 'All Certificate'|trans }}</h1>
+                <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
+                        data-target="#exampleModal">
+                    {{ 'Add Certificate'|trans }}
+                </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="upload-certificate">
+                                    <h1>{{ 'Uploading Certificate'|trans }}</h1>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-group-label">
-                                        <label>{{ 'Upload File'|trans }}</label>
+                                <div>
+                                    {{ form_start(modalCertificateForm) }}
+                                    <div class="form-group partner_inp">
+                                        <div class="form-group-label">
+                                            <label for="certificate_form_partnerId">{{ 'Partner Id'|trans }}</label>
+                                        </div>
+                                        <div>
+                                            {{ form_widget(modalCertificateForm.partnerId) }}
+                                        </div>
                                     </div>
-                                    <div>
-                                        {{ form_widget(modalCertificateForm.uploadFile) }}
+                                    <div class="form-group">
+                                        <div class="form-group-label">
+                                            <label>{{ 'Upload File'|trans }}</label>
+                                        </div>
+                                        <div>
+                                            {{ form_widget(modalCertificateForm.uploadFile) }}
+                                        </div>
                                     </div>
+                                    <div class="form-group-hide">
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_isActive">{{ 'Active'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_isActive"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_validFrom">{{ 'Active From'|trans }}</label>
+                                            </div>
+                                            <div class="form-group-date">
+                                                <p id="certificate_form_validFrom_hidden"></p>
+                                                {{ form_widget(modalCertificateForm.validFrom) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_validUntil">{{ 'Active Until'|trans }}</label>
+                                            </div>
+                                            <div class="form-group-date">
+                                                <p id="certificate_form_validUntil_hidden"></p>
+                                                {{ form_widget(modalCertificateForm.validUntil) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_issuerName">{{ 'Issuer Name'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_issuerName"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_name">{{ 'Name'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_name"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_email">{{ 'Email'|trans }}</label>
+                                            </div>
+                                            <div class="form-group-date">
+                                                <p id="certificate_form_email_hidden"></p>
+                                                {{ form_widget(modalCertificateForm.email) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_hash">{{ 'Hash'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_hash"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_issuerCountry">{{ 'Issuer Country'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_issuerCountry"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_issuerOrganisation">{{ 'Issuer Organisation'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_issuerOrganisation"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_issuerOrganisationUnit">{{ 'Issuer Organisation Unit'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_issuerOrganisationUnit"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_serialNumber">{{ 'Serial Number'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_serialNumber"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_subjectCountry">{{ 'Subject Country'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_subjectCountry"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_subjectLocation">{{ 'Subject Location'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_subjectLocation"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_subjectName">{{ 'Subject Name'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_subjectName"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group-label">
+                                                <label for="certificate_form_subjectOrganisation">{{ 'Subject Organisation'|trans }}</label>
+                                            </div>
+                                            <div>
+                                                <p id="certificate_form_subjectOrganisation"></p>
+                                            </div>
+                                        </div>
+                                        {{ form_widget(modalCertificateForm.certificateFile) }}
+                                    </div>
+                                    <div class="modal-footer-btn">
+                                        <button type="submit" id="save-disable" disabled class="btn btn-success">{{ 'Save'|trans }}
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" id="cancel-upload"
+                                                data-dismiss="modal">{{ 'Cancel'|trans }}
+                                        </button>
+                                    </div>
+                                    {{ form_end(modalCertificateForm) }}
                                 </div>
-                                <div class="form-group-hide">
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_isActive">{{ 'Active'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_isActive"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_validFrom">{{ 'Active From'|trans }}</label>
-                                        </div>
-                                        <div class="form-group-date">
-                                            <p id="certificate_form_validFrom_hidden"></p>
-                                            {{ form_widget(modalCertificateForm.validFrom) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_validUntil">{{ 'Active Until'|trans }}</label>
-                                        </div>
-                                        <div class="form-group-date">
-                                            <p id="certificate_form_validUntil_hidden"></p>
-                                            {{ form_widget(modalCertificateForm.validUntil) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_issuerName">{{ 'Issuer Name'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_issuerName"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_name">{{ 'Name'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_name"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_email">{{ 'Email'|trans }}</label>
-                                        </div>
-                                        <div class="form-group-date">
-                                            <p id="certificate_form_email_hidden"></p>
-                                            {{ form_widget(modalCertificateForm.email) }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_hash">{{ 'Hash'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_hash"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_issuerCountry">{{ 'issuer Country'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_issuerCountry"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_issuerOrganisation">{{ 'issuer Organisation'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_issuerOrganisation"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_issuerOrganisationUnit">{{ 'issuer Organisation Unit'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_issuerOrganisationUnit"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_serialNumber">{{ 'serial Number'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_serialNumber"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_subjectCountry">{{ 'subject Country'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_subjectCountry"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_subjectLocation">{{ 'subject Location'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_subjectLocation"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_subjectName">{{ 'subject Name'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_subjectName"></p>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group-label">
-                                            <label for="certificate_form_subjectOrganisation">{{ 'subject Organisation'|trans }}</label>
-                                        </div>
-                                        <div>
-                                            <p id="certificate_form_subjectOrganisation"></p>
-                                        </div>
-                                    </div>
-                                    {{ form_widget(modalCertificateForm.certificateFile) }}
-                                </div>
-                                <div class="modal-footer-btn">
-                                    <button type="submit" id="save-disable" disabled class="btn btn-success">{{ 'Save'|trans }}
-                                    </button>
-                                    <button type="button" class="btn btn-secondary" id="cancel-upload"
-                                            data-dismiss="modal">{{ 'Cancel'|trans }}
-                                    </button>
-                                </div>
-                                {{ form_end(modalCertificateForm) }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="certificate-dataTable">
+            <table id="table_id" class="display">
+                <thead>
+                <tr>
+                    <th>{{ 'Partner Id'|trans }}</th>
+                    <th>{{ 'Email'|trans }}</th>
+                    <th>{{ 'Type'|trans }}</th>
+                    <th>{{ 'Certificate Expiration'|trans }}</th>
+                    <th>{{ 'Valid From'|trans }}</th>
+                    <th>{{ 'Valid Until'|trans }}</th>
+                    <th>{{ 'Organization'|trans }}</th>
+                    <th>{{ 'Type MarketPartner'|trans }}</th>
+                    <th>{{ 'Energy'|trans }}</th>
+                    <th>{{ 'Active'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for marketPartnerEmail in marketPartnerEmails %}
+                    <tr>
+                        <td>{{ marketPartnerEmail.marketPartnerId }}</td>
+                        <td>{{ marketPartnerEmail.email }}</td>
+                        <td>{{ marketPartnerEmail.type }}</td>
+                        <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
+                        <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
+                        <td>{{ marketPartnerEmail.activeFrom|date('Y-m-d') }}</td>
+                        <td>{{ marketPartnerEmail.marketPartner.organization }}</td>
+                        <td>{{ marketPartnerEmail.marketPartner.type }}</td>
+                        <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
+                        {% if(marketPartnerEmail.activeUntil|date('Y-m-d') < marketPartnerEmail.activeFrom|date('Y-m-d')) %}
+                            <td style="color: green">{{ 'Active'|trans }}</td>
+                        {% else %}
+                            <td style="color: red">{{ 'In Active'|trans }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     {% block javascripts %}
