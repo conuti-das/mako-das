@@ -17,11 +17,7 @@ use DateTime;
 
 class CertificateController extends AbstractController
 {
-    /**
-     * @param MarketPartnerEmailRepository $marketPartnerEmailRepository
-     * @param UploadService $uploadService
-     * @param CertificateService $certificateService
-     */
+
     public function __construct(
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
