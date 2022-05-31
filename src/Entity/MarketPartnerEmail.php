@@ -4,11 +4,31 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use App\Api\Dto\MarketPartnerEmail\MarketPartnerEmailAllResponse;
 use App\Repository\MarketPartnerEmailRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    collectionOperations: [
+        'market_partners_email' => [
+            'method' => 'GET',
+            'path'=>'/market-partners-email',
+            'output' => MarketPartnerEmailAllResponse::class,
+            'normalization_context' => ['groups' => ['market-partners-email-all:read']],
+        ],
+    ],
+    itemOperations: [
+        'market_partners_email_single' => [
+            'method' => 'GET',
+            'path'=>'/market-partners-email',
+        ],
+    ],
+)]
+#[ApiFilter(DateFilter::class, properties: ['updatedAt'])]
 #[ORM\Entity(repositoryClass: MarketPartnerEmailRepository::class)]
 class MarketPartnerEmail
 {
@@ -25,6 +45,9 @@ class MarketPartnerEmail
 
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private DateTimeInterface $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $email;
@@ -76,6 +99,18 @@ class MarketPartnerEmail
     public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
