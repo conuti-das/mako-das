@@ -17,9 +17,11 @@ class CertificateServiceTest extends Unit
 {
     protected UnitTester $tester;
     private string $certificate;
+    private CertificateService $certificateService;
 
     protected function _before(): void
     {
+        $this->certificateService = $this->tester->grabService(CertificateService::class);
         $this->certificate = file_get_contents(codecept_data_dir() . 'Certificate/9911620000000.cer');
     }
 
@@ -28,8 +30,7 @@ class CertificateServiceTest extends Unit
      */
     public function testDecodeCertificate(): void
     {
-        $certificateService = new CertificateService();
-        $certificateDto = $certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificate);
 
         $this->tester->assertEquals(
             '/emailAddress=bes_vertrieb@bigge-energie.de/CN=bes_vertrieb/O=BIGGE Energie GmbH & Co. KG/L=Attendorn/C=DE',
@@ -53,9 +54,7 @@ class CertificateServiceTest extends Unit
     public function testCertificateIsActive(): void
     {
         $nowDate = new DateTime('now');
-
-        $certificateService = new CertificateService();
-        $certificateDto = $certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificate);
 
         // modify the dates: 1
         $newActiveFrom = clone $nowDate;
@@ -88,9 +87,7 @@ class CertificateServiceTest extends Unit
     public function testJsonRepresentation(): void
     {
         $nowDate = new DateTime('2022-05-18 14:55:55');
-
-        $certificateService = new CertificateService();
-        $certificateDto = $certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificate);
 
         // modify the dates to be active everytime
         $newActiveFrom = clone $nowDate;
@@ -112,8 +109,7 @@ class CertificateServiceTest extends Unit
     {
         $this->expectException(CertificateEmptyException::class);
 
-        $certificateService = new CertificateService();
-        $certificateService->decode('');
+        $this->certificateService->decode('');
     }
 
     /**
@@ -124,7 +120,6 @@ class CertificateServiceTest extends Unit
     {
         $this->expectException(CertificateReadException::class);
 
-        $certificateService = new CertificateService();
-        $certificateService->decode('---------');
+        $this->certificateService->decode('---------');
     }
 }
