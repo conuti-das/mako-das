@@ -19,8 +19,6 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
     public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
         $marketPartnerEmail = new MarketPartnerEmail();
-
-        $this->getEntityManager()->persist($marketPartnerEmail);
         $marketPartnerEmail->setMarketPartnerId($uploadCertificateDto->getPartnerId());
         $marketPartnerEmail->setCreatedAt(new DateTime('now'));
         $marketPartnerEmail->setEmail($uploadCertificateDto->getEmailAddress());
@@ -30,6 +28,7 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         $marketPartnerEmail->setActiveFrom($uploadCertificateDto->getValidUntil());
         $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidFrom());
 
+        $this->getEntityManager()->persist($marketPartnerEmail);
         if ($flush) {
             $this->getEntityManager()->flush();
         }
