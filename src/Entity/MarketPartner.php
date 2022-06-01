@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Api\Dto\MarketPartner\MarketPartnerAllResponse;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use App\Repository\MarketPartnerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -124,6 +126,14 @@ class MarketPartner
 
     #[ORM\Column(type: 'integer', length: 1)]
     private int $usingTumCatalog;
+
+    #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
+    private $marketPartnerEmails;
+
+    public function __construct()
+    {
+        $this->marketPartnerEmails = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -438,6 +448,32 @@ class MarketPartner
     public function setUsingTumCatalog(int $usingTumCatalog): self
     {
         $this->usingTumCatalog = $usingTumCatalog;
+
+        return $this;
+    }
+
+    public function getMarketPartnerEmails(): Collection
+    {
+        return $this->marketPartnerEmails;
+    }
+
+    public function addMarketPartnerEmail(MarketPartnerEmail $marketPartnerEmail): self
+    {
+        if (!$this->marketPartnerEmails->contains($marketPartnerEmail)) {
+            $this->marketPartnerEmails[] = $marketPartnerEmail;
+            $marketPartnerEmail->setMarketPartner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPartnerEmail(MarketPartnerEmail $marketPartnerEmail): self
+    {
+        if ($this->marketPartnerEmails->removeElement($marketPartnerEmail)) {
+            if ($marketPartnerEmail->getMarketPartner() === $this) {
+                $marketPartnerEmail->setMarketPartner(null);
+            }
+        }
 
         return $this;
     }
