@@ -24,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
     itemOperations: [
         'market_partners_email_single' => [
             'method' => 'GET',
-            'path'=>'/market-partners-email',
+            'path'=>'/market-partners-email/{id}',
         ],
     ],
 )]
