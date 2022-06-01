@@ -9,7 +9,9 @@ use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Certificate\UploadService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,6 @@ use DateTime;
 
 class CertificateController extends AbstractController
 {
-
     public function __construct(
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
@@ -28,18 +29,25 @@ class CertificateController extends AbstractController
     #[Route('/admin/certificates/decode', name: 'certificates_decode')]
     public function certificateDecode(Request $request): Response
     {
-        $certificateFile = $request->files->get('file');
-        $certificateJson = $this->uploadService->upload($certificateFile, $this->getParameter('certificateDirectory'));
-        $certificateService = $this->certificateService->decode($certificateJson);
+        try {
+            $certificateFile = $request->files->get('file');
+            $certificateData = $this->uploadService->upload(
+                $certificateFile,
+                $this->getParameter('certificateDirectory')
+            );
+            $certificateDto = $this->certificateService->decode($certificateData);
 
-        return new Response(
-            $certificateService->toJson(),
-            Response::HTTP_OK,
-            array('Content-Type' => 'application/json')
-        );
+            return new JsonResponse(
+                $certificateDto->toArray()
+            );
+        } catch (Exception $exception) {
+            return new JsonResponse(
+                ['errorMessage' => $exception->getMessage()]
+            );
+        }
     }
 
-    #[Route('/admin/certificate/all', name: 'certificate-all')]
+    #[Route('/admin/certificates/all', name: 'certificates_all')]
     public function certificate(Request $request): Response
     {
         $marketPartnerEmail = $this->marketPartnerEmailRepository->findAll();
@@ -49,15 +57,17 @@ class CertificateController extends AbstractController
 
         if ($modalCertificateForm->isSubmitted() && $modalCertificateForm->isValid()) {
             $certificateForm = $request->request->get('certificate_form');
-            $uploadCertificateDto = new UploadCertificateDto();
             $partnerId = (int)$certificateForm['partnerId'];
             $activeFrom = new DateTime($certificateForm['validFrom']);
             $activeUntil = new DateTime($certificateForm['validUntil']);
+
+            $uploadCertificateDto = new UploadCertificateDto();
             $uploadCertificateDto->setPartnerId($partnerId);
             $uploadCertificateDto->setEmailAddress($certificateForm['email']);
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
+
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
         }
 
