@@ -14,6 +14,10 @@ use OpenSSLCertificate;
 
 class CertificateService
 {
+    public function __construct(private CertificateConverter $certificateConverter)
+    {
+    }
+
     /**
      * @param string $certificate
      *
