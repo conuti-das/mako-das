@@ -14,7 +14,7 @@ class MarketPartnerEmailAllOutputDataTransformer implements DataTransformerInter
     {
         /** @var MarketPartnerEmail $object */
         $mp = new MarketPartnerEmailAllResponse();
-        $mp->marketPartnerId = $object->getMarketPartnerId();
+        $mp->marketPartner = $object->getMarketPartner();
         $mp->email = $object->getEmail();
         $mp->type = $object->getType();
         $mp->sslCertificate = $object->getSslCertificate();
