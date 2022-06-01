@@ -16,21 +16,23 @@ use JsonException;
 class CertificateServiceTest extends Unit
 {
     protected UnitTester $tester;
-    private string $certificate;
+    private string $certificatePEM;
+    private string $certificateDER;
     private CertificateService $certificateService;
 
     protected function _before(): void
     {
         $this->certificateService = $this->tester->grabService(CertificateService::class);
-        $this->certificate = file_get_contents(codecept_data_dir() . 'Certificate/9911620000000.cer');
+        $this->certificatePEM = file_get_contents(codecept_data_dir() . 'Certificate/9911620000000.cer.pem');
+        $this->certificateDER = file_get_contents(codecept_data_dir() . 'Certificate/4033872000010.cer.der');
     }
 
     /**
      * @covers \App\Service\Certificate\CertificateService::decode
      */
-    public function testDecodeCertificate(): void
+    public function testDecodePEMCertificate(): void
     {
-        $certificateDto = $this->certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificatePEM);
 
         $this->tester->assertEquals(
             '/emailAddress=bes_vertrieb@bigge-energie.de/CN=bes_vertrieb/O=BIGGE Energie GmbH & Co. KG/L=Attendorn/C=DE',
@@ -51,10 +53,36 @@ class CertificateServiceTest extends Unit
         $this->tester->assertEquals('2025-04-13 14:32:45', $certificateDto->getValidUntil()->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * @covers \App\Service\Certificate\CertificateService::decode
+     */
+    public function testDecodeDERCertificate(): void
+    {
+        $certificateDto = $this->certificateService->decode($this->certificateDER);
+
+        $this->tester->assertEquals(
+            '/emailAddress=vnb@tennet.biz/C=DE/ST=Bayern/L=Bayreuth/O=TenneT TSO GmbH/SN=tennet.biz/GN=vnb/CN=vnb',
+            $certificateDto->getName()
+        );
+        $this->tester->assertEquals('70efd0c3', $certificateDto->getHash());
+        $this->tester->assertEquals('0x2AF01FD8F9508EC2EAAEEDA33B85CFFB28E590C5', $certificateDto->getSerialNumber());
+        $this->tester->assertEquals('vnb@tennet.biz', $certificateDto->getEmailAddress());
+        $this->tester->assertEquals('vnb', $certificateDto->getSubjectName());
+        $this->tester->assertEquals('TenneT TSO GmbH', $certificateDto->getSubjectOrganisation());
+        $this->tester->assertEquals('Bayreuth', $certificateDto->getSubjectLocation());
+        $this->tester->assertEquals('DE', $certificateDto->getSubjectCountry());
+        $this->tester->assertEquals('QuoVadis Europe Advanced CA G2', $certificateDto->getIssuerName());
+        $this->tester->assertEquals('QuoVadis Trustlink Deutschland GmbH', $certificateDto->getIssuerOrganisation());
+        $this->tester->assertEquals(null, $certificateDto->getIssuerOrganisationUnit());
+        $this->tester->assertEquals('DE', $certificateDto->getIssuerCountry());
+        $this->tester->assertEquals('2020-09-16 09:42:14', $certificateDto->getValidFrom()->format('Y-m-d H:i:s'));
+        $this->tester->assertEquals('2023-03-20 00:00:00', $certificateDto->getValidUntil()->format('Y-m-d H:i:s'));
+    }
+
     public function testCertificateIsActive(): void
     {
         $nowDate = new DateTime('now');
-        $certificateDto = $this->certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificatePEM);
 
         // modify the dates: 1
         $newActiveFrom = clone $nowDate;
@@ -87,7 +115,7 @@ class CertificateServiceTest extends Unit
     public function testJsonRepresentation(): void
     {
         $nowDate = new DateTime('2022-05-18 14:55:55');
-        $certificateDto = $this->certificateService->decode($this->certificate);
+        $certificateDto = $this->certificateService->decode($this->certificatePEM);
 
         // modify the dates to be active everytime
         $newActiveFrom = clone $nowDate;

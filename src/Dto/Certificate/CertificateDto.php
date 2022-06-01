@@ -22,7 +22,7 @@ class CertificateDto
     private string $subjectCountry;
     private string $issuerName;
     private string $issuerOrganisation;
-    private string $issuerOrganisationUnit;
+    private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
     private ?string $certificateFile = null;
 
@@ -170,12 +170,12 @@ class CertificateDto
         return $this;
     }
 
-    public function getIssuerOrganisationUnit(): string
+    public function getIssuerOrganisationUnit(): ?string
     {
         return $this->issuerOrganisationUnit;
     }
 
-    public function setIssuerOrganisationUnit(string $issuerOrganisationUnit): self
+    public function setIssuerOrganisationUnit(?string $issuerOrganisationUnit): self
     {
         $this->issuerOrganisationUnit = $issuerOrganisationUnit;
 
