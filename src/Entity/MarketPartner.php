@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use App\Repository\MarketPartnerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -68,6 +69,7 @@ class MarketPartner
     private string $energy;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(["market-partners-email-all:read"])]
     private string $partnerId;
 
     #[ORM\Column(type: 'string', nullable: true)]
