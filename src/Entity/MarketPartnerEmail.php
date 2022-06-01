@@ -11,6 +11,7 @@ use App\Api\Dto\MarketPartnerEmail\MarketPartnerEmailAllResponse;
 use App\Repository\MarketPartnerEmailRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -25,6 +26,8 @@ use Doctrine\ORM\Mapping as ORM;
         'market_partners_email_single' => [
             'method' => 'GET',
             'path'=>'/market-partners-email/{id}',
+            'output' => MarketPartnerEmailAllResponse::class,
+            'normalization_context' => ['groups' => ['market-partners-email-all:read']],
         ],
     ],
 )]
@@ -69,7 +72,8 @@ class MarketPartnerEmail
 
     #[ORM\ManyToOne(targetEntity: MarketPartner::class, inversedBy: 'marketPartnerEmails')]
     #[ORM\JoinColumn(nullable: false)]
-    private $marketPartner;
+    #[Groups(["market-partners-all:read"])]
+    private MarketPartner $marketPartner;
 
     public function getId(): int
     {
