@@ -6,11 +6,12 @@ namespace App\Api\Dto\MarketPartnerEmail;
 
 use DateTimeInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use App\Entity\MarketPartner;
 
 class MarketPartnerEmailAllResponse
 {
     #[Groups(["market-partners-email-all:read"])]
-    public int $marketPartnerId;
+    public MarketPartner $marketPartner;
 
     #[Groups(["market-partners-email-all:read"])]
     public string $email;
