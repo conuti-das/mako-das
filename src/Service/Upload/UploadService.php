@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Certificate;
+namespace App\Service\Upload;
 
 use App\Exception\Certificate\CertificateUploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

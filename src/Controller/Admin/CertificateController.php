@@ -8,7 +8,7 @@ use App\Dto\Certificate\UploadCertificateDto;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
 use App\Service\Certificate\CertificateService;
-use App\Service\Certificate\UploadService;
+use App\Service\Upload\UploadService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
