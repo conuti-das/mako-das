@@ -7,7 +7,7 @@ parameters:
     certificateDirectory: '%kernel.project_dir%/public/uploads/certificate'
 
 services:
-    App\Service\Certificate\UploadService:
+    App\Service\Upload\UploadService:
         arguments:
             $targetDirectory: '%certificateDirectory%'
     # default configuration for services in *this* file

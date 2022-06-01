@@ -22,7 +22,7 @@ class CertificateDto
     private string $subjectCountry;
     private string $issuerName;
     private string $issuerOrganisation;
-    private string $issuerOrganisationUnit;
+    private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
     private ?string $certificateFile = null;
 
@@ -170,12 +170,12 @@ class CertificateDto
         return $this;
     }
 
-    public function getIssuerOrganisationUnit(): string
+    public function getIssuerOrganisationUnit(): ?string
     {
         return $this->issuerOrganisationUnit;
     }
 
-    public function setIssuerOrganisationUnit(string $issuerOrganisationUnit): self
+    public function setIssuerOrganisationUnit(?string $issuerOrganisationUnit): self
     {
         $this->issuerOrganisationUnit = $issuerOrganisationUnit;
 
@@ -201,16 +201,21 @@ class CertificateDto
         return $this->getValidFrom() <= $nowDate && $this->getValidUntil() >= $nowDate;
     }
 
+    public function toArray(): array
+    {
+        $objectVars = get_object_vars($this);
+        $objectVars['isActive'] = $this->isActive();
+
+        return $objectVars;
+    }
+
     /**
      * @return string
      * @throws JsonException
      */
     public function toJson(): string
     {
-        $objectVars = get_object_vars($this);
-        $objectVars['isActive'] = $this->isActive();
-
-        return json_encode($objectVars, JSON_THROW_ON_ERROR);
+        return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }
 
     public function getCertificateFile(): ?string
