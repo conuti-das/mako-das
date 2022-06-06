@@ -130,13 +130,9 @@ class MarketPartner
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
     private $marketPartnerEmails;
 
-    #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerImportLog::class)]
-    private $marketPartnerImportLogs;
-
     public function __construct()
     {
         $this->marketPartnerEmails = new ArrayCollection();
-        $this->marketPartnerImportLogs = new ArrayCollection();
     }
 
     public function getId(): int
@@ -476,32 +472,6 @@ class MarketPartner
         if ($this->marketPartnerEmails->removeElement($marketPartnerEmail)) {
             if ($marketPartnerEmail->getMarketPartner() === $this) {
                 $marketPartnerEmail->setMarketPartner(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getMarketPartnerImportLogs(): Collection
-    {
-        return $this->marketPartnerImportLogs;
-    }
-
-    public function addMarketPartnerImportLog(MarketPartnerImportLog $marketPartnerImportLog): self
-    {
-        if (!$this->marketPartnerImportLogs->contains($marketPartnerImportLog)) {
-            $this->marketPartnerImportLogs[] = $marketPartnerImportLog;
-            $marketPartnerImportLog->setMarketPartner($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMarketPartnerImportLog(MarketPartnerImportLog $marketPartnerImportLog): self
-    {
-        if ($this->marketPartnerImportLogs->removeElement($marketPartnerImportLog)) {
-            if ($marketPartnerImportLog->getMarketPartner() === $this) {
-                $marketPartnerImportLog->setMarketPartner(null);
             }
         }
 
