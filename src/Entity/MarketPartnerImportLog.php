@@ -11,35 +11,38 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MarketPartnerImportLogRepository::class)]
 class MarketPartnerImportLog
 {
+    const STATUS_DONE = "done";
+    const STATUS_FAILED = "failed";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private int $status;
+    #[ORM\Column(type: 'string', nullable: false)]
+    private string $status;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private string $message;
+    private ?string $message;
 
-    #[ORM\Column(type: 'date', nullable: true)]
+    #[ORM\Column(type: 'date', nullable: false)]
     private DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: MarketPartner::class, inversedBy: 'marketPartnerImportLogs')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $marketPartner;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?MarketPartner $marketPartner;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    public function setStatus(?int $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 
@@ -58,12 +61,12 @@ class MarketPartnerImportLog
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
