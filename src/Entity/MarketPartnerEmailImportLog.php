@@ -9,63 +9,60 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MarketPartnerEmailImportLogRepository::class)]
 class MarketPartnerEmailImportLog
 {
+    const STATUS_DONE = "done";
+    const STATUS_FAILED = "failed";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'integer')]
-    private int $status;
+    #[ORM\Column(type: 'string')]
+    private string $status;
 
-    #[ORM\Column(type: 'text')]
-    private string $message;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $message;
 
-    #[ORM\Column(type: 'date', nullable: true)]
+    #[ORM\Column(type: 'date')]
     private DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: MarketPartnerEmail::class, inversedBy: 'marketPartnerEmailImportLogs')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $marketPartnerEmail;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?MarketPartnerEmail $marketPartnerEmail;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): string
     {
         return $this->status;
     }
 
-    public function setStatus(int $status): self
+    public function setStatus(string $status): void
     {
         $this->status = $status;
-
-        return $this;
     }
 
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function setMessage($message): self
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
-
-        return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getMarketPartnerEmail(): ?MarketPartnerEmail
@@ -73,10 +70,8 @@ class MarketPartnerEmailImportLog
         return $this->marketPartnerEmail;
     }
 
-    public function setMarketPartnerEmail(?MarketPartnerEmail $marketPartnerEmail): self
+    public function setMarketPartnerEmail(?MarketPartnerEmail $marketPartnerEmail): void
     {
         $this->marketPartnerEmail = $marketPartnerEmail;
-
-        return $this;
     }
 }
