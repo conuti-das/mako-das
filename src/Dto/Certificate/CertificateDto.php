@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto\Certificate;
 
+use App\Entity\MarketPartner;
 use DateTime;
 use DateTimeInterface;
 use JsonException;
@@ -25,6 +26,8 @@ class CertificateDto
     private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
     private ?string $certificateFile = null;
+    private ?MarketPartner $marketPartner = null;
+    private int $marketPartnerId;
 
     public function getName(): string
     {
@@ -228,5 +231,27 @@ class CertificateDto
         $this->certificateFile = $certificateFile;
 
         return $this;
+    }
+
+
+    public function setMarketPartner(MarketPartner $marketPartner): void
+    {
+        $this->marketPartner = $marketPartner;
+    }
+
+
+    public function getMarketPartner(): MarketPartner
+    {
+        return $this->marketPartner;
+    }
+
+    public function setPartnerId(int $marketPartnerId): void
+    {
+        $this->marketPartnerId = $marketPartnerId;
+    }
+
+    public function getPartnerId(): int
+    {
+        return $this->marketPartnerId;
     }
 }
