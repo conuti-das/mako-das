@@ -24,6 +24,16 @@ class MarketPartnerRepository extends ServiceEntityRepository
         }
     }
 
+    public function getById(int $id): ?MarketPartner
+    {
+        $data =  $this->getEntityManager()->find(MarketPartner::class, $id);
+        if ($data instanceof MarketPartner) {
+            return $data;
+        }
+
+        return null;
+    }
+
     public function remove(MarketPartner $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
