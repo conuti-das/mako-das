@@ -71,17 +71,32 @@ doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 doctrine-schema-update: ## Run doctrine:schema:update
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
 
-doctrine-migrations-migrate: ## Run doctrine:migrations:migrate
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev
-
-migration: ## Make migration
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=dev
-
 doctrine-schema-update-test: ## Run doctrine:schema:update --env=test
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=test --force
 
 doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without the database
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=dev --full-database --force
+
+doctrine-schema-drop-test: ## Run doctrine:schema:drop - drops all the tables without the database for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=test --full-database --force
+
+doctrine-schema-validate: ## Run doctrine:schema:validate
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=dev
+
+doctrine-schema-validate-test: ## Run doctrine:schema:validate for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=test
+
+doctrine-migrations-migrate: ## Run doctrine:migrations:migrate
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev
+
+doctrine-migrations-migrate-test: ## Run doctrine:migrations:migrate for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=test
+
+migration: ## Make migration
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=dev
+
+migration-test: ## Make migration for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=test
 
 doctrine-fixtures-load: ## Run doctrine:fixtures:load
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:fixtures:load --env=dev
