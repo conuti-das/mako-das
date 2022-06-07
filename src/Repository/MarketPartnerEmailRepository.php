@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Exception\MarketPartner\MarketPartnerEmptyException;
 use App\Entity\MarketPartnerEmail;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -14,7 +13,6 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $registry,
-        private MarketPartnerRepository $marketPartnerRepository
     ) {
         parent::__construct($registry, MarketPartnerEmail::class);
     }
@@ -22,13 +20,8 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
     public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
         $marketPartnerEmail = new MarketPartnerEmail();
-        $marketPartnerData = $this->marketPartnerRepository->getById($uploadCertificateDto->getPartnerId());
 
-        if (!$marketPartnerData) {
-            throw new  MarketPartnerEmptyException("Given Market partner didn't exist");
-        }
-
-        $marketPartnerEmail->setMarketPartner($marketPartnerData);
+        $marketPartnerEmail->setMarketPartner($uploadCertificateDto->getMarketPartner());
         $marketPartnerEmail->setCreatedAt(new DateTime('now'));
         $marketPartnerEmail->setEmail($uploadCertificateDto->getEmailAddress());
         $marketPartnerEmail->setType($marketPartnerEmail::TYPE_EDIFACT);
