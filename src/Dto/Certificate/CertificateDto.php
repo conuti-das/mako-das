@@ -9,7 +9,7 @@ use DateTime;
 use DateTimeInterface;
 use JsonException;
 
-class CertificateDto
+class CertificateDto implements CertificateDtoInterface
 {
     private string $name;
     private string $hash;
@@ -25,7 +25,7 @@ class CertificateDto
     private string $issuerOrganisation;
     private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
-    private ?string $certificateFile;
+    private string $certificateFile;
     private MarketPartner $marketPartner;
     private int $marketPartnerId;
 
@@ -221,12 +221,12 @@ class CertificateDto
         return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }
 
-    public function getCertificateFile(): ?string
+    public function getCertificateFile(): string
     {
         return $this->certificateFile;
     }
 
-    public function setCertificateFile(?string $certificateFile): self
+    public function setCertificateFile(string $certificateFile): self
     {
         $this->certificateFile = $certificateFile;
 
