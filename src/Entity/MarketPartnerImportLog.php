@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MarketPartnerImportLogRepository::class)]
 class MarketPartnerImportLog
 {
-    const STATUS_DONE = "done";
-    const STATUS_FAILED = "failed";
+    public const STATUS_DONE = "done";
+    public const STATUS_FAILED = "failed";
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
