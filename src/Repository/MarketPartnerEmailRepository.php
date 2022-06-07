@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Dto\Certificate\UploadCertificateDto;
+use App\Dto\Certificate\CertificateDtoInterface;
 use App\Entity\MarketPartnerEmail;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -17,7 +17,7 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         parent::__construct($registry, MarketPartnerEmail::class);
     }
 
-    public function addCertificate(UploadCertificateDto $uploadCertificateDto, bool $flush = false): MarketPartnerEmail
+    public function addCertificate(CertificateDtoInterface $uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
         $marketPartnerEmail = new MarketPartnerEmail();
 
