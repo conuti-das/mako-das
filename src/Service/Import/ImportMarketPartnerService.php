@@ -53,7 +53,6 @@ class ImportMarketPartnerService
                 );
 
                 $certificate->setMarketPartner($newMarketPartner);
-                $certificate->setPartnerId($newMarketPartner->getId());
                 $marketPartnerEmail = $this->partnerEmailRepository->addCertificate($certificate, true);
 
                 $certificateLogStatus = MarketPartnerEmailImportLog::STATUS_DONE;
