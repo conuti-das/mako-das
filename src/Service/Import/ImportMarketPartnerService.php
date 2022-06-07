@@ -38,7 +38,7 @@ class ImportMarketPartnerService
         $newMarketPartner = null;
         try {
             $newMarketPartner = $this->marketPartnerFactory->createFromArray($marketPartner);
-            $this->marketPartnerRepository->add($newMarketPartner, true);
+            $this->marketPartnerRepository->add($newMarketPartner);
             $marketPartnerLogStatus = MarketPartnerImportLog::STATUS_DONE;
             $marketPartnerLogException = null;
             $marketPartnerEmail = null;
@@ -53,7 +53,7 @@ class ImportMarketPartnerService
                 );
 
                 $certificate->setMarketPartner($newMarketPartner);
-                $marketPartnerEmail = $this->partnerEmailRepository->addCertificate($certificate, true);
+                $marketPartnerEmail = $this->partnerEmailRepository->addCertificate($certificate);
 
                 $certificateLogStatus = MarketPartnerEmailImportLog::STATUS_DONE;
                 $certificateLogException = null;
@@ -67,7 +67,7 @@ class ImportMarketPartnerService
             $certificateLog->setMessage($certificateLogException);
             $certificateLog->setStatus($certificateLogStatus);
             $certificateLog->setCreatedAt(new DateTime('now'));
-            $this->emailImportLogRepository->add($certificateLog, true);
+            $this->emailImportLogRepository->add($certificateLog);
         } catch (Exception $exception) {
             $marketPartnerLogStatus = MarketPartnerImportLog::STATUS_FAILED;
             $marketPartnerLogException = $exception->getMessage();
@@ -78,6 +78,6 @@ class ImportMarketPartnerService
         $partnerImportLog->setCreatedAt(new DateTime("now"));
         $partnerImportLog->setMessage($marketPartnerLogException);
 
-        $this->partnerImportLogRepository->add($partnerImportLog, true);
+        $this->partnerImportLogRepository->add($partnerImportLog);
     }
 }
