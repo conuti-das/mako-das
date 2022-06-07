@@ -14,6 +14,10 @@ use OpenSSLCertificate;
 
 class CertificateService
 {
+    public function __construct(private CertificateConverter $certificateConverter)
+    {
+    }
+
     /**
      * @param string $certificate
      *
@@ -26,6 +30,10 @@ class CertificateService
     {
         if (empty($certificate)) {
             throw new CertificateEmptyException('Given certificate is empty.');
+        }
+
+        if (!$this->certificateConverter->isPEM($certificate)) {
+            $certificate = $this->certificateConverter->convertDER2PEM($certificate);
         }
 
         try {
@@ -53,11 +61,13 @@ class CertificateService
         $certificateDto->setEmailAddress($decodedCertificateData['subject']['emailAddress']);
         $certificateDto->setSubjectName($decodedCertificateData['subject']['CN']);
         $certificateDto->setSubjectOrganisation($decodedCertificateData['subject']['O']);
-        $certificateDto->setSubjectLocation($decodedCertificateData['subject']['L']);
+        $certificateDto->setSubjectLocation(
+            !isset($decodedCertificateData['subject']) ? $decodedCertificateData['subject']['L'] : ''
+        );
         $certificateDto->setSubjectCountry($decodedCertificateData['subject']['C']);
         $certificateDto->setIssuerName($decodedCertificateData['issuer']['CN']);
         $certificateDto->setIssuerOrganisation($decodedCertificateData['issuer']['O']);
-        $certificateDto->setIssuerOrganisationUnit($decodedCertificateData['issuer']['OU']);
+        $certificateDto->setIssuerOrganisationUnit($decodedCertificateData['issuer']['OU'] ?? null);
         $certificateDto->setIssuerCountry($decodedCertificateData['issuer']['C']);
         $certificateDto->setCertificateFile(base64_encode($certificate));
         $certificateDto->setValidFrom((new DateTime)->setTimestamp((int)$decodedCertificateData['validFrom_time_t']));

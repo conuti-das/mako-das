@@ -37,7 +37,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text', 'certificate-all');
+        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text', 'certificates_all');
         yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
     }
 
