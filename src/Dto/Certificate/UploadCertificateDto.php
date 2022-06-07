@@ -14,7 +14,7 @@ class UploadCertificateDto
     private DateTimeInterface $validFrom;
     private DateTimeInterface $validUntil;
     private string $certificateFile;
-    private ?MarketPartner $marketPartner = null;
+    private MarketPartner $marketPartner;
 
     public function getPartnerId(): int
     {
