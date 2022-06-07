@@ -128,7 +128,7 @@ class MarketPartner
     private int $usingTumCatalog;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
-    private $marketPartnerEmails;
+    private ArrayCollection $marketPartnerEmails;
 
     public function __construct()
     {
