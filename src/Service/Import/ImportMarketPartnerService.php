@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImportMarketPartnerService
 {
-    const SECOND_PART_OF_FILE_NAME = ".cer.converted";
+    public const SECOND_PART_OF_FILE_NAME = ".cer.converted";
 
     public function __construct(
         private CertificateService $certificateService,
