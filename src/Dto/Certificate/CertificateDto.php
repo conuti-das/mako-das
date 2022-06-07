@@ -25,8 +25,8 @@ class CertificateDto
     private string $issuerOrganisation;
     private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
-    private ?string $certificateFile = null;
-    private ?MarketPartner $marketPartner = null;
+    private ?string $certificateFile;
+    private MarketPartner $marketPartner;
     private int $marketPartnerId;
 
     public function getName(): string
@@ -233,12 +233,10 @@ class CertificateDto
         return $this;
     }
 
-
     public function setMarketPartner(MarketPartner $marketPartner): void
     {
         $this->marketPartner = $marketPartner;
     }
-
 
     public function getMarketPartner(): MarketPartner
     {
