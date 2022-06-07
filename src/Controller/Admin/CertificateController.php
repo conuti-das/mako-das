@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Dto\Certificate\UploadCertificateDto;
+use App\Exception\MarketPartner\MarketPartnerEmptyException;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
+use App\Repository\MarketPartnerRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Upload\UploadService;
 use Exception;
@@ -22,7 +24,8 @@ class CertificateController extends AbstractController
     public function __construct(
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
-        private CertificateService $certificateService
+        private CertificateService $certificateService,
+        private MarketPartnerRepository $marketPartnerRepository
     ) {
     }
 
@@ -67,6 +70,13 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
+            $marketPartnerData = $this->marketPartnerRepository->getById($uploadCertificateDto->getPartnerId());
+
+            if (!$marketPartnerData) {
+                throw new MarketPartnerEmptyException("Given Market partner didn't exist");
+            }
+
+            $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
         }
