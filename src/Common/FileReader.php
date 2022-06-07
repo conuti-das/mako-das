@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Common;
 
-use App\Exception\Certificate\CertificateParseException;
+use App\Exception\File\FileReadException;
 use Exception;
 
 class FileReader
@@ -14,7 +14,7 @@ class FileReader
         try {
             return file_get_contents($filePath);
         } catch (Exception $exception) {
-            throw new CertificateParseException("Can not read file, in FileReader::getContent function. ${$filePath}");
+            throw new FileReadException("Can not read file, in FileReader::getContent function. ${$filePath}");
         }
     }
 
@@ -34,7 +34,7 @@ class FileReader
             }
             fclose($fileToRead);
         } catch (Exception $exception) {
-            throw new Exception("Invalid csv provided in FileReader::csvToArray function. ${$csvFile}");
+            throw new FileReadException("Invalid csv provided in FileReader::csvToArray function. ${$csvFile}");
         }
 
         return $lines;
