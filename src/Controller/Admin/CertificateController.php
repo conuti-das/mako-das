@@ -65,12 +65,11 @@ class CertificateController extends AbstractController
             $activeUntil = new DateTime($certificateForm['validUntil']);
 
             $uploadCertificateDto = new UploadCertificateDto();
-            $uploadCertificateDto->setPartnerId($partnerId);
             $uploadCertificateDto->setEmailAddress($certificateForm['email']);
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
-            $marketPartnerData = $this->marketPartnerRepository->getById($uploadCertificateDto->getPartnerId());
+            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
 
             if (!$marketPartnerData) {
                 throw new MarketPartnerEmptyException("Given Market partner didn't exist");
