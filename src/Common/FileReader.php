@@ -18,12 +18,12 @@ class FileReader
         }
     }
 
-    public function csvToArray($csvFile, $length = 1000, $separator = ','): array
+    public function csvToArray(string $csvFilePath, int $length = 1000, string $separator = ','): array
     {
         $lines = [];
 
         try {
-            $fileToRead = fopen($csvFile, 'r');
+            $fileToRead = fopen($csvFilePath, 'r');
             $index = fgetcsv($fileToRead, $length, $separator);
 
             while (!feof($fileToRead)) {
