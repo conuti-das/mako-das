@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Dto\Certificate\UploadCertificateDto;
 use App\Entity\MarketPartnerEmail;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -11,13 +12,12 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class MarketPartnerEmailRepository extends ServiceEntityRepository
 {
-    public function __construct(
-        ManagerRegistry $registry,
-    ) {
+    public function __construct(ManagerRegistry $registry)
+    {
         parent::__construct($registry, MarketPartnerEmail::class);
     }
 
-    public function addCertificate($uploadCertificateDto, bool $flush = false): MarketPartnerEmail
+    public function addCertificate(UploadCertificateDto $uploadCertificateDto, bool $flush = false): MarketPartnerEmail
     {
         $marketPartnerEmail = new MarketPartnerEmail();
 
@@ -31,6 +31,7 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidFrom());
 
         $this->getEntityManager()->persist($marketPartnerEmail);
+
         if ($flush) {
             $this->getEntityManager()->flush();
         }
