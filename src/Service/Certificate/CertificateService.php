@@ -53,7 +53,7 @@ class CertificateService
         } catch (Exception $exception) {
             throw new CertificateParseException('Given certificate could not be parsed.');
         }
-#dd($decodedCertificateData);
+
         $certificateDto = new CertificateDto();
         $certificateDto->setHash($decodedCertificateData['hash']);
         $certificateDto->setName($decodedCertificateData['name']);
@@ -61,7 +61,9 @@ class CertificateService
         $certificateDto->setEmailAddress($decodedCertificateData['subject']['emailAddress']);
         $certificateDto->setSubjectName($decodedCertificateData['subject']['CN']);
         $certificateDto->setSubjectOrganisation($decodedCertificateData['subject']['O']);
-        $certificateDto->setSubjectLocation($decodedCertificateData['subject']['L']);
+        $certificateDto->setSubjectLocation(
+            !isset($decodedCertificateData['subject']) ? $decodedCertificateData['subject']['L'] : ''
+        );
         $certificateDto->setSubjectCountry($decodedCertificateData['subject']['C']);
         $certificateDto->setIssuerName($decodedCertificateData['issuer']['CN']);
         $certificateDto->setIssuerOrganisation($decodedCertificateData['issuer']['O']);

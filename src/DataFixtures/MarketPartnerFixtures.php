@@ -20,6 +20,13 @@ class MarketPartnerFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $marketPartner = $this->createMarketPartnerFixtures();
+        $manager->persist($marketPartner);
+        $manager->flush();
+    }
+
+    static public function createMarketPartnerFixtures(): MarketPartner
+    {
         $marketPartner = new MarketPartner();
         $marketPartner->setActive(1);
         $marketPartner->setDeleted(0);
@@ -45,7 +52,7 @@ class MarketPartnerFixtures extends Fixture
         $marketPartner->setEncrypt(0);
         $marketPartner->setReminderEmailAddress('debug@conuti.de');
         $marketPartner->setUsingTumCatalog(0);
-        $manager->persist($marketPartner);
-        $manager->flush();
+
+        return $marketPartner;
     }
 }
