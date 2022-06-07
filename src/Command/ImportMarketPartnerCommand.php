@@ -11,7 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 #[AsCommand(
     name: 'market-partner:import',
@@ -23,8 +23,8 @@ class ImportMarketPartnerCommand extends Command
 
     public function __construct(
         private ImportMarketPartnerService $importMarketPartnerService,
-        private ParameterBagInterface $parameterBag,
         private EntityManagerInterface $entityManager,
+        private KernelInterface $appKernel,
         private FileReader $fileReader
     ) {
         parent::__construct();
@@ -33,7 +33,9 @@ class ImportMarketPartnerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $marketPartners = $this->fileReader->csvToArray(
-            $this->parameterBag->get('importCertificateDirectory') . '/' . self::MARKET_PARTNER_DATA_FILE_NAME
+            $this->appKernel->getProjectDir() .
+            $_ENV["IMPORT_PUBLIC_CERTIFICATES_PATH"] .
+            self::MARKET_PARTNER_DATA_FILE_NAME
         );
 
         foreach ($marketPartners as $marketPartner) {
