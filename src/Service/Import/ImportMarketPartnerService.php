@@ -15,7 +15,7 @@ use App\Repository\MarketPartnerRepository;
 use App\Service\Certificate\CertificateService;
 use DateTime;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImportMarketPartnerService
 {
@@ -24,7 +24,7 @@ class ImportMarketPartnerService
     public function __construct(
         private CertificateService $certificateService,
         private FileReader $fileReader,
-        private ParameterBagInterface $parameterBag,
+        private KernelInterface $appKernel,
         private MarketPartnerFactory $marketPartnerFactory,
         private MarketPartnerRepository $marketPartnerRepository,
         private MarketPartnerEmailRepository $partnerEmailRepository,
@@ -44,9 +44,10 @@ class ImportMarketPartnerService
             $marketPartnerEmail = null;
 
             try {
-                $filePath = $this->parameterBag->get(
-                        'importCertificateDirectory'
-                    ) . '/' . $marketPartner["partnerId"] . self::SECOND_PART_OF_FILE_NAME;
+                $filePath = $this->appKernel->getProjectDir() .
+                    $_ENV["IMPORT_PUBLIC_CERTIFICATES_PATH"] .
+                    $marketPartner["partnerId"] .
+                    self::SECOND_PART_OF_FILE_NAME;
 
                 $certificate = $this->certificateService->decode(
                     $this->fileReader->getContent($filePath)
