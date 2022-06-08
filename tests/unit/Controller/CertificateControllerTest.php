@@ -43,6 +43,6 @@ class CertificateControllerTest extends Unit
 
         $response = $this->certificateController->certificateDecode($request);
 
-        $this->assertEquals(new JsonResponse(['errorMessage' => "Given Market partnerId didn't exist"]), $response);
+        $this->tester->assertEquals(new JsonResponse(['errorMessage' => "Given Market partnerId didn't exist"]), $response);
     }
 }
