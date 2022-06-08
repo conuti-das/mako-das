@@ -1,0 +1,7 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% if constant('DEPLOY_TIMESTAMP') is defined and constant('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
+    {% set asset_version = '?version=' ~ constant('DEPLOY_TIMESTAMP') %}
+{% else %}
+    {% set asset_version = '' %}
+{% endif %}
