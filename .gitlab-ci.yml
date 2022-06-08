@@ -1,7 +1,7 @@
 stages:
   - test
 
-image: docker-php8.0
+image: php:8.0
 
 test:
   stage: test
