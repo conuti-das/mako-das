@@ -130,10 +130,10 @@ class MarketPartner
     private int $usingTumCatalog;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
-    private ArrayCollection $marketPartnerEmails;
+    private Collection $marketPartnerEmails;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerImportLog::class)]
-    private $marketPartnerImportLogs;
+    private Collection $marketPartnerImportLogs;
 
     public function __construct()
     {
@@ -144,6 +144,13 @@ class MarketPartner
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getActive(): int
