@@ -128,7 +128,7 @@ class MarketPartner
     private int $usingTumCatalog;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
-    private ArrayCollection $marketPartnerEmails;
+    private $marketPartnerEmails;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerImportLog::class)]
     private $marketPartnerImportLogs;
