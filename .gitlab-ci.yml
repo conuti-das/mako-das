@@ -12,3 +12,4 @@ test:
     - make doctrine-fixtures-load
     - make codeception-unit
     - make codeception-api
+
