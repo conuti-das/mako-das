@@ -1,0 +1,12 @@
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - make start
+    - make doctrine-schema-update
+    - make doctrine-schema-update-test
+    - make doctrine-fixtures-load
+    - make codeception-unit
+    - make codeception-api
