@@ -69,7 +69,7 @@ class CertificateService
         $certificateDto->setIssuerOrganisation($decodedCertificateData['issuer']['O']);
         $certificateDto->setIssuerOrganisationUnit($decodedCertificateData['issuer']['OU'] ?? null);
         $certificateDto->setIssuerCountry($decodedCertificateData['issuer']['C']);
-        $certificateDto->setCertificateFile($certificate);
+        $certificateDto->setCertificateFile(base64_encode($certificate));
         $certificateDto->setValidFrom((new DateTime)->setTimestamp((int)$decodedCertificateData['validFrom_time_t']));
         $certificateDto->setValidUntil((new DateTime)->setTimestamp((int)$decodedCertificateData['validTo_time_t']));
 

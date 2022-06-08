@@ -28,6 +28,7 @@ class MarketPartnerEmailFixtures extends Fixture
         $marketPartnerEmail = new MarketPartnerEmail();
         $marketPartnerEmail->setMarketPartner($marketPartner);
         $marketPartnerEmail->setCreatedAt($nowDate);
+        $marketPartnerEmail->setUpdatedAt($nowDate);
         $marketPartnerEmail->setEmail('debug@conuti.de');
         $marketPartnerEmail->setType(MarketPartnerEmail::TYPE_EDIFACT);
         $marketPartnerEmail->setSslCertificate('rjh$ZaG+xbHUauc2p5PvwNhReQ==.fdd873cc2c87b844f972a4bfa086cbb0');
