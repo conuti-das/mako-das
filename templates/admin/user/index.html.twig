@@ -1,9 +1,4 @@
-{# templates/admin/user/index.html.twig #}
-{% extends '@EasyAdmin/page/content.html.twig' %}
-
-{#{% block content_title %}#}
-{#    User List#}
-{#{% endblock %}#}
+{% extends 'admin/base.html.twig' %}
 
 {% block page_action %}
 
@@ -17,7 +12,6 @@
                 <tr>
                     <th>Id</th>
                     <th>Username</th>
-{#                    <th>Role</th>#}
                 </tr>
             </thead>
             <tbody>
@@ -25,11 +19,6 @@
                     <tr>
                         <td>{{ user.id }}</td>
                         <td>{{ user.username }}</td>
-{#                        <td>#}
-{#                            {% for role in user.roles %}#}
-{#                                {{ role }}#}
-{#                            {% endfor %}#}
-{#                        </td>#}
                     </tr>
                 {% endfor %}
             </tbody>
