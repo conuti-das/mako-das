@@ -81,8 +81,7 @@ class MarketPartnerEmail
     {
         $this->marketPartnerEmailImportLogs = new ArrayCollection();
     }
-
-
+    
     public function getId(): int
     {
         return $this->id;

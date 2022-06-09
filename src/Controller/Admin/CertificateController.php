@@ -33,6 +33,13 @@ class CertificateController extends AbstractController
     public function certificateDecode(Request $request): Response
     {
         try {
+            $partnerId = (int)$request->get('partnerId');
+            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
+
+            if (!$marketPartnerData) {
+                throw new MarketPartnerEmptyException("Given Market partnerId didn't exist");
+            }
+
             $certificateFile = $request->files->get('file');
             $certificateData = $this->uploadService->upload(
                 $certificateFile,
@@ -70,10 +77,6 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
             $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
-
-            if (!$marketPartnerData) {
-                throw new MarketPartnerEmptyException("Given Market partner didn't exist");
-            }
 
             $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
