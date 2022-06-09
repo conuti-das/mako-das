@@ -4,7 +4,7 @@ WEBSERVER_CONTAINER := webserver
 DOCKER_COMPOSE := docker-compose
 MAKE := make
 HOST := http://localhost
-EGREP := egrep
+
 ################################################################
 ## Docker
 ################################################################
@@ -20,6 +20,18 @@ start: ## Starts the application for local development
 	@echo "The phpMyAdmin is available at ${HOST}:${PHPMYADMIN_PORT}"
 	@echo "The Database port is ${DB_PORT}"
 	@echo "The Memcached port is ${MEMCACHED_PORT}"
+
+update: ## Update the DEV and TEST environment
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev --no-interaction
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=dev
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console cache:clear
+
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=test --no-interaction
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console cache:clear --env=test
+
+	@echo "DEV is now up-to-date!"
+	@echo "TEST is now up-to-date!"
 
 stop: ## Stop the entire docker compose stack
 	$(DOCKER_COMPOSE) stop
@@ -62,29 +74,43 @@ cache-clear: ## Run cache:clear
 cache-clear-test: ## Run cache:clear for the test environment
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console cache:clear --env=test
 
+################################################################
+## Doctrine
+################################################################
+
 doctrine-cache-clear-metadata: ## Run doctrine:cache:clear-metadata
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:cache:clear-metadata
 
 doctrine-cache-clear-query: ## Run doctrine:cache:clear-query
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:cache:clear-query
 
-doctrine-schema-update: ## Run doctrine:schema:update
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=dev --force
-
-doctrine-migrations-migrate: ## Run doctrine:migrations:migrate
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev
-
-migration: ## Make migration
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=dev
-
-doctrine-schema-update-test: ## Run doctrine:schema:update --env=test
-	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:update --env=test --force
-
 doctrine-schema-drop: ## Run doctrine:schema:drop - drops all the tables without the database
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=dev --full-database --force
 
+doctrine-schema-drop-test: ## Run doctrine:schema:drop - drops all the tables without the database for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=test --full-database --force
+
+doctrine-schema-validate: ## Run doctrine:schema:validate
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=dev
+
+doctrine-schema-validate-test: ## Run doctrine:schema:validate for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=test
+
 doctrine-fixtures-load: ## Run doctrine:fixtures:load
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:fixtures:load --env=dev
+
+################################################################
+## Migrations
+################################################################
+
+migration: ## Create new migration files
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console make:migration --env=dev --no-interaction
+
+doctrine-migrations-migrate: ## Run doctrine:migrations:migrate
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=dev --no-interaction
+
+doctrine-migrations-migrate-test: ## Run doctrine:migrations:migrate for test
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
 ################################################################
 ## Codeception
@@ -92,6 +118,11 @@ doctrine-fixtures-load: ## Run doctrine:fixtures:load
 
 codeception-build: ## Run codeception build by config changes
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept build
+
+codeception-all: ## Run codeception unit tests
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test unit
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test functional
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test api
 
 codeception-unit: ## Run codeception unit tests
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test unit

@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use App\Repository\MarketPartnerRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -68,6 +69,7 @@ class MarketPartner
     private string $energy;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(["market-partners-email-all:read"])]
     private string $partnerId;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -128,16 +130,27 @@ class MarketPartner
     private int $usingTumCatalog;
 
     #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerEmail::class)]
-    private $marketPartnerEmails;
+    private Collection $marketPartnerEmails;
+
+    #[ORM\OneToMany(mappedBy: 'marketPartner', targetEntity: MarketPartnerImportLog::class)]
+    private Collection $marketPartnerImportLogs;
 
     public function __construct()
     {
         $this->marketPartnerEmails = new ArrayCollection();
+        $this->marketPartnerImportLogs = new ArrayCollection();
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getActive(): int
@@ -472,6 +485,32 @@ class MarketPartner
         if ($this->marketPartnerEmails->removeElement($marketPartnerEmail)) {
             if ($marketPartnerEmail->getMarketPartner() === $this) {
                 $marketPartnerEmail->setMarketPartner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMarketPartnerImportLogs(): Collection
+    {
+        return $this->marketPartnerImportLogs;
+    }
+
+    public function addMarketPartnerImportLog(MarketPartnerImportLog $marketPartnerImportLog): self
+    {
+        if (!$this->marketPartnerImportLogs->contains($marketPartnerImportLog)) {
+            $this->marketPartnerImportLogs[] = $marketPartnerImportLog;
+            $marketPartnerImportLog->setMarketPartner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPartnerImportLog(MarketPartnerImportLog $marketPartnerImportLog): self
+    {
+        if ($this->marketPartnerImportLogs->removeElement($marketPartnerImportLog)) {
+            if ($marketPartnerImportLog->getMarketPartner() === $this) {
+                $marketPartnerImportLog->setMarketPartner(null);
             }
         }
 

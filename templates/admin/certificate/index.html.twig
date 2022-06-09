@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         {% block stylesheets %}
-            <link href="{{ asset('assets/app/css/certificate.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('assets/app/css/certificate.css') }}" type="text/css" rel="stylesheet"/>
         {% endblock %}
     </head>
     <body>
@@ -21,7 +21,8 @@
                         data-target="#exampleModal">
                     {{ 'Add Certificate'|trans }}
                 </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -31,6 +32,7 @@
                                 </div>
                                 <div>
                                     {{ form_start(modalCertificateForm) }}
+                                    <div class="errorMsg"></div>
                                     <div class="form-group partner_inp">
                                         <div class="form-group-label">
                                             <label for="certificate_form_partnerId">{{ 'Partner Id'|trans }}</label>
@@ -174,7 +176,8 @@
                                         {{ form_widget(modalCertificateForm.certificateFile) }}
                                     </div>
                                     <div class="modal-footer-btn">
-                                        <button type="submit" id="save-disable" disabled class="btn btn-success">{{ 'Save'|trans }}
+                                        <button type="submit" id="save-disable" disabled
+                                                class="btn btn-success">{{ 'Save'|trans }}
                                         </button>
                                         <button type="button" class="btn btn-secondary" id="cancel-upload"
                                                 data-dismiss="modal">{{ 'Cancel'|trans }}
@@ -207,7 +210,7 @@
                 <tbody>
                 {% for marketPartnerEmail in marketPartnerEmails %}
                     <tr>
-                        <td>{{ marketPartnerEmail.marketPartnerId }}</td>
+                        <td>{{ marketPartnerEmail.marketPartner.id }}</td>
                         <td>{{ marketPartnerEmail.email }}</td>
                         <td>{{ marketPartnerEmail.type }}</td>
                         <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>

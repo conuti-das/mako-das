@@ -4,11 +4,36 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use App\Api\Dto\MarketPartnerEmail\MarketPartnerEmailAllResponse;
 use App\Repository\MarketPartnerEmailRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    collectionOperations: [
+        'market_partners_email' => [
+            'method' => 'GET',
+            'path'=>'/market-partners-email',
+            'output' => MarketPartnerEmailAllResponse::class,
+            'normalization_context' => ['groups' => ['market-partners-email-all:read']],
+        ],
+    ],
+    itemOperations: [
+        'market_partners_email_single' => [
+            'method' => 'GET',
+            'path'=>'/market-partners-email/{id}',
+            'output' => MarketPartnerEmailAllResponse::class,
+            'normalization_context' => ['groups' => ['market-partners-email-all:read']],
+        ],
+    ],
+)]
+#[ApiFilter(DateFilter::class, properties: ['updatedAt'])]
 #[ORM\Entity(repositoryClass: MarketPartnerEmailRepository::class)]
 class MarketPartnerEmail
 {
@@ -20,11 +45,11 @@ class MarketPartnerEmail
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'integer')]
-    private int $marketPartnerId;
-
     #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private DateTimeInterface $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $email;
@@ -46,8 +71,17 @@ class MarketPartnerEmail
 
     #[ORM\ManyToOne(targetEntity: MarketPartner::class, inversedBy: 'marketPartnerEmails')]
     #[ORM\JoinColumn(nullable: false)]
-    private $marketPartner;
+    #[Groups(["market-partners-all:read"])]
+    private MarketPartner $marketPartner;
 
+    #[ORM\OneToMany(mappedBy: 'marketPartnerEmail', targetEntity: MarketPartnerEmailImportLog::class)]
+    private $marketPartnerEmailImportLogs;
+
+    public function __construct()
+    {
+        $this->marketPartnerEmailImportLogs = new ArrayCollection();
+    }
+    
     public function getId(): int
     {
         return $this->id;
@@ -60,18 +94,6 @@ class MarketPartnerEmail
         return $this;
     }
 
-    public function getMarketPartnerId(): int
-    {
-        return $this->marketPartnerId;
-    }
-
-    public function setMarketPartnerId(int $marketPartnerId): self
-    {
-        $this->marketPartnerId = $marketPartnerId;
-
-        return $this;
-    }
-
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
@@ -80,6 +102,18 @@ class MarketPartnerEmail
     public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -164,6 +198,32 @@ class MarketPartnerEmail
     public function setMarketPartner(?MarketPartner $marketPartner): self
     {
         $this->marketPartner = $marketPartner;
+
+        return $this;
+    }
+
+    public function getMarketPartnerEmailImportLogs(): Collection
+    {
+        return $this->marketPartnerEmailImportLogs;
+    }
+
+    public function addMarketPartnerEmailImportLog(MarketPartnerEmailImportLog $marketPartnerEmailImportLog): self
+    {
+        if (!$this->marketPartnerEmailImportLogs->contains($marketPartnerEmailImportLog)) {
+            $this->marketPartnerEmailImportLogs[] = $marketPartnerEmailImportLog;
+            $marketPartnerEmailImportLog->setMarketPartnerEmail($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarketPartnerEmailImportLog(MarketPartnerEmailImportLog $marketPartnerEmailImportLog): self
+    {
+        if ($this->marketPartnerEmailImportLogs->removeElement($marketPartnerEmailImportLog)) {
+            if ($marketPartnerEmailImportLog->getMarketPartnerEmail() === $this) {
+                $marketPartnerEmailImportLog->setMarketPartnerEmail(null);
+            }
+        }
 
         return $this;
     }

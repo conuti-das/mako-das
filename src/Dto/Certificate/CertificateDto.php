@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Dto\Certificate;
 
+use App\Entity\MarketPartner;
 use DateTime;
 use DateTimeInterface;
 use JsonException;
 
-class CertificateDto
+class CertificateDto implements CertificateDtoInterface
 {
     private string $name;
     private string $hash;
@@ -24,7 +25,9 @@ class CertificateDto
     private string $issuerOrganisation;
     private ?string $issuerOrganisationUnit;
     private string $issuerCountry;
-    private ?string $certificateFile = null;
+    private string $certificateFile;
+    private MarketPartner $marketPartner;
+    private int $marketPartnerId;
 
     public function getName(): string
     {
@@ -218,15 +221,35 @@ class CertificateDto
         return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }
 
-    public function getCertificateFile(): ?string
+    public function getCertificateFile(): string
     {
         return $this->certificateFile;
     }
 
-    public function setCertificateFile(?string $certificateFile): self
+    public function setCertificateFile(string $certificateFile): self
     {
         $this->certificateFile = $certificateFile;
 
         return $this;
+    }
+
+    public function setMarketPartner(MarketPartner $marketPartner): void
+    {
+        $this->marketPartner = $marketPartner;
+    }
+
+    public function getMarketPartner(): MarketPartner
+    {
+        return $this->marketPartner;
+    }
+
+    public function setPartnerId(int $marketPartnerId): void
+    {
+        $this->marketPartnerId = $marketPartnerId;
+    }
+
+    public function getPartnerId(): int
+    {
+        return $this->marketPartnerId;
     }
 }

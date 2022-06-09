@@ -6,12 +6,29 @@ namespace App\DataFixtures;
 
 use App\Entity\MarketPartner;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\Id\AssignedGenerator;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Doctrine\Persistence\ObjectManager;
 use DateTime;
 use Exception;
 
-class MarketPartnerFixtures extends Fixture
+class MarketPartnerFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class
+        ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['demo'];
+    }
+
     /**
      * @param ObjectManager $manager
      *
@@ -21,6 +38,7 @@ class MarketPartnerFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $marketPartner = new MarketPartner();
+        $marketPartner->setId(1);
         $marketPartner->setActive(1);
         $marketPartner->setDeleted(0);
         $marketPartner->setCreatedAt(new DateTime('now'));
@@ -45,7 +63,13 @@ class MarketPartnerFixtures extends Fixture
         $marketPartner->setEncrypt(0);
         $marketPartner->setReminderEmailAddress('debug@conuti.de');
         $marketPartner->setUsingTumCatalog(0);
+
+        $metadata = $manager->getClassMetaData(MarketPartner::class);
+        $metadata->setIdGenerator(new AssignedGenerator());
+        $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_NONE);
         $manager->persist($marketPartner);
         $manager->flush();
+
+        $this->addReference('market-partner-1', $marketPartner);
     }
 }

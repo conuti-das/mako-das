@@ -4,27 +4,16 @@ declare(strict_types=1);
 
 namespace App\Dto\Certificate;
 
+use App\Entity\MarketPartner;
 use DateTimeInterface;
 
-class UploadCertificateDto
+class UploadCertificateDto implements CertificateDtoInterface
 {
-    private int $partnerId;
     private string $emailAddress;
     private DateTimeInterface $validFrom;
     private DateTimeInterface $validUntil;
     private string $certificateFile;
-
-    public function getPartnerId(): int
-    {
-        return $this->partnerId;
-    }
-
-    public function setPartnerId(int $partnerId): self
-    {
-        $this->partnerId = $partnerId;
-
-        return $this;
-    }
+    private MarketPartner $marketPartner;
 
     public function getEmailAddress(): string
     {
@@ -72,5 +61,17 @@ class UploadCertificateDto
         $this->certificateFile = $certificateFile;
 
         return $this;
+    }
+
+    public function setMarketPartner(MarketPartner $marketPartner): self
+    {
+        $this->marketPartner = $marketPartner;
+
+        return $this;
+    }
+
+    public function getMarketPartner(): MarketPartner
+    {
+        return $this->marketPartner;
     }
 }

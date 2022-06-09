@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Dto\Certificate\UploadCertificateDto;
+use App\Exception\MarketPartner\MarketPartnerEmptyException;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
+use App\Repository\MarketPartnerRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Upload\UploadService;
 use Exception;
@@ -22,7 +24,8 @@ class CertificateController extends AbstractController
     public function __construct(
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
-        private CertificateService $certificateService
+        private CertificateService $certificateService,
+        private MarketPartnerRepository $marketPartnerRepository
     ) {
     }
 
@@ -30,6 +33,13 @@ class CertificateController extends AbstractController
     public function certificateDecode(Request $request): Response
     {
         try {
+            $partnerId = (int)$request->get('partnerId');
+            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
+
+            if (!$marketPartnerData) {
+                throw new MarketPartnerEmptyException("Given Market partnerId didn't exist");
+            }
+
             $certificateFile = $request->files->get('file');
             $certificateData = $this->uploadService->upload(
                 $certificateFile,
@@ -62,11 +72,13 @@ class CertificateController extends AbstractController
             $activeUntil = new DateTime($certificateForm['validUntil']);
 
             $uploadCertificateDto = new UploadCertificateDto();
-            $uploadCertificateDto->setPartnerId($partnerId);
             $uploadCertificateDto->setEmailAddress($certificateForm['email']);
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
+            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
+
+            $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
         }
