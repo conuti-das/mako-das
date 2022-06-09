@@ -1,15 +1,32 @@
 stages:
-  - test
+  - build
+  - apiTest
+  - unitTest
 
-image: php:8.0
+services:
+  - name: docker:dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: ["dockerd-entrypoint.sh"]
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  # See https://github.com/docker-library/docker/pull/166
+  DOCKER_TLS_CERTDIR: ""
 
-test:
-  stage: test
+
+image:
+  name: docker/compose:1.24.0
+  entrypoint: ["/bin/sh", "-c"]
+
+
+build:
+  stage: build
   script:
-    - make start
-    - make doctrine-schema-update
-    - make doctrine-schema-update-test
-    - make doctrine-fixtures-load
-    - make codeception-unit
-    - make codeception-api
-
+    - docker-compose up --remove-orphans -d
+    - docker-compose exec -T webserver composer install --no-interaction
+    - docker-compose exec -T webserver  php bin/console cache:clear
+    - docker-compose exec -T webserver  php bin/console doctrine:schema:update --env=dev --force
+    - docker-compose exec -T webserver  php bin/console doctrine:fixtures:load --no-interaction --env=dev
+    - docker-compose exec -T webserver  php bin/console lexik:jwt:generate-keypair
+    - docker-compose exec -T webserver   php vendor/bin/codecept run --steps --env=dev api
+    - docker-compose exec -T webserver   php vendor/bin/codecept run --steps --env=dev api
