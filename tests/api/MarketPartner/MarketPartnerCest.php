@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\api\MarketPartner;
 
 use App\Tests\ApiTester;
+use App\Tests\Faker\FakerMarketPartner;
 use Codeception\Example;
 use Codeception\Util\HttpCode;
 
@@ -19,6 +20,8 @@ class MarketPartnerCest
      */
     public function marketPartnerTest(ApiTester $I, Example $example): void
     {
+        $fakeMarketPartner = new FakerMarketPartner();
+        $fakeMarketPartner->create([]);
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
         $I->sendGet('/api/market-partners');
@@ -26,6 +29,7 @@ class MarketPartnerCest
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['partnerId' => $example['partnerId']], ['isActive' => $example['isActive']]);
         $I->canSeeResponseCodeIsSuccessful();
+        $fakeMarketPartner->delete();
     }
 
     /**
