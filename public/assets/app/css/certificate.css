@@ -72,3 +72,7 @@
     font-weight: bold;
     color: red;
 }
+
+.content-header{
+    background: none!important;
+}
