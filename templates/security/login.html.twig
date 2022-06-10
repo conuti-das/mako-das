@@ -3,42 +3,51 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <form method="post">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+    <div class="login-img">
+        <div class="page">
+            <div class="container">
+                <div class="container-login100">
+                    <div class="wrap-login100 p-6">
+                        <form method="post" class="login100-form validate-form">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    You are logged in as {{ app.user.userIdentifier }}, <a
+                                            href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a>
+                                </div>
+                            {% else %}
+                                <span class="login100-form-title">Login</span>
+                                <div class="wrap-input100 validate-input">
 
-            {% if app.user %}
-                <div class="mb-3">
-                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a>
+                                    <input type="text" value="{{ last_username }}" name="username"
+                                           id="inputUsername"
+                                           class="input100" autocomplete="username" required autofocus>
+                                    <span class="focus-input100"></span>
+                                    <span class="symbol-input100">
+										<i class="zmdi zmdi-email" aria-hidden="true"></i>
+									</span>
+                                    </span>
+                                </div>
+                                <div class="wrap-input100 validate-input">
+                                    <input type="password" name="password" id="inputPassword" class="input100"
+                                           autocomplete="current-password" required>
+                                    <span class="focus-input100"></span>
+                                    <span class="symbol-input100">
+										<i class="zmdi zmdi-lock" aria-hidden="true"></i>
+									</span>
+                                </div>
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}">
+                                <button class="btn btn-lg btn-primary" style="margin-top: 10px;" type="submit">
+                                    {{ 'Sign in'|trans }}
+                                </button>
+                            {% endif %}
+                        </form>
+                    </div>
                 </div>
-            {% else %}
-                <h1 class="h3 mb-3 font-weight-normal">{{ 'Please sign in'|trans }}</h1>
-                <label for="inputUsername">{{ 'Username'|trans }}</label>
-                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-                <label for="inputPassword">{{ 'Password'|trans }}</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-                <input type="hidden" name="_csrf_token"
-                       value="{{ csrf_token('authenticate') }}"
-                >
-
-                {#
-                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                See https://symfony.com/doc/current/security/remember_me.html
-
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="_remember_me"> Remember me
-                    </label>
-                </div>
-                #}
-
-                <button class="btn btn-lg btn-primary" style="margin-top: 10px;" type="submit">
-                    {{ 'Sign in'|trans }}
-                </button>
-            {% endif %}
-        </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
