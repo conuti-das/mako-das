@@ -13,15 +13,22 @@
     {% block page_action %}
 
     {% endblock %}
-    <div class="container">
-        <div class="certificateModal-parents">
-            <div class="certificate-open-modal">
-                <h1>{{ 'All Certificate'|trans }}</h1>
-                <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
-                        data-target="#exampleModal">
-                    {{ 'Add Certificate'|trans }}
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">{{ 'All Certificate'|trans }}</h1>
+                </div>
+                <div class="ms-auto pageheader-btn">
+                    <button id="certificateModal" type="submit"
+                            class="btn btn-primary btn-sm fs-13 btn btn-success btn-icon text-white me-2"
+                            data-toggle="modal"
+                            data-target="#exampleModal">
+                        {{ 'Add Certificate'|trans }}
+                    </button>
+                </div>
+                <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -32,7 +39,7 @@
                                 </div>
                                 <div>
                                     {{ form_start(modalCertificateForm) }}
-                                    <div class="errorMsg"></div>
+
                                     <div class="form-group partner_inp">
                                         <div class="form-group-label">
                                             <label for="certificate_form_partnerId">{{ 'Partner Id'|trans }}</label>
@@ -190,44 +197,48 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="certificate-dataTable">
-            <table id="table_id" class="display">
-                <thead>
-                <tr>
-                    <th>{{ 'Partner Id'|trans }}</th>
-                    <th>{{ 'Email'|trans }}</th>
-                    <th>{{ 'Type'|trans }}</th>
-                    <th>{{ 'Certificate Expiration'|trans }}</th>
-                    <th>{{ 'Valid From'|trans }}</th>
-                    <th>{{ 'Valid Until'|trans }}</th>
-                    <th>{{ 'Organization'|trans }}</th>
-                    <th>{{ 'Type MarketPartner'|trans }}</th>
-                    <th>{{ 'Energy'|trans }}</th>
-                    <th>{{ 'Active'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for marketPartnerEmail in marketPartnerEmails %}
-                    <tr>
-                        <td>{{ marketPartnerEmail.marketPartner.id }}</td>
-                        <td>{{ marketPartnerEmail.email }}</td>
-                        <td>{{ marketPartnerEmail.type }}</td>
-                        <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
-                        <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
-                        <td>{{ marketPartnerEmail.activeFrom|date('Y-m-d') }}</td>
-                        <td>{{ marketPartnerEmail.marketPartner.organization }}</td>
-                        <td>{{ marketPartnerEmail.marketPartner.type }}</td>
-                        <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
-                        {% if(marketPartnerEmail.activeUntil|date('Y-m-d') < marketPartnerEmail.activeFrom|date('Y-m-d')) %}
-                            <td style="color: green">{{ 'Active'|trans }}</td>
-                        {% else %}
-                            <td style="color: red">{{ 'In Active'|trans }}</td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="grid-margin">
+                <div class="card-body">
+                    <div id="table_id_wrapper" class="table-responsive">
+                        <table id="table_id">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="wd-15p">{{ 'Partner Id'|trans }}</th>
+                                <th class="wd-15p">{{ 'Email'|trans }}</th>
+                                <th class="wd-15p">{{ 'Type'|trans }}</th>
+                                <th class="wd-15p">{{ 'Certificate Expiration'|trans }}</th>
+                                <th class="wd-15p">{{ 'Valid From'|trans }}</th>
+                                <th class="wd-15p">{{ 'Valid Until'|trans }}</th>
+                                <th class="wd-15p">{{ 'Organization'|trans }}</th>
+                                <th class="wd-15p">{{ 'Type MarketPartner'|trans }}</th>
+                                <th class="wd-15p">{{ 'Energy'|trans }}</th>
+                                <th class="wd-15p">{{ 'Active'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for marketPartnerEmail in marketPartnerEmails %}
+                                <tr>
+                                    <td>{{ marketPartnerEmail.marketPartner.id }}</td>
+                                    <td>{{ marketPartnerEmail.email }}</td>
+                                    <td>{{ marketPartnerEmail.type }}</td>
+                                    <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
+                                    <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
+                                    <td>{{ marketPartnerEmail.activeFrom|date('Y-m-d') }}</td>
+                                    <td>{{ marketPartnerEmail.marketPartner.organization }}</td>
+                                    <td>{{ marketPartnerEmail.marketPartner.type }}</td>
+                                    <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
+                                    {% if(marketPartnerEmail.activeUntil|date('Y-m-d') < marketPartnerEmail.activeFrom|date('Y-m-d')) %}
+                                        <td style="color: green">{{ 'Active'|trans }}</td>
+                                    {% else %}
+                                        <td style="color: red">{{ 'In Active'|trans }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {% block javascripts %}
