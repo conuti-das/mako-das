@@ -1,7 +1,5 @@
 stages:
-  - build
-  - apiTest
-  - unitTest
+  - test
 
 services:
   - name: docker:dind
@@ -19,8 +17,8 @@ image:
   entrypoint: ["/bin/sh", "-c"]
 
 
-build:
-  stage: build
+test:
+  stage: test
   script:
     - docker-compose up --remove-orphans -d
     - docker-compose exec -T webserver composer install --no-interaction
