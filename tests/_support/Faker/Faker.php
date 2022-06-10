@@ -8,7 +8,10 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 
 abstract class Faker extends ApiTestCase
 {
-    abstract public function create(?array $data): object;
+    abstract public function create(array $data = []): object;
 
-    abstract public function delete(): void;
+    public function getEntityManager(): object
+    {
+        return parent::getContainer()->get('doctrine.orm.entity_manager');
+    }
 }
