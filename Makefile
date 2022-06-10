@@ -132,6 +132,8 @@ codeception-functional: ## Run codeception functional tests
 
 codeception-api: ## Run codeception api tests
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php vendor/bin/codecept run --steps --env=test api
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:drop --env=test --full-database --force
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=test --no-interaction
 
 ################################################################
 ## API Platform
