@@ -21,7 +21,7 @@ class MarketPartnerCest
     public function marketPartnerTest(ApiTester $I, Example $example): void
     {
         $fakeMarketPartner = new FakerMarketPartner();
-        $fakeMarketPartner->create([]);
+        $fakeMarketPartner->create();
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
         $I->sendGet('/api/market-partners');
@@ -29,7 +29,6 @@ class MarketPartnerCest
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['partnerId' => $example['partnerId']], ['isActive' => $example['isActive']]);
         $I->canSeeResponseCodeIsSuccessful();
-        $fakeMarketPartner->delete();
     }
 
     /**
