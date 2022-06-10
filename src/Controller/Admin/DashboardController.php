@@ -44,9 +44,20 @@ class DashboardController extends AbstractDashboardController
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addCssFile('https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css')
-            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
-            ->addJsFile('https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js');
+            ->addCssFile('assets/app/css/certificate.css')
+            ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css')
+            ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css')
+            ->addCssFile(
+                'assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css'
+            )
+            ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/colors/color1.css')
+            ->addCssFile(
+                'assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/jquery.dataTables.min.css'
+            )
+            ->addJsFile("assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/js/jquery.min.js")
+            ->addJsFile(
+                'assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js'
+            );
     }
 
     #[Route('/admin/user/list', name: 'admin_user_list')]
