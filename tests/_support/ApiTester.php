@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Entity\User;
+use App\Tests\Faker\FakerUser;
 use Codeception\Actor;
 
 /**
@@ -36,11 +38,31 @@ class ApiTester extends Actor
                 'password' => $_ENV['API_TEST_PASSWORD'],
             ]
         );
+
         $this->seeResponseCodeIs(200);
 
         $token = $this->grabDataFromResponseByJsonPath('token');
         $this->assertNotEmpty($token);
 
         return $token[0];
+    }
+
+    public function createApiUser(): User
+    {
+        /** @var FakerUser $fakerUser */
+        $fakerUser = $this->grabService(FakerUser::class);
+
+        return $fakerUser->create([
+            'username' => $_ENV['API_TEST_USERNAME'],
+            'password' => $_ENV['API_TEST_PASSWORD'],
+            'roles' => ["ROLE_USER_API"]
+        ]);
+    }
+
+    public function deleteAPIUser(User $user): void
+    {
+        /** @var FakerUser $fakerUser */
+        $fakerUser = $this->grabService(FakerUser::class);
+        $fakerUser->delete($user);
     }
 }
