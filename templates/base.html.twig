@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-{#        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">#}
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        {% endblock %}
-
-        {% block javascripts %}
-{#            {{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% if constant('DEPLOY_TIMESTAMP') is defined and constant('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
+        {% set asset_version = '?version=' ~ constant('DEPLOY_TIMESTAMP') %}
+    {% else %}
+        {% set asset_version = '' %}
+    {% endif %}
+    {% block stylesheets %}
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/images/brand/favicon.ico' ~ asset_version ) }}"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/dark-style.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/single-page/css/main.css' ~ asset_version ) }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/charts-c3/c3-chart.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/perfect-scrollbar.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/icons.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+<body class="dark-mode">
+{% block body %}{% endblock %}
+</body>
 </html>
