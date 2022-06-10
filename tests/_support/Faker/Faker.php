@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Faker;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-abstract class Faker extends ApiTestCase
+abstract class Faker
 {
-    abstract public function create(?array $data): object;
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+        protected UserPasswordHasherInterface $encoder
+    ) {
+    }
 
-    abstract public function delete(): void;
+    abstract public function create(?array $data): object;
+    abstract public function delete(mixed $object): void;
 }
