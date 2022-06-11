@@ -74,12 +74,13 @@ class ApiTester extends Actor
         ]);
     }
 
-    public function createApiMarketPartnerEmail(): MarketPartnerEmail
+    public function createApiMarketPartnerEmail($apiMarketPartner): MarketPartnerEmail
     {
         /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
         $fakerMarketPartnerEmail = $this->grabService(FakerMarketPartnerEmail::class);
 
         return $fakerMarketPartnerEmail->create([
+            'marketPartner' => $apiMarketPartner
         ]);
     }
 
