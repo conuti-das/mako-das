@@ -19,7 +19,7 @@ class ApiTest
     {
         $this->apiUser = $I->createApiUser();
         $this->apiMarketPartner = $I->createApiMarketPartner();
-        $this->apiMarketPartnerEmail = $I->createApiMarketPartnerEmail();
+        $this->apiMarketPartnerEmail = $I->createApiMarketPartnerEmail($this->apiMarketPartner);
     }
 
     public function _after(ApiTester $I): void
