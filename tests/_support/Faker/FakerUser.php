@@ -11,18 +11,31 @@ class FakerUser extends Faker
 {
     private const TEST_PASSWORD = 'test';
 
-    public function create(array $data = []): User
+    public function create(?array $data, bool $commit = true): User
     {
-        $entityManager = $this->getEntityManager();
         $user = new User();
         $user->setUsername($data['username'] ?? 'user1@conuti.de');
-        $user->setRoles($data['roles'] ?? ["ROLE_USER_API"]);
-        $user->setPassword($data['password'] ?? self::TEST_PASSWORD);
+        $user->setRoles($data['roles'] ?? ["ROLE_ADMIN", "ROLE_USER"]);
+        $password = $this->encoder->hashPassword($user, $data['password'] ?? static::TEST_PASSWORD);
+        $user->setPassword($password);
         $user->setCreatedAt($data['createdAt'] ?? new DateTime('now'));
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        // commit the change,
+        // otherwise the API will not see it
+        // because it runs in another transaction
+        if ($commit) {
+            $this->entityManager->commit();
+        }
 
         return $user;
+    }
+
+    public function delete(mixed $object): void
+    {
+        $this->entityManager->remove($object);
+        $this->entityManager->flush();
     }
 }
