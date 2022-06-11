@@ -6,19 +6,17 @@ namespace App\Tests\Faker;
 
 use App\Entity\MarketPartner;
 use DateTime;
-use Doctrine\ORM\Id\AssignedGenerator;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class FakerMarketPartner extends Faker
 {
-    public function create(array $data = []): MarketPartner
+    public function create(?array $data): MarketPartner
     {
-        $entityManager = $this->getEntityManager();
         $marketPartner = new MarketPartner();
         $marketPartner->setId($data['id'] ?? 1);
         $marketPartner->setActive($data['active'] ?? 1);
-        $marketPartner->setDeleted($data['deleted'] ?? 0);
-        $marketPartner->setCreatedAt($data['createdAt'] ?? new DateTime('now'));
+        $marketPartner->setDeleted($data['deletedAt'] ?? 0);
+        $marketPartner->setCreatedAt($data['createdAt'] ?? new DateTime("2022-05-23T13:17:20+00:00"));
+        $marketPartner->setUpdatedAt($data['updatedAt'] ?? new DateTime("2022-06-23T00:00:00+00:00"));
         $marketPartner->setType($data['type'] ?? MarketPartner::TYPE_NET);
         $marketPartner->setEnergy($data['energy'] ?? MarketPartner::ENERGY_ELECTRICITY);
         $marketPartner->setPartnerId($data['partnerId'] ?? '9900080000007');
@@ -40,13 +38,15 @@ class FakerMarketPartner extends Faker
         $marketPartner->setEncrypt($data['encrypt'] ?? 0);
         $marketPartner->setReminderEmailAddress($data['reminderEmailAddress'] ?? 'debug@conuti.de');
         $marketPartner->setUsingTumCatalog($data['usingTumCatalog'] ?? 0);
-
-        $metadata = $entityManager->getClassMetaData(MarketPartner::class);
-        $metadata->setIdGenerator(new AssignedGenerator());
-        $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_NONE);
-        $entityManager->persist($marketPartner);
-        $entityManager->flush();
+        $this->entityManager->persist($marketPartner);
+        $this->entityManager->flush();
 
         return $marketPartner;
+    }
+
+    public function delete(mixed $object): void
+    {
+        $this->entityManager->remove($object);
+        $this->entityManager->flush();
     }
 }
