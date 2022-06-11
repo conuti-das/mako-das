@@ -6,3 +6,7 @@ services:
 
   App\Tests\Faker\FakerUser:
     public: true;
+  App\Tests\Faker\FakerMarketPartner:
+    public: true;
+  App\Tests\Faker\FakerMarketPartnerEmail:
+    public: true;
