@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\api\MarketPartnerEmail;
 
+use App\Tests\api\ApiTest;
 use App\Tests\ApiTester;
 use Codeception\Example;
 use Codeception\Util\HttpCode;
 
-class MarketPartnerEmailCest
+class MarketPartnerEmailCest extends ApiTest
 {
     /**
      * @param ApiTester $I
@@ -47,7 +48,7 @@ class MarketPartnerEmailCest
     {
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
-        $I->sendGet('/api/market-partners-email/1');
+        $I->sendGet('/api/market-partners-email/' . $this->apiMarketPartnerEmail->getId());
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(
