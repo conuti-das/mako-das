@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Entity\MarketPartner;
+use App\Entity\MarketPartnerEmail;
 use App\Entity\User;
+use App\Tests\Faker\FakerMarketPartner;
+use App\Tests\Faker\FakerMarketPartnerEmail;
 use App\Tests\Faker\FakerUser;
 use Codeception\Actor;
 
@@ -38,7 +42,6 @@ class ApiTester extends Actor
                 'password' => $_ENV['API_TEST_PASSWORD'],
             ]
         );
-
         $this->seeResponseCodeIs(200);
 
         $token = $this->grabDataFromResponseByJsonPath('token');
@@ -59,10 +62,48 @@ class ApiTester extends Actor
         ]);
     }
 
+    public function createApiMarketPartner(): MarketPartner
+    {
+        /** @var FakerMarketPartner $fakerMarketPartner */
+        $fakerMarketPartner = $this->grabService(FakerMarketPartner::class);
+
+        return $fakerMarketPartner->create([
+            'type' => MarketPartner::TYPE_NET,
+            'energy' => MarketPartner::ENERGY_ELECTRICITY,
+            'partnerIdType' => MarketPartner::NUMBER_BDEW,
+        ]);
+    }
+
+    public function createApiMarketPartnerEmail(MarketPartner $apiMarketPartner, array $data = []): MarketPartnerEmail
+    {
+        /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
+        $fakerMarketPartnerEmail = $this->grabService(FakerMarketPartnerEmail::class);
+
+        $marketPartner = $data['marketPartner'] ?? $apiMarketPartner;
+
+        return $fakerMarketPartnerEmail->create([
+            'marketPartner' => $marketPartner,
+        ]);
+    }
+
     public function deleteAPIUser(User $user): void
     {
         /** @var FakerUser $fakerUser */
         $fakerUser = $this->grabService(FakerUser::class);
         $fakerUser->delete($user);
+    }
+
+    public function deleteAPIMarketPartner(MarketPartner $marketPartner): void
+    {
+        /** @var FakerMarketPartner $fakerMarketPartner */
+        $fakerMarketPartner = $this->grabService(FakerMarketPartner::class);
+        $fakerMarketPartner->delete($marketPartner);
+    }
+
+    public function deleteAPIMarketPartnerEmail(MarketPartnerEmail $marketPartnerEmail): void
+    {
+        /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
+        $fakerMarketPartnerEmail = $this->grabService(FakerMarketPartnerEmail::class);
+        $fakerMarketPartnerEmail->delete($marketPartnerEmail);
     }
 }
