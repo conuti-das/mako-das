@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Faker;
 
-use App\Entity\MarketPartner;
 use App\Entity\MarketPartnerEmail;
 use App\Tests\Exception\MarketPartner\MarketPartnerEmptyException;
 use DateTime;
@@ -13,9 +12,7 @@ class FakerMarketPartnerEmail extends Faker
 {
     public function create(?array $data): MarketPartnerEmail
     {
-        $marketPartner = $this->entityManager->getRepository(MarketPartner::class)->findAll();
-
-        if (!isset($marketPartner[0])) {
+        if (!isset($data['marketPartner'])) {
             throw new MarketPartnerEmptyException("marketPartner not found");
         }
 
@@ -24,7 +21,7 @@ class FakerMarketPartnerEmail extends Faker
 
         $marketPartnerEmail = new MarketPartnerEmail();
         $marketPartnerEmail->setId($data['id'] ?? 1);
-        $marketPartnerEmail->setMarketPartner($data['marketPartner'] ?? $marketPartner[0]);
+        $marketPartnerEmail->setMarketPartner($data['marketPartner']);
         $marketPartnerEmail->setCreatedAt($data['createdAt'] ?? $nowDate);
         $marketPartnerEmail->setUpdatedAt($data['updatedAt'] ?? $nowDate);
         $marketPartnerEmail->setEmail($data['email'] ?? 'debug@conuti.de');
