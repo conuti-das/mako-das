@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\api\MarketPartner;
 
+use App\Tests\api\ApiTest;
 use App\Tests\ApiTester;
-use App\Tests\Faker\FakerMarketPartner;
 use Codeception\Example;
 use Codeception\Util\HttpCode;
 
-class MarketPartnerCest
+class MarketPartnerCest extends ApiTest
 {
     /**
      * @param ApiTester $I
@@ -20,8 +20,6 @@ class MarketPartnerCest
      */
     public function marketPartnerTest(ApiTester $I, Example $example): void
     {
-        $fakeMarketPartner = new FakerMarketPartner();
-        $fakeMarketPartner->create();
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
         $I->sendGet('/api/market-partners');
@@ -42,10 +40,10 @@ class MarketPartnerCest
     {
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
-        $I->sendGet('/api/market-partners/1');
+        $I->sendGet('/api/market-partners/' . $this->apiMarketPartner->getId());
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $I->seeResponseContainsJson(['id' => $example['id']],
+        $I->seeResponseContainsJson(
             ['active' => $example['active']],
             ['deleted' => $example['deleted']],
             ['createdAt' => $example['createdAt']],
@@ -71,8 +69,7 @@ class MarketPartnerCest
             ['compress' => $example['compress']],
             ['encrypt' => $example['encrypt']],
             ['reminderEmailAddress' => $example['reminderEmailAddress']],
-            ['usingTumCatalog' => $example['usingTumCatalog']],
-            ['marketPartnerEmails' => $example['marketPartnerEmails']]
+            ['usingTumCatalog' => $example['usingTumCatalog']]
         );
         $I->canSeeResponseCodeIsSuccessful();
     }
