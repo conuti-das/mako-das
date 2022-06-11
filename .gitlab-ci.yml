@@ -15,6 +15,7 @@ image:
   name: docker/compose:1.24.0
   entrypoint: ["/bin/sh", "-c"]
 
+
 test:
   stage: test
   script:
