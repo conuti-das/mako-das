@@ -4,12 +4,26 @@ declare(strict_types=1);
 
 namespace App\Tests\api\MarketPartnerEmail;
 
+use App\Entity\MarketPartner;
+use App\Entity\MarketPartnerEmail;
+use App\Tests\api\ApiTest;
 use App\Tests\ApiTester;
 use Codeception\Example;
 use Codeception\Util\HttpCode;
 
-class MarketPartnerEmailCest
+class MarketPartnerEmailCest extends ApiTest
 {
+    protected MarketPartnerEmail $apiMarketPartnerEmail;
+
+    protected MarketPartner $apiMarketPartner;
+
+    public function _before(ApiTester $I): void
+    {
+        parent::_before($I);
+        $this->apiMarketPartner = $I->createApiMarketPartner();
+        $this->apiMarketPartnerEmail = $I->createApiMarketPartnerEmail($this->apiMarketPartner);
+    }
+
     /**
      * @param ApiTester $I
      * @param Example $example
@@ -47,7 +61,7 @@ class MarketPartnerEmailCest
     {
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
-        $I->sendGet('/api/market-partners-email/1');
+        $I->sendGet('/api/market-partners-email/' . $this->apiMarketPartnerEmail->getId());
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(
@@ -60,5 +74,12 @@ class MarketPartnerEmailCest
             ['activeUntil' => $example['activeUntil']]
         );
         $I->canSeeResponseCodeIsSuccessful();
+    }
+
+    public function _after(ApiTester $I): void
+    {
+        parent::_after($I);
+        $I->deleteAPIMarketPartnerEmail($this->apiMarketPartnerEmail);
+        $I->deleteAPIMarketPartner($this->apiMarketPartner);
     }
 }
