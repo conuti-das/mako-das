@@ -11,6 +11,8 @@
     {% block stylesheets %}
         <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}"
               rel="stylesheet"/>
+        <link href="{{ asset('assets/app/css/login.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
         <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css' ~ asset_version ) }}"
               rel="stylesheet"/>
         <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/dark-style.css' ~ asset_version ) }}"
@@ -29,10 +31,11 @@
               rel="stylesheet"/>
         <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}"
               rel="stylesheet"/>
-        <link rel="icon" href="assets/app/img/conuti-logo-favicon.png" type="image/png" sizes="16x16">
+        <link rel="icon" href="{{ asset('assets/app/img/conuti-logo-favicon.png' ~ asset_version ) }}" type="image/png"
+              sizes="16x16"/>
     {% endblock %}
 </head>
-<body style="background-color: #1c3945">
+<body>
 {% block body %}{% endblock %}
 </body>
 </html>
