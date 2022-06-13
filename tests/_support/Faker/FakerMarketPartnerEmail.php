@@ -20,7 +20,6 @@ class FakerMarketPartnerEmail extends Faker
         $expiredDate = clone $nowDate->modify('+1 year');
 
         $marketPartnerEmail = new MarketPartnerEmail();
-        $marketPartnerEmail->setId($data['id'] ?? 1);
         $marketPartnerEmail->setMarketPartner($data['marketPartner']);
         $marketPartnerEmail->setCreatedAt($data['createdAt'] ?? $nowDate);
         $marketPartnerEmail->setUpdatedAt($data['updatedAt'] ?? $nowDate);
@@ -37,11 +36,5 @@ class FakerMarketPartnerEmail extends Faker
         $this->entityManager->flush();
 
         return $marketPartnerEmail;
-    }
-
-    public function delete(mixed $object): void
-    {
-        $this->entityManager->remove($object);
-        $this->entityManager->flush();
     }
 }
