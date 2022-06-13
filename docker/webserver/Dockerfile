@@ -7,13 +7,13 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
 RUN  apt-get update -y && \
      apt-get upgrade -y && \
      apt-get dist-upgrade -y && \
      apt-get -y autoremove && \
      apt-get clean
-
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 RUN apt-get install -y p7zip \
     p7zip-full \
