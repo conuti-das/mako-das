@@ -112,7 +112,7 @@ class CertificateServiceTest extends Unit
      * @throws CertificateParseException
      * @throws CertificateReadException
      */
-    public function testJsonRepresentation(): void
+    public function JsonRepresentation(): void
     {
         $nowDate = new DateTime('2022-05-18 14:55:55');
         $certificateDto = $this->certificateService->decode($this->certificatePEM);
