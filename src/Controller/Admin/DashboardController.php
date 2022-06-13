@@ -31,21 +31,23 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()->setTitle('MPSync');
+        return Dashboard::new()->setTitle('MPSync')->setFaviconPath("assets/app/img/conuti-logo-favicon.png");
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text', 'certificates_all');
-        yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
+        yield MenuItem::linkToDashboard('Dashboard', 'side-menu__icon ti-home')->setCssClass("side-menu__item");
+        yield MenuItem::linkToRoute('Certificate', 'side-menu__icon ti-package', 'certificates_all')->setCssClass("side-menu__item");
+        yield MenuItem::linkToRoute('User', 'side-menu__icon ti-user', 'admin_user_list')->setCssClass("side-menu__item");
     }
 
     public function configureAssets(): Assets
     {
         return Assets::new()
-            ->addCssFile('assets/app/css/certificate.css')
+            ->addCssFile('assets/app/css/sidemenu.css')
+            ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/sidemenu.css')
             ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css')
+            ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/icons.css')
             ->addCssFile('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css')
             ->addCssFile(
                 'assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css'
