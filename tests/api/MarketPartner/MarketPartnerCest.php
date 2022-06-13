@@ -17,8 +17,7 @@ class MarketPartnerCest extends ApiTest
     public function _before(ApiTester $I): void
     {
         parent::_before($I);
-        #$this->apiMarketPartner = $I->createMarketPartner();
-        #dd($this->apiMarketPartner);
+        $this->apiMarketPartner = $I->createMarketPartner();
     }
 
     /**
