@@ -7,7 +7,9 @@ modules:
             app_path: 'src'
             environment: 'test'
             kernel_class: App\Kernel
-            rebootable_client: false
+            part:
+                - ORM
+                - services
         - Doctrine2:
             depends: Symfony
             cleanup: true
@@ -16,5 +18,7 @@ modules:
             part: Json
         - PhpBrowser:
               url: '%API_TEST_HOST%'
+              headers:
+                  User-Agent: Codeception PhpBrowser
         - Asserts
         - \App\Tests\Helper\Api
