@@ -74,9 +74,7 @@ make start
 ```
 
 With this command you will
-* start the docker environment
-* install all dependencies with composer
-* run all migrations for DEV and TEST databases
+* run all migrations for DEV and TEST database
 * fix autoload
 * clean cache
 
