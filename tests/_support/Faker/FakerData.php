@@ -80,7 +80,7 @@ trait FakerData
      */
     public function createMarketPartnerEmail(
         MarketPartner $marketPartner,
-        ?array $data,
+        ?array $data = null,
         bool $commit = true
     ): MarketPartnerEmail {
         /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
