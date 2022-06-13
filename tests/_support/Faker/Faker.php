@@ -16,5 +16,10 @@ abstract class Faker
     }
 
     abstract public function create(?array $data): object;
-    abstract public function delete(mixed $object): void;
+
+    public function delete(mixed $object): void
+    {
+        $this->entityManager->remove($object);
+        $this->entityManager->flush();
+    }
 }
