@@ -77,22 +77,18 @@
     background: none;
 }
 
-#table_id_wrapper {
-    overflow-x: auto;
-}
-
 #table_id {
     min-width: 1386px;
 }
 
-.card-body {
-    overflow: hidden;
+.certificate-error {
+    display: none;
 }
 
-.card {
-    max-width: 1178px;
+.certificate-success {
+    display: none;
 }
 
-.ea-sidebar-width-normal .card {
-    max-width: 990px;
+.successMsg {
+    color: green;
 }
