@@ -1,0 +1,32 @@
+stages:
+  - test
+
+services:
+  - name: docker:dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: ["dockerd-entrypoint.sh"]
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  # See https://github.com/docker-library/docker/pull/166
+  DOCKER_TLS_CERTDIR: ""
+
+image:
+  name: docker/compose:1.24.0
+  entrypoint: ["/bin/sh", "-c"]
+
+
+test:
+  stage: test
+  script:
+    - docker-compose up --remove-orphans -d
+    - docker-compose exec -T webserver composer install --no-interaction
+    - docker-compose exec -T webserver composer dumpautoload --no-interaction
+    - docker-compose exec -T webserver php bin/console cache:clear
+    - docker-compose exec -T webserver php bin/console doctrine:migrations:migrate --env=dev --no-interaction
+    - docker-compose exec -T webserver php bin/console doctrine:schema:validate --env=dev
+    - docker-compose exec -T webserver php bin/console doctrine:fixtures:load --no-interaction --env=dev
+    - docker-compose exec -T webserver php bin/console lexik:jwt:generate-keypair
+    - docker-compose exec -T webserver php vendor/bin/codecept run --steps --env=test unit
+    - docker-compose exec -T webserver php vendor/bin/codecept run --steps --env=test functional
+    - docker-compose exec -T webserver php vendor/bin/codecept run --steps --env=test api
