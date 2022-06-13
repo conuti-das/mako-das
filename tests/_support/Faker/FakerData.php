@@ -7,7 +7,7 @@ namespace App\Tests\Faker;
 use App\Entity\MarketPartner;
 use App\Entity\MarketPartnerEmail;
 use App\Entity\User;
-use App\Exception\MarketPartner\MarketPartnerEmptyException;
+use Exception;
 
 trait FakerData
 {
@@ -29,30 +29,46 @@ trait FakerData
     {
         /** @var FakerUser $fakerUser */
         $fakerUser = $this->grabService(FakerUser::class);
-
-        return $fakerUser->create($data, $commit);
+        try {
+            return $fakerUser->create($data, $commit);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     public function deleteUser(User $user): void
     {
         /** @var FakerUser $fakerUser */
         $fakerUser = $this->grabService(FakerUser::class);
-        $fakerUser->delete($user);
+        try {
+            $fakerUser->delete($user);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
-    public function createMarketPartner(?array $data, bool $commit = true): MarketPartner
+    public function createMarketPartner(?array $data = null, bool $commit = true): MarketPartner
     {
         /** @var FakerMarketPartner $fakerMarketPartner */
         $fakerMarketPartner = $this->grabService(FakerMarketPartner::class);
 
-        return $fakerMarketPartner->create($data, $commit);
+        try {
+            return $fakerMarketPartner->create($data, $commit);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     public function deleteMarketPartner(MarketPartner $marketPartner): void
     {
         /** @var FakerMarketPartner $fakerMarketPartner */
         $fakerMarketPartner = $this->grabService(FakerMarketPartner::class);
-        $fakerMarketPartner->delete($marketPartner);
+
+        try {
+            $fakerMarketPartner->delete($marketPartner);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     /**
@@ -61,7 +77,6 @@ trait FakerData
      * @param bool $commit
      *
      * @return MarketPartnerEmail
-     * @throws MarketPartnerEmptyException
      */
     public function createMarketPartnerEmail(
         MarketPartner $marketPartner,
@@ -73,13 +88,22 @@ trait FakerData
 
         $data['marketPartner'] = $marketPartner;
 
-        return $fakerMarketPartnerEmail->create($data, $commit);
+        try {
+            return $fakerMarketPartnerEmail->create($data, $commit);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     public function deleteMarketPartnerEmail(MarketPartnerEmail $marketPartnerEmail): void
     {
         /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
         $fakerMarketPartnerEmail = $this->grabService(FakerMarketPartnerEmail::class);
-        $fakerMarketPartnerEmail->delete($marketPartnerEmail);
+
+        try {
+            $fakerMarketPartnerEmail->delete($marketPartnerEmail);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
     }
 }
