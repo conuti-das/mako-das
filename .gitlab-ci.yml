@@ -15,7 +15,6 @@ image:
   name: docker/compose:1.24.0
   entrypoint: ["/bin/sh", "-c"]
 
-
 test:
   stage: test
   script:
@@ -25,7 +24,6 @@ test:
     - docker-compose exec -T webserver php bin/console cache:clear
     - docker-compose exec -T webserver php bin/console doctrine:migrations:migrate --env=test --no-interaction
     - docker-compose exec -T webserver php bin/console doctrine:schema:validate --env=test
-    - docker-compose exec -T webserver php bin/console doctrine:fixtures:load --no-interaction --env=test
     - docker-compose exec -T webserver php bin/console lexik:jwt:generate-keypair
     - docker-compose exec -T webserver php vendor/bin/codecept run --steps --env=test unit
     - docker-compose exec -T webserver php vendor/bin/codecept run --steps --env=test functional
