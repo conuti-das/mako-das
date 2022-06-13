@@ -34,7 +34,7 @@ class CertificateController extends AbstractController
     {
         try {
             $partnerId = (int)$request->get('partnerId');
-            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
+            $marketPartnerData = $this->marketPartnerRepository->findOneBy(array('partnerId' => $partnerId, "active" => 1, "deleted" => 0));
 
             if (!$marketPartnerData) {
                 throw new MarketPartnerEmptyException("Given Market partnerId didn't exist");
@@ -76,7 +76,7 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
-            $marketPartnerData = $this->marketPartnerRepository->find($partnerId);
+            $marketPartnerData = $this->marketPartnerRepository->findOneBy(array('partnerId' => $partnerId, "active" => 1, "deleted" => 0));
 
             $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
