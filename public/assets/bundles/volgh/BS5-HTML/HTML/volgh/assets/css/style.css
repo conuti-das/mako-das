@@ -125,10 +125,7 @@ body {
   text-align: left;
   background-color: #f2f3f9; }
 
-.page-content{
-  margin: 0!important;
-  padding: 0;
-}
+
 
 .number-font {
   font-weight: 600 !important; }
@@ -7614,13 +7611,6 @@ body.fixed-header .page {
 .page-main {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto; }
-
-.page-content {
-  margin: .75rem 0; }
-
-@media (min-width: 768px) {
-  .page-content {
-    margin: 1.5rem 0; } }
 
 .example .pagination {
   margin-bottom: 0; }
