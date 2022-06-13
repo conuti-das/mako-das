@@ -62,16 +62,12 @@ class ApiTester extends Actor
         ]);
     }
 
-    public function createApiMarketPartner(): MarketPartner
+    public function createApiMarketPartner(array $data = []): MarketPartner
     {
         /** @var FakerMarketPartner $fakerMarketPartner */
         $fakerMarketPartner = $this->grabService(FakerMarketPartner::class);
 
-        return $fakerMarketPartner->create([
-            'type' => MarketPartner::TYPE_NET,
-            'energy' => MarketPartner::ENERGY_ELECTRICITY,
-            'partnerIdType' => MarketPartner::NUMBER_BDEW,
-        ]);
+        return $fakerMarketPartner->create($data);
     }
 
     public function createApiMarketPartnerEmail(MarketPartner $apiMarketPartner, array $data = []): MarketPartnerEmail
@@ -79,11 +75,9 @@ class ApiTester extends Actor
         /** @var FakerMarketPartnerEmail $fakerMarketPartnerEmail */
         $fakerMarketPartnerEmail = $this->grabService(FakerMarketPartnerEmail::class);
 
-        $marketPartner = $data['marketPartner'] ?? $apiMarketPartner;
+        $data['marketPartner'] = $apiMarketPartner;
 
-        return $fakerMarketPartnerEmail->create([
-            'marketPartner' => $marketPartner,
-        ]);
+        return $fakerMarketPartnerEmail->create($data);
     }
 
     public function deleteAPIUser(User $user): void
