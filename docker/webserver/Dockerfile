@@ -7,6 +7,8 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
 RUN  apt-get update -y && \
      apt-get upgrade -y && \
      apt-get dist-upgrade -y && \
@@ -34,7 +36,7 @@ RUN apt-get update \
     && docker-php-ext-configure zip\
     && docker-php-ext-install zip \
     && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached && cd /usr/src/php/ext/memcached \
-    && docker-php-ext-configure memcached   && docker-php-ext-install memcached
+    && docker-php-ext-configure memcached && docker-php-ext-install memcached
 
 CMD ["bash"]
 
@@ -42,7 +44,7 @@ RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev && rm -r /v
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap
 
-RUN docker-php-ext-install pdo mysqli pdo_mysql zip;
+RUN docker-php-ext-install pdo mysqli pdo_mysql;
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
