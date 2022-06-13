@@ -45,7 +45,7 @@ class MarketPartnerCest extends ApiTest
      * @return void
      * @example {"id": "1","active": "1", "deleted": "0", "createdAt": "2022-05-23T13:17:20+00:00","updatedAt": "2022-06-23T00:00:00+00:00", "type": "net", "energy": "electricity", "partnerId": "9900080000007", "partnerIdType": "bdew", "partnerIdGmsb": "null", "organization": "Stromnetz Berlin GmbH", "zip": "12435", "city": "Berlin", "street": "Eichenstraße", "houseNumber": "3a", "iban": "DE85120300000001122445", "bic": "BYLADEM1001", "bank": "DEUTSCHE KREDIT BANK A.G. BERLIN", "accountHolder": "Stromnetz Berlin GmbH", "phone": "+49 30 0000 000", "registerCourt": "Charlottenburg (Berlin) HRB 179968 B", "registerNumber": "DE308492655", "sign": "0", "compress": "0", "encrypt": "0", "reminderEmailAddress": "debug@conuti.de", "usingTumCatalog": "0", "marketPartnerEmails": "string" }
      */
-    /*public function marketPartnerSingleTest(ApiTester $I, Example $example): void
+    public function marketPartnerSingleTest(ApiTester $I, Example $example): void
     {
         $I->amBearerAuthenticated($I->getJWT());
         $I->haveHttpHeader('accept', 'application/ld+json');
@@ -81,7 +81,7 @@ class MarketPartnerCest extends ApiTest
             ['usingTumCatalog' => $example['usingTumCatalog']]
         );
         $I->canSeeResponseCodeIsSuccessful();
-    }*/
+    }
 
     public function _after(ApiTester $I): void
     {
