@@ -1,0 +1,29 @@
+.sidebar-resizer {
+    min-height: 100%;
+    right: 12px !important;
+}
+
+#sidebar-resizer-handler {
+
+}
+
+.sub-sidebar {
+    margin: auto;
+    padding: 0;
+}
+
+.resizer-handler .resizer-handler-left {
+    display: none !important;
+}
+
+.main-header {
+    min-height: 80px;
+}
+
+.menu-item {
+    padding-top: 10px;
+}
+
+.content-header {
+    background: none !important;
+}
