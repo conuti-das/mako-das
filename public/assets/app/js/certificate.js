@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
     $("#certificateModal").click(function () {
         $("#certificate_form_partnerId").val("");
         $("#exampleModal").modal('show');
@@ -23,7 +27,8 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (!response.errorMessage) {
-                    $('.errorMsg').html('');
+                    $('.successMsg').html('Certificate Decoded.');
+                    $('.certificate-success').css("display", "block");
                     let validFromDate = response.validFrom.date.split('.')[0];
                     let validUntilDate = response.validUntil.date.split('.')[0];
                     $("#certificate_form_email_hidden").html(response.emailAddress)
@@ -56,7 +61,8 @@ $(document).ready(function () {
                 } else {
                     $('#certificate_form_uploadFile').val("")
                     $('#certificate_form_partnerId').val("")
-                    $('.errorMsg').html(response.errorMessage);
+                    $('.error-message').html(response.errorMessage);
+                    $('.certificate-error').css("display", "block");
                 }
             },
             error: function (error) {
