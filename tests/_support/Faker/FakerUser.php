@@ -33,9 +33,4 @@ class FakerUser extends Faker
         return $user;
     }
 
-    public function delete(mixed $object): void
-    {
-        $this->entityManager->remove($object);
-        $this->entityManager->flush();
-    }
 }
