@@ -26,11 +26,10 @@ class FakerUser extends Faker
         // commit the change,
         // otherwise the API will not see it
         // because it runs in another transaction
-        if($commit) {
+        if ($commit) {
             $this->entityManager->commit();
         }
 
         return $user;
     }
-
 }

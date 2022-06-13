@@ -18,6 +18,6 @@ class ApiTest
 
     public function _after(ApiTester $I): void
     {
-        $I->deleteAPIUser($this->apiUser);
+        $I->deleteApiUser($this->apiUser);
     }
 }

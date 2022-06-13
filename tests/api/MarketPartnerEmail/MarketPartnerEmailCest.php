@@ -20,8 +20,8 @@ class MarketPartnerEmailCest extends ApiTest
     public function _before(ApiTester $I): void
     {
         parent::_before($I);
-        $this->apiMarketPartner = $I->createApiMarketPartner();
-        $this->apiMarketPartnerEmail = $I->createApiMarketPartnerEmail($this->apiMarketPartner);
+        $this->apiMarketPartner = $I->createMarketPartner();
+        $this->apiMarketPartnerEmail = $I->createMarketPartnerEmail($this->apiMarketPartner);
     }
 
     /**
@@ -79,7 +79,7 @@ class MarketPartnerEmailCest extends ApiTest
     public function _after(ApiTester $I): void
     {
         parent::_after($I);
-        $I->deleteAPIMarketPartnerEmail($this->apiMarketPartnerEmail);
-        $I->deleteAPIMarketPartner($this->apiMarketPartner);
+        $I->deleteMarketPartnerEmail($this->apiMarketPartnerEmail);
+        $I->deleteMarketPartner($this->apiMarketPartner);
     }
 }

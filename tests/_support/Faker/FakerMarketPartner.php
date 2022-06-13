@@ -9,14 +9,15 @@ use DateTime;
 
 class FakerMarketPartner extends Faker
 {
-    public function create(?array $data): MarketPartner
+    public function create(?array $data, bool $commit = true): MarketPartner
     {
+        $nowDate = new DateTime('now');
+
         $marketPartner = new MarketPartner();
-        $marketPartner->setId($data['id'] ?? 1);
         $marketPartner->setActive($data['active'] ?? 1);
         $marketPartner->setDeleted($data['deletedAt'] ?? 0);
-        $marketPartner->setCreatedAt($data['createdAt'] ?? new DateTime("2022-05-23T13:17:20+00:00"));
-        $marketPartner->setUpdatedAt($data['updatedAt'] ?? new DateTime("2022-06-23T00:00:00+00:00"));
+        $marketPartner->setCreatedAt($data['createdAt'] ?? $nowDate);
+        $marketPartner->setUpdatedAt($data['updatedAt'] ?? $nowDate);
         $marketPartner->setType($data['type'] ?? MarketPartner::TYPE_NET);
         $marketPartner->setEnergy($data['energy'] ?? MarketPartner::ENERGY_ELECTRICITY);
         $marketPartner->setPartnerId($data['partnerId'] ?? '9900080000007');
@@ -38,8 +39,16 @@ class FakerMarketPartner extends Faker
         $marketPartner->setEncrypt($data['encrypt'] ?? 0);
         $marketPartner->setReminderEmailAddress($data['reminderEmailAddress'] ?? 'debug@conuti.de');
         $marketPartner->setUsingTumCatalog($data['usingTumCatalog'] ?? 0);
+
         $this->entityManager->persist($marketPartner);
         $this->entityManager->flush();
+
+        // commit the change,
+        // otherwise the API will not see it
+        // because it runs in another transaction
+        if ($commit) {
+            $this->entityManager->commit();
+        }
 
         return $marketPartner;
     }
