@@ -105,6 +105,7 @@
     },
     "require-dev": {
         "codeception/module-asserts": "*",
+        "codeception/module-db": "*",
         "codeception/module-doctrine2": "*",
         "codeception/module-phpbrowser": "*",
         "codeception/module-rest": "*",

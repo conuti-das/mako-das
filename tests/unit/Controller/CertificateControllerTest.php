@@ -36,11 +36,8 @@ class CertificateControllerTest extends Unit
 
     public function testCheckMarketPartnerIdException(): void
     {
-        $this->certicateControler = $this->tester->grabService(CertificateController::class);
         $request = $this->createMock(Request::class);
-
         $request->method("get")->with("partnerId")->willReturn(self::PARTNER_ID);
-
         $response = $this->certificateController->certificateDecode($request);
 
         $this->tester->assertEquals(new JsonResponse(['errorMessage' => "Given Market partnerId didn't exist"]), $response);

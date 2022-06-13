@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Tests\Faker\FakerData;
 use Codeception\Actor;
 
 /**
@@ -24,6 +25,7 @@ use Codeception\Actor;
 class ApiTester extends Actor
 {
     use _generated\ApiTesterActions;
+    use FakerData;
 
     public function getJWT(): string
     {
