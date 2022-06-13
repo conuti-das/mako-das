@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\api\Authorization;
 
+use App\Tests\api\ApiTest;
 use App\Tests\ApiTester;
 
-class AuthorizationCest
+class AuthorizationCest extends ApiTest
 {
     public function authorizationFailedTest(ApiTester $I): void
     {
