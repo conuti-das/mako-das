@@ -51,6 +51,12 @@ shell: ## Run a shell inside the webserver container
 logs: ## Call the logs from the entire stack, and follow them (like tail -f)
 	$(DOCKER_COMPOSE) logs --follow
 
+logs-symfony: ## Call the symfony logs for dev.log
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) tail -f var/log/dev.log
+
+logs-symfony-error: ## Call the symfony logs for dev.log only for errors
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) tail -f var/log/dev.log | grep -E -i 'error|critical'
+
 ################################################################
 ## Composer
 ################################################################
