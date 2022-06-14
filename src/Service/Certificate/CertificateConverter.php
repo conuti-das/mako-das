@@ -8,7 +8,7 @@ class CertificateConverter
 {
     public function convertDER2PEM(string $derData): string
     {
-        $pem = chunk_split(base64_encode($derData), 64);
+        $pem = chunk_split(base64_encode($derData), 64, "\n");
 
         return "-----BEGIN CERTIFICATE-----\n" . $pem . "-----END CERTIFICATE-----\n";
     }
