@@ -29,6 +29,7 @@ $(document).ready(function () {
                 if (!response.errorMessage) {
                     $('.successMsg').html('Certificate Decoded.');
                     $('.certificate-success').css("display", "block");
+                    setTimeout(function(){ $('.certificate-success').css("display", "none");}, 2000);
                     let validFromDate = response.validFrom.date.split('.')[0];
                     let validUntilDate = response.validUntil.date.split('.')[0];
                     $("#certificate_form_email_hidden").html(response.emailAddress)
@@ -63,6 +64,7 @@ $(document).ready(function () {
                     $('#certificate_form_partnerId').val("")
                     $('.error-message').html(response.errorMessage);
                     $('.certificate-error').css("display", "block");
+                    setTimeout(function(){ $('.certificate-error').css("display", "none");}, 2000);
                 }
             },
             error: function (error) {
