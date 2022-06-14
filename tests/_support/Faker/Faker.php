@@ -21,5 +21,9 @@ abstract class Faker
     {
         $this->entityManager->remove($object);
         $this->entityManager->flush();
+
+        if ($this->entityManager->getConnection()->isTransactionActive()) {
+            $this->entityManager->commit();
+        }
     }
 }
