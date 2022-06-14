@@ -1,4 +1,8 @@
 $(document).ready(function () {
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
     $("#certificateModal").click(function () {
         $("#certificate_form_partnerId").val("");
         $("#exampleModal").modal('show');

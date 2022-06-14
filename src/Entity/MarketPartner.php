@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: [
         'market_partners_all' => [
             'method' => 'GET',
-            'path'=>'/market-partners',
+            'path' => '/market-partners',
             'output' => MarketPartnerAllResponse::class,
             'normalization_context' => ['groups' => ['market-partners-all:read']],
         ],
@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     itemOperations: [
         'market_partners_single' => [
             'method' => 'GET',
-            'path'=>'/market-partners/{id}',
+            'path' => '/market-partners/{id}',
         ],
     ],
 )]
@@ -482,10 +482,11 @@ class MarketPartner
 
     public function removeMarketPartnerEmail(MarketPartnerEmail $marketPartnerEmail): self
     {
-        if ($this->marketPartnerEmails->removeElement($marketPartnerEmail)) {
-            if ($marketPartnerEmail->getMarketPartner() === $this) {
-                $marketPartnerEmail->setMarketPartner(null);
-            }
+        if (
+            $this->marketPartnerEmails->removeElement($marketPartnerEmail)
+            && $marketPartnerEmail->getMarketPartner() === $this
+        ) {
+            $marketPartnerEmail->setMarketPartner(null);
         }
 
         return $this;
@@ -508,10 +509,11 @@ class MarketPartner
 
     public function removeMarketPartnerImportLog(MarketPartnerImportLog $marketPartnerImportLog): self
     {
-        if ($this->marketPartnerImportLogs->removeElement($marketPartnerImportLog)) {
-            if ($marketPartnerImportLog->getMarketPartner() === $this) {
-                $marketPartnerImportLog->setMarketPartner(null);
-            }
+        if (
+            $this->marketPartnerImportLogs->removeElement($marketPartnerImportLog)
+            && $marketPartnerImportLog->getMarketPartner() === $this
+        ) {
+            $marketPartnerImportLog->setMarketPartner(null);
         }
 
         return $this;
