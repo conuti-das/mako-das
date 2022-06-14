@@ -16,16 +16,18 @@
     min-height: 80px;
     position: relative;
 }
-.main-header:after{
+
+.main-header:after {
     content: "";
     position: absolute;
     bottom: 0;
     left: calc(-1 * var(--sidebar-padding-right));
-    width: calc(100% + (2* var(--sidebar-padding-right)));
+    width: calc(100% + (2 * var(--sidebar-padding-right)));
     height: 1px;
     background: #eaedf1;
 }
-body.ea-sidebar-width-compact .sidebar .main-header:after{
+
+body.ea-sidebar-width-compact .sidebar .main-header:after {
     left: 0;
     width: 100%;
 }

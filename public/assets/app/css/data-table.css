@@ -90,8 +90,9 @@ div.dataTables_wrapper div.dataTables_filter input:focus {
 }
 
 .dataTables_info {
-    color: black!important;
+    color: black !important;
 }
-body .content-wrapper{
+
+body .content-wrapper {
     max-width: 100% !important;
 }
