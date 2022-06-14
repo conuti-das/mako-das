@@ -37,7 +37,7 @@ table.dataTable.no-footer {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
     user-select: none;
-    color: #ced4da !important;
+    color: black !important;
     pointer-events: none;
     cursor: auto;
     background-color: #fff;
@@ -83,4 +83,15 @@ div.dataTables_wrapper div.dataTables_filter input:focus {
 
 .dataTables_filter {
     color: black !important;
+}
+
+.dataTables_length label {
+    color: black;
+}
+
+.dataTables_info {
+    color: black!important;
+}
+body .content-wrapper{
+    max-width: 100% !important;
 }
