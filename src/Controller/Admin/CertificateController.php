@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Dto\Certificate\UploadCertificateDto;
-use App\Exception\MarketPartner\MarketPartnerEmptyException;
+use App\Exception\MarketPartner\MarketPartnerNotExistsException;
 use App\Form\CertificateFormType;
 use App\Repository\MarketPartnerEmailRepository;
 use App\Repository\MarketPartnerRepository;
 use App\Service\Certificate\CertificateService;
 use App\Service\Upload\UploadService;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,10 +35,10 @@ class CertificateController extends AbstractController
     {
         try {
             $partnerId = (int)$request->get('partnerId');
-            $marketPartnerData = $this->marketPartnerRepository->findOneBy(array('partnerId' => $partnerId, "active" => 1, "deleted" => 0));
+            $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
 
             if (!$marketPartnerData) {
-                throw new MarketPartnerEmptyException("Given Market partnerId didn't exist");
+                throw new MarketPartnerNotExistsException("Given Market partnerId didn't exist");
             }
 
             $certificateFile = $request->files->get('file');
@@ -57,8 +58,12 @@ class CertificateController extends AbstractController
         }
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws Exception
+     */
     #[Route('/admin/certificates/all', name: 'certificates_all')]
-    public function certificate(Request $request): Response
+    public function certificateAll(Request $request): Response
     {
         $modalCertificateForm = $this->createForm(CertificateFormType::class);
         $modalCertificateForm->handleRequest($request);
@@ -69,13 +74,16 @@ class CertificateController extends AbstractController
             $activeFrom = new DateTime($certificateForm['validFrom']);
             $activeUntil = new DateTime($certificateForm['validUntil']);
 
+            $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
+            if (!$marketPartnerData) {
+                throw new MarketPartnerNotExistsException("Given Market partnerId didn't exist");
+            }
+
             $uploadCertificateDto = new UploadCertificateDto();
             $uploadCertificateDto->setEmailAddress($certificateForm['email']);
             $uploadCertificateDto->setValidFrom($activeFrom);
             $uploadCertificateDto->setValidUntil($activeUntil);
             $uploadCertificateDto->setCertificateFile($certificateForm['certificateFile']);
-            $marketPartnerData = $this->marketPartnerRepository->findOneBy(array('partnerId' => $partnerId, "active" => 1, "deleted" => 0));
-
             $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);

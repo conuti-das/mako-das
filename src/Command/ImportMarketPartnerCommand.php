@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Common\FileReader;
+use App\Exception\File\FileReadException;
 use App\Service\Import\ImportMarketPartnerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -31,6 +32,9 @@ class ImportMarketPartnerCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * @throws FileReadException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $micrometerStart = microtime(true);
@@ -44,11 +48,13 @@ class ImportMarketPartnerCommand extends Command
         $numberMarketPartner = 0;
         foreach ($marketPartners as $marketPartner) {
             $this->importMarketPartnerService->import($marketPartner);
-            $numberMarketPartner++;
+
             if ($numberMarketPartner % self::COUNT_MARKET_PARTNER === 0) {
                 $this->entityManager->flush();
                 $this->entityManager->clear();
             }
+
+            $numberMarketPartner++;
         }
         $this->entityManager->flush();
 

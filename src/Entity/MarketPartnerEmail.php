@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: [
         'market_partners_email' => [
             'method' => 'GET',
-            'path'=>'/market-partners-email',
+            'path' => '/market-partners-email',
             'output' => MarketPartnerEmailAllResponse::class,
             'normalization_context' => ['groups' => ['market-partners-email-all:read']],
         ],
@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     itemOperations: [
         'market_partners_email_single' => [
             'method' => 'GET',
-            'path'=>'/market-partners-email/{id}',
+            'path' => '/market-partners-email/{id}',
             'output' => MarketPartnerEmailAllResponse::class,
             'normalization_context' => ['groups' => ['market-partners-email-all:read']],
         ],
@@ -75,13 +75,13 @@ class MarketPartnerEmail
     private MarketPartner $marketPartner;
 
     #[ORM\OneToMany(mappedBy: 'marketPartnerEmail', targetEntity: MarketPartnerEmailImportLog::class)]
-    private $marketPartnerEmailImportLogs;
+    private Collection $marketPartnerEmailImportLogs;
 
     public function __construct()
     {
         $this->marketPartnerEmailImportLogs = new ArrayCollection();
     }
-    
+
     public function getId(): int
     {
         return $this->id;
@@ -219,10 +219,11 @@ class MarketPartnerEmail
 
     public function removeMarketPartnerEmailImportLog(MarketPartnerEmailImportLog $marketPartnerEmailImportLog): self
     {
-        if ($this->marketPartnerEmailImportLogs->removeElement($marketPartnerEmailImportLog)) {
-            if ($marketPartnerEmailImportLog->getMarketPartnerEmail() === $this) {
-                $marketPartnerEmailImportLog->setMarketPartnerEmail(null);
-            }
+        if (
+            $this->marketPartnerEmailImportLogs->removeElement($marketPartnerEmailImportLog)
+            && $marketPartnerEmailImportLog->getMarketPartnerEmail() === $this
+        ) {
+            $marketPartnerEmailImportLog->setMarketPartnerEmail(null);
         }
 
         return $this;
