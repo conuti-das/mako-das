@@ -60,8 +60,6 @@ class CertificateController extends AbstractController
     #[Route('/admin/certificates/all', name: 'certificates_all')]
     public function certificate(Request $request): Response
     {
-        $marketPartnerEmail = $this->marketPartnerEmailRepository->findAll();
-
         $modalCertificateForm = $this->createForm(CertificateFormType::class);
         $modalCertificateForm->handleRequest($request);
 
@@ -82,6 +80,8 @@ class CertificateController extends AbstractController
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
         }
+
+        $marketPartnerEmail = $this->marketPartnerEmailRepository->findAll();
 
         return $this->render(
             'admin/certificate/index.html.twig',
