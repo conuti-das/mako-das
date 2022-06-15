@@ -15,12 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
     }
 
     #[Route('/admin', name: 'admin')]

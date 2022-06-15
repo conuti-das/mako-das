@@ -9,6 +9,9 @@ use Exception;
 
 class FileReader
 {
+    /**
+     * @throws FileReadException
+     */
     public function getContent(string $filePath): string
     {
         try {
@@ -18,12 +21,15 @@ class FileReader
         }
     }
 
+    /**
+     * @throws FileReadException
+     */
     public function csvToArray(string $csvFilePath, int $length = 1000, string $separator = ','): array
     {
         $lines = [];
 
         try {
-            $fileToRead = fopen($csvFilePath, 'r');
+            $fileToRead = fopen($csvFilePath, 'rb');
             $index = fgetcsv($fileToRead, $length, $separator);
 
             while (!feof($fileToRead)) {
