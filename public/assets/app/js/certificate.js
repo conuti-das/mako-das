@@ -85,5 +85,12 @@ $(document).ready(function () {
         });
     })
 
+    if($('#showSuccessMessage').val() == 1){
+        $.growl.notice({
+            message: "Successfully saved!"
+        });
+        $('#showSuccessMessage').val("");
+    }
+
     $('#table_id').DataTable({});
 });
