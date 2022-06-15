@@ -70,6 +70,7 @@ class CertificateController extends AbstractController
         $modalCertificateForm = $this->createForm(CertificateFormType::class);
         $modalCertificateForm->handleRequest($request);
 
+        $showSuccess = false;
         if ($modalCertificateForm->isSubmitted() && $modalCertificateForm->isValid()) {
             $certificateForm = $request->request->get('certificate_form');
             $partnerId = (int)$certificateForm['partnerId'];
@@ -89,6 +90,7 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
+            $showSuccess = true;
         }
 
         $marketPartnerEmail = $this->marketPartnerEmailRepository->findAll();
@@ -98,7 +100,8 @@ class CertificateController extends AbstractController
             [
                 'modalCertificateForm' => $modalCertificateForm->createView(),
                 'marketPartnerEmails' => $marketPartnerEmail,
-                'nowDate' => date('Y-m-d')
+                'nowDate' => date('Y-m-d'),
+                'showSuccess' => $showSuccess
             ]
         );
     }
