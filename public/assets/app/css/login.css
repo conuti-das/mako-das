@@ -1,0 +1,8 @@
+.page {
+    background-color: #1c3945;
+    justify-content: flex-start !important;
+}
+
+.login-logo-img {
+    height:200px !important;
+}

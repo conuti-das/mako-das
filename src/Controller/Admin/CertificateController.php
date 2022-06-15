@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CertificateController extends AbstractController
 {
@@ -26,7 +27,8 @@ class CertificateController extends AbstractController
         private MarketPartnerEmailRepository $marketPartnerEmailRepository,
         private UploadService $uploadService,
         private CertificateService $certificateService,
-        private MarketPartnerRepository $marketPartnerRepository
+        private MarketPartnerRepository $marketPartnerRepository,
+        private TranslatorInterface $translator
     ) {
     }
 
@@ -38,7 +40,7 @@ class CertificateController extends AbstractController
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
 
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException("Given Market partnerId didn't exist");
+                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
             }
 
             $certificateFile = $request->files->get('file');
@@ -68,6 +70,7 @@ class CertificateController extends AbstractController
         $modalCertificateForm = $this->createForm(CertificateFormType::class);
         $modalCertificateForm->handleRequest($request);
 
+        $showSuccess = false;
         if ($modalCertificateForm->isSubmitted() && $modalCertificateForm->isValid()) {
             $certificateForm = $request->request->get('certificate_form');
             $partnerId = (int)$certificateForm['partnerId'];
@@ -76,7 +79,7 @@ class CertificateController extends AbstractController
 
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException("Given Market partnerId didn't exist");
+                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
             }
 
             $uploadCertificateDto = new UploadCertificateDto();
@@ -87,15 +90,18 @@ class CertificateController extends AbstractController
             $uploadCertificateDto->setMarketPartner($marketPartnerData);
 
             $this->marketPartnerEmailRepository->addCertificate($uploadCertificateDto, true);
+            $showSuccess = true;
         }
 
         $marketPartnerEmail = $this->marketPartnerEmailRepository->findAll();
 
         return $this->render(
-            'admin/certificate/index.html.twig',
+            'admin/content/certificate/index.html.twig',
             [
                 'modalCertificateForm' => $modalCertificateForm->createView(),
                 'marketPartnerEmails' => $marketPartnerEmail,
+                'nowDate' => (new DateTime('now'))->format('Y-m-d'),
+                'showSuccess' => $showSuccess
             ]
         );
     }

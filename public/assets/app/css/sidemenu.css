@@ -1,0 +1,14 @@
+.header-brand-img {
+    height:66px !important;
+}
+
+.avatar {
+    background: transparent !important;
+    border: 1px darkgrey solid;
+}
+
+.mobile-brand-logo{
+    height:40px !important;
+    margin-left: 0 !important;
+}
+

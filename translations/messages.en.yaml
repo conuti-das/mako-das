@@ -1,8 +1,15 @@
+Close: Close
 Login: Login
 Logout: Logout
+Dashboard: Dashboard
 Username: Username
 Password: Password
+Certificate: Certificate
+Certificates: Certificates
+User: User
+Admin: Admin
 Sign in: Sign in
+Sign out: Sign out
 Please sign in: Please sign in
 All Certificate: All Certificate
 Add Certificate: Add Certificate
@@ -12,6 +19,7 @@ Partner Id: Partner Id
 Active: Active
 Active From: Active From
 Active Until: Active Until
+Inactive: Inactive
 Issuer Name: Issuer Name
 Name: Name
 Email: Email
@@ -33,4 +41,5 @@ Valid Until: Valid Until
 Organization: Organization
 Type MarketPartner: Type MarketPartner
 Energy: Energy
-In Active: In Active
+Given Market Partner Id didn't exist: Given Market Partner Id didn't exist
+Upload Certificate: Upload Certificate
