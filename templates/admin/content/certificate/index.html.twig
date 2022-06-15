@@ -60,12 +60,13 @@
                                     <td>{{ marketPartnerEmail.email }}</td>
                                     <td>{{ marketPartnerEmail.type }}</td>
                                     <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
-                                    <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
                                     <td>{{ marketPartnerEmail.activeFrom|date('Y-m-d') }}</td>
+                                    <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
                                     <td>{{ marketPartnerEmail.marketPartner.organization }}</td>
                                     <td>{{ marketPartnerEmail.marketPartner.type }}</td>
                                     <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
-                                    {% if(marketPartnerEmail.activeUntil|date('Y-m-d') < marketPartnerEmail.activeFrom|date('Y-m-d')) %}
+                                    {% if (marketPartnerEmail.activeFrom|date('Y-m-d') <= nowDate) and
+                                          (marketPartnerEmail.activeUntil >= nowDate) %}
                                         <td style="color: green">{{ 'Active'|trans }}</td>
                                     {% else %}
                                         <td style="color: red">{{ 'Inactive'|trans }}</td>
