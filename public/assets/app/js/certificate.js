@@ -16,6 +16,7 @@ $(document).ready(function () {
         $("#certificate_form_partnerId").val("");
         $("#exampleModal").modal('show');
     });
+
     $("#cancel-upload").click(function () {
         $("#exampleModal").modal('hide');
     })
@@ -23,8 +24,8 @@ $(document).ready(function () {
     $("#certificate_form_uploadFile").change(function (e) {
         const file = e.target.files[0];
         const form_data = new FormData();
-        $certificateFormPartnerId = $('#certificate_form_partnerId').val();
-        form_data.append('partnerId', $certificateFormPartnerId)
+        const certificateFormPartnerId = $('#certificate_form_partnerId').val();
+        form_data.append('partnerId', certificateFormPartnerId)
         form_data.append('file', file, e.target.files[0].name);
         $.ajax({
             type: "POST",
