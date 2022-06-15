@@ -1,3 +1,7 @@
 .page {
-    background-color: #1c3945
+    background-color: #1c3945;
+}
+
+.login-logo-img {
+    height:200px !important;
 }
