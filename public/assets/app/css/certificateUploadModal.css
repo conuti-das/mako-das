@@ -1,5 +1,4 @@
-#exampleModal .modal-dialog {
-
+#certificationUploadModal .modal-dialog {
     max-width: 650px;
 }
 
@@ -9,5 +8,9 @@
 }
 
 .badge {
+    font-weight:500 !important;
+}
+
+#certificateModal {
     font-weight:500 !important;
 }
