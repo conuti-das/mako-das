@@ -42,6 +42,7 @@
                         <table id="certificateTable" class="table table-striped table-bordered text-nowrap w-100">
                             <thead>
                             <tr>
+                                <th>{{ 'Id'|trans }}</th>
                                 <th>{{ 'Partner Id'|trans }}</th>
                                 <th>{{ 'Email'|trans }}</th>
                                 <th>{{ 'Type'|trans }}</th>
@@ -49,7 +50,7 @@
                                 <th>{{ 'Valid From'|trans }}</th>
                                 <th>{{ 'Valid Until'|trans }}</th>
                                 <th>{{ 'Organization'|trans }}</th>
-                                <th>{{ 'Type MarketPartner'|trans }}</th>
+                                <th>{{ 'MP-Type'|trans }}</th>
                                 <th>{{ 'Energy'|trans }}</th>
                                 <th>{{ 'Active'|trans }}</th>
                             </tr>
@@ -57,7 +58,8 @@
                             <tbody>
                             {% for marketPartnerEmail in marketPartnerEmails %}
                                 <tr>
-                                    <td>{{ marketPartnerEmail.marketPartner.id }}</td>
+                                    <td>{{ marketPartnerEmail.id}}</td>
+                                    <td>{{ marketPartnerEmail.marketpartner.partnerid }}</td>
                                     <td>{{ marketPartnerEmail.email }}</td>
                                     <td>{{ marketPartnerEmail.type }}</td>
                                     <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
