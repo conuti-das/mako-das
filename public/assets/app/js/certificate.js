@@ -1,7 +1,16 @@
 $(document).ready(function () {
+
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
+
+    $('#exampleModal').on('show.bs.modal', function () {
+        $('#certificate_form_partnerId').val('');
+        $('#certificate_form_uploadFile').val('');
+        $('#certificate-information').addClass('d-none');
+        $("#list-cert-information input:hidden").val("");
+        $("#list-cert-information span").html("");
+    })
 
     $("#certificateModal").click(function () {
         $("#certificate_form_partnerId").val("");
@@ -28,7 +37,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (!response.errorMessage) {
                     $('.successMsg').html('Certificate Decoded.');
-                    $('.certificate-success').css("display", "block");
+                    $('#certificate-information').removeClass('d-none');
                     setTimeout(function(){ $('.certificate-success').css("display", "none");}, 2000);
                     let validFromDate = response.validFrom.date.split('.')[0];
                     let validUntilDate = response.validUntil.date.split('.')[0];
@@ -62,9 +71,12 @@ $(document).ready(function () {
                 } else {
                     $('#certificate_form_uploadFile').val("")
                     $('#certificate_form_partnerId').val("")
-                    $('.error-message').html(response.errorMessage);
-                    $('.certificate-error').css("display", "block");
-                    setTimeout(function(){ $('.certificate-error').css("display", "none");}, 2000);
+
+                    $('#uploadCertErrorMessage').html(response.errorMessage);
+                    $('#uploadCertErrorMessage').removeClass('d-none');
+                    $("#uploadCertErrorMessage").fadeTo(2000, 500).slideUp(500, function(){
+                        $("#uploadCertErrorMessage").slideUp(800);
+                    });
                 }
             },
             error: function (error) {
