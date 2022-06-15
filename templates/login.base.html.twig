@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% if constant('DEPLOY_TIMESTAMP') is defined and constant('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
-        {% set asset_version = '?version=' ~ constant('DEPLOY_TIMESTAMP') %}
+    {% if app.request.server.get('DEPLOY_TIMESTAMP') is defined and app.request.server.get('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
+        {% set asset_version = '?version=' ~ app.request.server.get('DEPLOY_TIMESTAMP') %}
     {% else %}
         {% set asset_version = '' %}
     {% endif %}
+
     {% block stylesheets %}
         <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}"
               rel="stylesheet"/>

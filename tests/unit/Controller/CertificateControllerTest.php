@@ -13,6 +13,7 @@ use App\Tests\UnitTester;
 use Codeception\Test\Unit;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CertificateControllerTest extends Unit
 {
@@ -30,7 +31,8 @@ class CertificateControllerTest extends Unit
             $this->createMock(MarketPartnerEmailRepository::class),
             $this->createMock(UploadService::class),
             $this->createMock(CertificateService::class),
-            $marketPartnerRepository
+            $marketPartnerRepository,
+            $this->createMock(TranslatorInterface::class),
         );
     }
 
@@ -39,7 +41,6 @@ class CertificateControllerTest extends Unit
         $request = $this->createMock(Request::class);
         $request->method("get")->with("partnerId")->willReturn(self::PARTNER_ID);
         $response = $this->certificateController->certificateDecode($request);
-
         $this->tester->assertEquals(new JsonResponse(['errorMessage' => "Given Market partnerId didn't exist"]), $response);
     }
 }

@@ -1,7 +1,7 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% if constant('DEPLOY_TIMESTAMP') is defined and constant('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
-    {% set asset_version = '?version=' ~ constant('DEPLOY_TIMESTAMP') %}
+{% if app.request.server.get('DEPLOY_TIMESTAMP') is defined and app.request.server.get('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
+    {% set asset_version = '?version=' ~ app.request.server.get('DEPLOY_TIMESTAMP') %}
 {% else %}
     {% set asset_version = '' %}
 {% endif %}
@@ -47,6 +47,10 @@
 
             </div>
         </div>
+
+        <script type="text/javascript">
+            const jsGlobalData = {% if js_data.toJson() is not empty %}{{ js_data.toJson()|raw }}{% else %}""{% endif %};
+        </script>
 
         {% block javascripts %}
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/js/jquery.min.js' ~ asset_version ) }}"></script>
