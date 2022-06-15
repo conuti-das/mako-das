@@ -52,9 +52,9 @@ $(document).ready(function () {
                     $("#certificate_form_name").html(response.name)
                     $("#certificate_form_hash").html(response.hash)
                     if (response.isActive) {
-                        $("#certificate_form_isActive").html(response.isActive).css('color', 'green')
+                        $("#certificate_form_isActive").html(response.isActive).addClass('badge bg-success');
                     } else {
-                        $("#certificate_form_isActive").html(response.isActive).css('color', 'red')
+                        $("#certificate_form_isActive").html(response.isActive).addClass('badge bg-danger');
                     }
                     $("#certificate_form_issuerCountry").html(response.issuerCountry)
                     $("#certificate_form_issuerOrganisation").html(response.issuerOrganisation)
