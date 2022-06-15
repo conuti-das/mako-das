@@ -3,7 +3,7 @@
  {% block head_stylesheets %}
      {{ parent() }}
      <link href="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}"
+        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css' ~ asset_version) }}"
         type="text/css" rel="stylesheet"/>
  {% endblock %}
 
@@ -60,13 +60,13 @@
 {% block javascripts %}
     {{ parent() }}
     <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js') }}">
+        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js' ~ asset_version) }}">
     </script>
     <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}">
+        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/dataTables.bootstrap5.min.js' ~ asset_version) }}">
     </script>
     <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/dataTables.responsive.min.js') }}">
+        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/dataTables.responsive.min.js' ~ asset_version) }}">
     </script>
     <script defer src="{{ asset('assets/app/js/user.js') }}"></script>
 {% endblock %}
