@@ -100,7 +100,7 @@ class CertificateController extends AbstractController
             [
                 'modalCertificateForm' => $modalCertificateForm->createView(),
                 'marketPartnerEmails' => $marketPartnerEmail,
-                'nowDate' => date('Y-m-d'),
+                'nowDate' => (new DateTime('now'))->format('Y-m-d'),
                 'showSuccess' => $showSuccess
             ]
         );
