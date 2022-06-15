@@ -1,7 +1,7 @@
 <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="side-header">
-        <a class="header-brand1" href="/admin">
+        <a class="header-brand1" href="{{ path('admin') }}">
             <img src="{{ asset('assets/app/img/conuti-logo.png') }}" class="header-brand-img light-logo1" alt="logo"/>
         </a>
         <a aria-label="Hide Sidebar" class="app-sidebar__toggle ms-auto" data-bs-toggle="sidebar" href="#"></a>
@@ -38,7 +38,7 @@
     <div class="container-fluid">
         <div class="d-flex">
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
-            <a class="header-brand" href="/admin">
+            <a class="header-brand" href="{{ path('admin') }}">
 
                 <img src="{{ asset('assets/app/img/conuti-logo.png') }}"
                      class="header-brand-img mobile-brand-logo" alt="logo">
@@ -64,7 +64,7 @@
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <a class="dropdown-item" href="/logout">
+                        <a class="dropdown-item" href="{{ path('app_logout') }}">
                             <i class="dropdown-icon mdi  mdi-logout-variant"></i> Sign out
                         </a>
                     </div>
