@@ -40,7 +40,7 @@ class CertificateController extends AbstractController
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
 
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market partnerId didn't exist"));
+                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
             }
 
             $certificateFile = $request->files->get('file');
@@ -79,7 +79,7 @@ class CertificateController extends AbstractController
 
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market partnerId didn't exist"));
+                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
             }
 
             $uploadCertificateDto = new UploadCertificateDto();
