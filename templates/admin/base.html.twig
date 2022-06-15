@@ -6,9 +6,7 @@
     {% set asset_version = '' %}
 {% endif %}
 
-
 {% block head_javascript %} {% endblock %}
-
 
 {% block head_stylesheets %}
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}" rel="stylesheet"/>
@@ -49,7 +47,6 @@
 
             </div>
         </div>
-
 
         {% block javascripts %}
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/js/jquery.min.js' ~ asset_version ) }}"></script>
