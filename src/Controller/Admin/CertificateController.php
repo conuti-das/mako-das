@@ -84,7 +84,7 @@ class CertificateController extends AbstractController
         }
 
         return $this->render(
-            'admin/certificate/index.html.twig',
+            'admin/content/certificate/index.html.twig',
             [
                 'modalCertificateForm' => $modalCertificateForm->createView(),
                 'marketPartnerEmails' => $marketPartnerEmail,
