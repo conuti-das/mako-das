@@ -87,7 +87,8 @@ $(document).ready(function () {
 
     if($('#showSuccessMessage').val() == 1){
         $.growl.notice({
-            message: "Successfully saved!"
+            title: "Success!",
+            message: "Saved successfully!"
         });
         $('#showSuccessMessage').val("");
     }
