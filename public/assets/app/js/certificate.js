@@ -4,7 +4,7 @@ $(document).ready(function () {
         window.history.replaceState(null, null, window.location.href);
     }
 
-    $('#exampleModal').on('show.bs.modal', function () {
+    $('#certificationUploadModal').on('show.bs.modal', function () {
         $('#certificate_form_partnerId').val('');
         $('#certificate_form_uploadFile').val('');
         $('#certificate-information').addClass('d-none');
@@ -14,11 +14,11 @@ $(document).ready(function () {
 
     $("#certificateModal").click(function () {
         $("#certificate_form_partnerId").val("");
-        $("#exampleModal").modal('show');
+        $("#certificationUploadModal").modal('show');
     });
 
     $("#cancel-upload").click(function () {
-        $("#exampleModal").modal('hide');
+        $("#certificationUploadModal").modal('hide');
     })
 
     $("#certificate_form_uploadFile").change(function (e) {
@@ -94,5 +94,5 @@ $(document).ready(function () {
         $('#showSuccessMessage').val("");
     }
 
-    $('#table_id').DataTable({});
+    $('#certificateTable').DataTable({});
 });
