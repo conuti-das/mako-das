@@ -17,14 +17,18 @@ class MarketPartnerRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int $partnerId
+     *
+     * @return MarketPartner|null
      * @throws NonUniqueResultException
      */
-    public function getActiveMarketPartner($partnerId): ?MarketPartner
+    public function getActiveMarketPartner(int $partnerId): ?MarketPartner
     {
         return $this->createQueryBuilder('mp')
-            ->where('mp.partnerId', $partnerId)
-            ->andWhere('mp.active', 1)
-            ->andWhere('mp.deleted', 0)
+            ->where('mp.partnerId = :partnerId')
+            ->andWhere('mp.active = 1')
+            ->andWhere('mp.deleted = 0')
+            ->setParameter('partnerId', $partnerId)
             ->getQuery()
             ->getOneOrNullResult();
     }
