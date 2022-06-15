@@ -28,8 +28,8 @@ class MarketPartnerEmailRepository extends ServiceEntityRepository
         $marketPartnerEmail->setType($marketPartnerEmail::TYPE_EDIFACT);
         $marketPartnerEmail->setSslCertificate($uploadCertificateDto->getCertificateFile());
         $marketPartnerEmail->setSslCertificateExpiration($uploadCertificateDto->getValidUntil());
-        $marketPartnerEmail->setActiveFrom($uploadCertificateDto->getValidUntil());
-        $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidFrom());
+        $marketPartnerEmail->setActiveFrom($uploadCertificateDto->getValidFrom());
+        $marketPartnerEmail->setActiveUntil($uploadCertificateDto->getValidUntil());
 
         $this->getEntityManager()->persist($marketPartnerEmail);
 

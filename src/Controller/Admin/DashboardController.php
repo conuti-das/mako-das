@@ -9,35 +9,45 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger
     ) {
-        $this->entityManager = $entityManager;
     }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        // the following code will test if monolog integration logs to sentry
+        $this->logger->error('My custom logged error.');
+
         return $this->render('admin/content/dashboard/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()->setTitle('MPSync')->setFaviconPath("assets/app/img/conuti-logo-favicon.png");
+        return Dashboard::new()->setTitle('MPSync');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'side-menu__icon ti-home')->setCssClass("side-menu__item");
-        yield MenuItem::linkToRoute('Certificate', 'side-menu__icon ti-package', 'certificates_all')->setCssClass("side-menu__item");
-        yield MenuItem::linkToRoute('User', 'side-menu__icon ti-user', 'admin_user_list')->setCssClass("side-menu__item");
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToRoute('Certificate', 'fa fa-file-text', 'certificates_all');
+        yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
+    }
+
+    public function configureAssets(): Assets
+    {
+        return Assets::new()
+            ->addCssFile('https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css')
+            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
+            ->addJsFile('https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js');
     }
 
     #[Route('/admin/user/list', name: 'admin_user_list')]
