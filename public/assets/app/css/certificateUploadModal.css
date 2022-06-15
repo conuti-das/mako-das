@@ -7,3 +7,7 @@
     content:"*";
     color:red;
 }
+
+.badge {
+    font-weight:500 !important;
+}
