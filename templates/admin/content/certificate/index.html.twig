@@ -71,9 +71,9 @@
                                     <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
                                     {% if (marketPartnerEmail.activeFrom|date('Y-m-d') <= nowDate) and
                                           (marketPartnerEmail.activeUntil >= nowDate) %}
-                                        <td style="color: green">{{ 'Active'|trans }}</td>
+                                        <td><div class="badge bg-success">{{ 'Active'|trans }}</div></td>
                                     {% else %}
-                                        <td style="color: red">{{ 'Inactive'|trans }}</td>
+                                        <td><div class="badge bg-danger"> {{ 'Inactive'|trans }}</div></td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}
