@@ -2,3 +2,8 @@
 
     max-width: 650px;
 }
+
+.form-group .form-group-label .required:after {
+    content:"*";
+    color:red;
+}
