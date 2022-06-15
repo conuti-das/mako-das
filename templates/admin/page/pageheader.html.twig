@@ -1,6 +1,13 @@
 <div class="d-flex ms-auto header-right-icons header-search-icon">
 
+    <div class="text-dark mt-4">
+        {% if ea.userMenu.isNameDisplayed %}
+            {{ ea.userMenu.name }}
+        {% endif %}
+    </div>
+
     <div class="profile-1">
+
         <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex" aria-expanded="false">
             <span>
                  <img src="{{ asset('assets/app/img/conuti-logo-favicon.png') }}" alt="profile-user" class="avatar profile-user brround cover-image">
@@ -8,18 +15,6 @@
         </a>
 
         <div class="dropdown-menu ">
-            <div class="drop-heading">
-                <div class="text-center">
-                    <h5 class="text-dark mb-0">
-                        {% if ea.userMenu.isNameDisplayed %}
-                            {{ ea.userMenu.name }}
-                        {% endif %}
-                    </h5>
-                </div>
-            </div>
-
-            <div class="dropdown-divider"></div>
-
             <a class="dropdown-item" href="/logout">
                 <i class="dropdown-icon mdi  mdi-logout-variant"></i> Sign out
             </a>
