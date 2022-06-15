@@ -1,7 +1,10 @@
 Login: Login
 Logout: Logout
+Dashboard: Dashboard
 Username: Username
 Password: Password
+Certificate: Certificate
+User: User
 Sign in: Sign in
 Please sign in: Please sign in
 All Certificate: All Certificate
@@ -34,4 +37,4 @@ Organization: Organization
 Type MarketPartner: Type MarketPartner
 Energy: Energy
 In Active: In Active
-Given Market partnerId didn't exist: Given Market partnerId didn't exist
+Given Market Partner Id didn't exist: Given Market Partner Id didn't exist
