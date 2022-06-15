@@ -2,14 +2,11 @@
 
 {% block head_stylesheets %}
     {{ parent() }}
-    <link href="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css')
-        }}"
-        type="text/css" rel="stylesheet"/>
-    <link href="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/css/jquery.growl.css') }}"
-        type="text/css" rel="stylesheet"/>
-    <link href="{{ asset('assets/app/css/certificateUploadModal.css') }}" type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css'  ~ asset_version) }}"
+          type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/css/jquery.growl.css' ~ asset_version) }}"
+          type="text/css" rel="stylesheet"/>
+    <link href="{{ asset('assets/app/css/certificateUploadModal.css' ~ asset_version) }}" type="text/css" rel="stylesheet"/>
 
 {% endblock %}
 
@@ -86,7 +83,7 @@
         </div>
     </div>
 
-    <input id="showSuccessMessage" type="hidden" value="{{showSuccess}}" />
+    <input id="showSuccessMessage" type="hidden" value="{{ showSuccess }}"/>
 
     {% include 'admin/content/certificate/certificateUploadModal.html.twig' %}
 
@@ -94,20 +91,19 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js') }}">
+    <script defer
+            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js' ~ asset_version) }}">
     </script>
-    <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}">
+    <script defer
+            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/dataTables.bootstrap5.min.js' ~ asset_version) }}">
     </script>
-    <script defer src="{{
-        asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/dataTables.responsive.min.js') }}">
+    <script defer
+            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/dataTables.responsive.min.js' ~ asset_version) }}">
     </script>
-    <script defer src="{{
-    asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/rainbow.js') }}">
+    <script defer src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/rainbow.js' ~ asset_version) }}">
     </script>
-    <script defer src="{{
-    asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/jquery.growl.js') }}">
+    <script defer
+            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/jquery.growl.js' ~ asset_version) }}">
     </script>
-    <script defer src="{{ asset('assets/app/js/certificate.js') }}"></script>
+    <script defer src="{{ asset('assets/app/js/certificate.js' ~ asset_version) }}"></script>
 {% endblock %}
