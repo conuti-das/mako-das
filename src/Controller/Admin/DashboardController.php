@@ -24,9 +24,6 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        // the following code will test if monolog integration logs to sentry
-        $this->logger->error('My custom logged error.');
-
         return $this->render('admin/content/dashboard/index.html.twig');
     }
 
