@@ -1,41 +1,12 @@
-.sidebar-resizer {
-    min-height: 100%;
-    right: 12px !important;
+.header-brand-img {
+    height:66px !important;
 }
 
-.sub-sidebar {
-    margin: auto;
-    padding: 0;
+.avatar {
+    background: transparent !important;
+    border: 1px darkgrey solid;
 }
 
-.resizer-handler .resizer-handler-left {
-    display: none !important;
-}
-
-.main-header {
-    min-height: 80px;
-    position: relative;
-}
-
-.main-header:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: calc(-1 * var(--sidebar-padding-right));
-    width: calc(100% + (2 * var(--sidebar-padding-right)));
-    height: 1px;
-    background: #eaedf1;
-}
-
-body.ea-sidebar-width-compact .sidebar .main-header:after {
-    left: 0;
-    width: 100%;
-}
-
-.menu-item {
-    padding-top: 10px;
-}
-
-.content-header {
-    background: none !important;
+.mobile-brand-logo{
+    height:40px !important;
 }
