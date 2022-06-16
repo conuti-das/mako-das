@@ -1,0 +1,4 @@
+partnerId,type,organization,energy,active,zip,city,street,houseNumber,iban,bic,bank,accountHolder,accountingAllocationIndicator,deleted,reminderEmailAddress
+9904095000002,provider,Stadtwerke Eberbach GmbH,electricity,1,69412,Eberbach,Güterbahnhofstr. 	,4,,NULL,NULL,,standard,0,netznutzung@sw-eberbach.de	
+9903948000002,provider,SW PFULLENDORF ,electricity,1,88630,Pfullendorf,Bahnhofstr.,6,DE50690516200000433029,SOLADES1PFD,SPARKASSE PFULLENDORF-MESSKIRCH,,standard,0,info@stadtwerke-pfullendorf.de
+9903115000009,provider,MVV ENERGIE ,electricity,1,68159,Mannheim,Luisenring,49,,SOLADEST671,Baden-Württembergische Bank,,standard,0,lieferantenwechsel-mannheim@soluvia.de
