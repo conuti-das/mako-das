@@ -11,6 +11,10 @@ modules:
         - Symfony:
             app_path: 'src'
             environment: 'test'
+        - Db:
+            dsn: 'mysql:host=172.31.0.2;dbname=app_test'
+            user: 'root'
+            password: 'root'
         - Doctrine2:
             depends: Symfony
             cleanup: true
