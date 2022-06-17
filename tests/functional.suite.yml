@@ -1,8 +1,6 @@
 actor: FunctionalTester
-
 params:
     - env.test
-
 modules:
     enabled:
         - Symfony:
