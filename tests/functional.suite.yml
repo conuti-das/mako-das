@@ -10,6 +10,7 @@ modules:
             dsn: 'mysql:host=MPSYnc_db;dbname=%DATABASE_NAME%'
             user: '%DATABASE_USER%'
             password: '%DATABASE_PASSWORD%'
+            cleanup: true
         - Doctrine2:
             depends: Symfony
             cleanup: true
