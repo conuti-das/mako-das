@@ -2,22 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\functional\MarketPartner\Services;
-
+namespace App\Tests\functional\Service\Import;
 
 use App\Common\FileReader;
 use App\Entity\MarketPartnerEmail;
+use App\Exception\File\FileReadException;
 use App\Service\Import\ImportMarketPartnerService;
 use App\Tests\FunctionalTester;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class MarketPartnerImportServiceCest
+class ImportMarketPartnerServiceCest
 {
     private EntityManagerInterface $entityManager;
     private ImportMarketPartnerService $importMarketPartnerService;
     private KernelInterface $appKernel;
     private FileReader $fileReader;
+
+    public const MARKET_PARTNER_DATA_FILE_NAME_TEST = "market_partner.csv";
+
 
     public function _before(FunctionalTester $I): void
     {
@@ -27,24 +31,40 @@ class MarketPartnerImportServiceCest
         $this->fileReader = $I->grabService(FileReader::class);
     }
 
-    public const MARKET_PARTNER_DATA_FILE_NAME_TEST = "market_partner_for_certificates_postman.csv";
-    public const IMPORT_PUBLIC_CERTIFICATES_PATH_TEST = "/tests/_data/ImportCertificate/";
+    /**
+     * @throws Exception
+     */
+    public function _after(FunctionalTester $I): void
+    {
+        $connection = $this->entityManager->getConnection();
+        $platform = $connection->getDatabasePlatform();
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
+        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_email', true));
+        $connection->executeStatement($platform->getTruncateTableSQL('market_partner', true));
+        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_email_import_log', true));
+        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_import_log', true));
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
+    }
 
+    /**
+     * @throws FileReadException
+     */
     public function testMarketPartnerImport(FunctionalTester $I): void
     {
+        $importPath = $this->appKernel->getProjectDir() . $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
+
         $marketPartners = $this->fileReader->csvToArray(
-            $this->appKernel->getProjectDir() .
-            self::IMPORT_PUBLIC_CERTIFICATES_PATH_TEST .
+            $importPath .
             self::MARKET_PARTNER_DATA_FILE_NAME_TEST
         );
 
         foreach ($marketPartners as $marketPartner) {
-            $this->importMarketPartnerService->import($marketPartner);
+            $this->importMarketPartnerService->import($marketPartner, $importPath);
         }
 
         $this->entityManager->flush();
-        $this->entityManager->clear();
 
+        // need to commit, because we use different transaction for the import
         $this->entityManager->commit();
 
         $I->seeInDatabase(
@@ -88,14 +108,5 @@ class MarketPartnerImportServiceCest
         $I->seeNumRecords(3, 'market_partner_email');
         $I->seeNumRecords(3, 'market_partner_email_import_log');
         $I->seeNumRecords(3, 'market_partner_import_log');
-
-        $connection = $this->entityManager->getConnection();
-        $platform = $connection->getDatabasePlatform();
-        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
-        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_email', true));
-        $connection->executeStatement($platform->getTruncateTableSQL('market_partner', true));
-        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_email_import_log', true));
-        $connection->executeStatement($platform->getTruncateTableSQL('market_partner_import_log', true));
-        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
     }
 }
