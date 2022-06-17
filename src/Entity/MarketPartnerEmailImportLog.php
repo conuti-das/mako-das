@@ -25,7 +25,7 @@ class MarketPartnerEmailImportLog
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $message;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'datetime')]
     private DateTimeInterface $createdAt;
 
     #[ORM\ManyToOne(targetEntity: MarketPartnerEmail::class, inversedBy: 'marketPartnerEmailImportLogs')]
