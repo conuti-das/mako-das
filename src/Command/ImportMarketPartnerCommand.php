@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 )]
 class ImportMarketPartnerCommand extends Command
 {
-    public const MARKET_PARTNER_DATA_FILE_NAME = "market_partner_for_certificates_postman.csv";
+    public const MARKET_PARTNER_DATA_FILE_NAME = "market_partner.csv";
     public const COUNT_MARKET_PARTNER = 50;
 
     public function __construct(
@@ -39,19 +39,22 @@ class ImportMarketPartnerCommand extends Command
     {
         $micrometerStart = microtime(true);
 
+        $importPath = $this->appKernel->getProjectDir() . $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
+
         $marketPartners = $this->fileReader->csvToArray(
-            $this->appKernel->getProjectDir() .
-            $_ENV["IMPORT_PUBLIC_CERTIFICATES_PATH"] .
-            self::MARKET_PARTNER_DATA_FILE_NAME
+            $importPath . static::MARKET_PARTNER_DATA_FILE_NAME
         );
 
         $numberMarketPartner = 0;
         foreach ($marketPartners as $marketPartner) {
-            $this->importMarketPartnerService->import($marketPartner);
+            $output->writeln([
+                'Import: ' . $marketPartner['partnerId']
+            ]);
+
+            $this->importMarketPartnerService->import($marketPartner, $importPath);
 
             if ($numberMarketPartner % self::COUNT_MARKET_PARTNER === 0) {
                 $this->entityManager->flush();
-                $this->entityManager->clear();
             }
 
             $numberMarketPartner++;
