@@ -20,7 +20,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class ImportMarketPartnerService
 {
     public const SECOND_PART_OF_FILE_NAME = ".cer.converted";
-    public const IMPORT_PUBLIC_CERTIFICATES_PATH_TEST = "/tests/_data/ImportCertificate/";
 
     public function __construct(
         private CertificateService $certificateService,
@@ -46,7 +45,7 @@ class ImportMarketPartnerService
 
             try {
                 $filePath = $this->appKernel->getProjectDir() .
-                    self::IMPORT_PUBLIC_CERTIFICATES_PATH_TEST .
+                    $_ENV["IMPORT_PUBLIC_CERTIFICATES_PATH"] .
                     $marketPartner["partnerId"] .
                     self::SECOND_PART_OF_FILE_NAME;
 
