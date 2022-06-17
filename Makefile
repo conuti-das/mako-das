@@ -18,7 +18,7 @@ start: ## Starts the application for local development
 	@echo "The Api Swagger UI is available at ${HOST}:${WEBSERVER_PORT}/api/docs"
 	@echo "The Admin is available at ${HOST}:${WEBSERVER_PORT}/admin"
 	@echo "The phpMyAdmin is available at ${HOST}:${PHPMYADMIN_PORT}"
-	@echo "The Database port is ${DB_PORT}"
+	@echo "The Database port is ${DATABASE_PORT}"
 	@echo "The Memcached port is ${MEMCACHED_PORT}"
 
 update: ## Update the DEV and TEST environment
