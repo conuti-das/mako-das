@@ -51,7 +51,7 @@ class ImportMarketPartnerServiceCest
      */
     public function testMarketPartnerImport(FunctionalTester $I): void
     {
-        $importPath = $this->appKernel->getProjectDir() . $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
+        $importPath = $this->appKernel->getProjectDir() . '/' . $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
 
         $marketPartners = $this->fileReader->csvToArray(
             $importPath .

@@ -25,6 +25,7 @@ class UploadService
 
             return file_get_contents($directoryName . '/' . $fileName);
         } catch (Exception $exception) {
+            dd($exception);
             throw new CertificateUploadException('Given certificate could not be uploaded.');
         }
     }

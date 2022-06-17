@@ -39,7 +39,7 @@ class ImportMarketPartnerCommand extends Command
     {
         $micrometerStart = microtime(true);
 
-        $importPath = $this->appKernel->getProjectDir() . $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
+        $importPath = $this->appKernel->getProjectDir() .'/'. $_ENV['CERTIFICATES_IMPORT_DIRECTORY'];
 
         $marketPartners = $this->fileReader->csvToArray(
             $importPath . static::MARKET_PARTNER_DATA_FILE_NAME

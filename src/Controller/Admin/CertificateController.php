@@ -36,17 +36,22 @@ class CertificateController extends AbstractController
     public function certificateDecode(Request $request): Response
     {
         try {
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $importPath = $projectDir . '/' .$_ENV['CERTIFICATES_UPLOAD_DIRECTORY'];
+
             $partnerId = (int)$request->get('partnerId');
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
 
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
+                throw new MarketPartnerNotExistsException(
+                    $this->translator->trans("Given Market Partner Id didn't exist")
+                );
             }
 
             $certificateFile = $request->files->get('file');
             $certificateData = $this->uploadService->upload(
                 $certificateFile,
-                $this->getParameter('certificateDirectory')
+                $importPath
             );
             $certificateDto = $this->certificateService->decode($certificateData);
 
@@ -79,7 +84,9 @@ class CertificateController extends AbstractController
 
             $marketPartnerData = $this->marketPartnerRepository->getActiveMarketPartner($partnerId);
             if (!$marketPartnerData) {
-                throw new MarketPartnerNotExistsException($this->translator->trans("Given Market Partner Id didn't exist"));
+                throw new MarketPartnerNotExistsException(
+                    $this->translator->trans("Given Market Partner Id didn't exist")
+                );
             }
 
             $uploadCertificateDto = new UploadCertificateDto();

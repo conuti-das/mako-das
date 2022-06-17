@@ -30,6 +30,8 @@ update: ## Update the DEV and TEST environment
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=test
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console cache:clear --env=test
 
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) chmod 777 -R ${CERTIFICATES_UPLOAD_DIRECTORY}
+
 	@echo "DEV is now up-to-date!"
 	@echo "TEST is now up-to-date!"
 
