@@ -6,24 +6,25 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger
     ) {
     }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->render('admin/index/index.html.twig');
+        return $this->render('admin/content/dashboard/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -38,19 +39,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('User', 'fa fa-user', 'admin_user_list');
     }
 
-    public function configureAssets(): Assets
-    {
-        return Assets::new()
-            ->addCssFile('https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css')
-            ->addJsFile("https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js")
-            ->addJsFile('https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js');
-    }
-
     #[Route('/admin/user/list', name: 'admin_user_list')]
     public function user(): Response
     {
         $users = $this->entityManager->getRepository(User::class)->findAll();
 
-        return $this->render('admin/user/index.html.twig', ['users' => $users]);
+        return $this->render('admin/content/user/index.html.twig', ['users' => $users]);
     }
 }

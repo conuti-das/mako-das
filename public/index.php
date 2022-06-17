@@ -3,6 +3,7 @@
 use App\Kernel;
 
 require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
+require dirname(__DIR__) . '/sys.cfg.php';
 
 return function (array $context) {
     $env = $context['APP_ENV'];

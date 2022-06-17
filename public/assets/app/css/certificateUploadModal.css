@@ -1,0 +1,16 @@
+#certificationUploadModal .modal-dialog {
+    max-width: 650px;
+}
+
+.form-group .form-group-label .required:after {
+    content:"*";
+    color:red;
+}
+
+.badge {
+    font-weight:500 !important;
+}
+
+#certificateModal {
+    font-weight:500 !important;
+}

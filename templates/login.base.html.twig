@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% if app.request.server.get('DEPLOY_TIMESTAMP') is defined and app.request.server.get('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
+        {% set asset_version = '?version=' ~ app.request.server.get('DEPLOY_TIMESTAMP') %}
+    {% else %}
+        {% set asset_version = '' %}
+    {% endif %}
+
+    {% block stylesheets %}
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/app/css/login.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/dark-style.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/single-page/css/main.css' ~ asset_version ) }}"
+              rel="stylesheet" type="text/css">
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/charts-c3/c3-chart.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/perfect-scrollbar.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/icons.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/colors/color1.css' ~ asset_version ) }}"
+              rel="stylesheet"/>
+        <link rel="icon" href="{{ asset('assets/app/img/conuti-logo-favicon.png' ~ asset_version ) }}" type="image/png"
+              sizes="16x16"/>
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>

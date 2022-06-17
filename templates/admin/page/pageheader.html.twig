@@ -1,0 +1,24 @@
+<div class="d-flex ms-auto header-right-icons header-search-icon">
+
+    <div class="text-dark mt-4">
+        {% if ea.userMenu.isNameDisplayed %}
+            {{ ea.userMenu.name }}
+        {% endif %}
+    </div>
+
+    <div class="profile-1">
+
+        <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex" aria-expanded="false">
+            <span>
+                 <img src="{{ asset('assets/app/img/conuti-logo-favicon.png') }}" alt="profile-user" class="avatar profile-user brround cover-image">
+            </span>
+        </a>
+
+        <div class="dropdown-menu ">
+            <a class="dropdown-item" href="{{ path('app_logout') }}">
+                <i class="dropdown-icon mdi  mdi-logout-variant"></i> {{ 'Sign out'|trans }}
+            </a>
+        </div>
+    </div>
+
+</div>
