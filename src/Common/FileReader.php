@@ -40,7 +40,7 @@ class FileReader
             }
             fclose($fileToRead);
         } catch (Exception $exception) {
-            throw new FileReadException("Invalid csv provided in FileReader::csvToArray function. ${$csvFile}");
+            throw new FileReadException("Invalid csv provided in FileReader::csvToArray function. ${$csvFilePath}");
         }
 
         return $lines;

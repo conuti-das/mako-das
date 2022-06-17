@@ -18,7 +18,7 @@ start: ## Starts the application for local development
 	@echo "The Api Swagger UI is available at ${HOST}:${WEBSERVER_PORT}/api/docs"
 	@echo "The Admin is available at ${HOST}:${WEBSERVER_PORT}/admin"
 	@echo "The phpMyAdmin is available at ${HOST}:${PHPMYADMIN_PORT}"
-	@echo "The Database port is ${DB_PORT}"
+	@echo "The Database port is ${DATABASE_PORT}"
 	@echo "The Memcached port is ${MEMCACHED_PORT}"
 
 update: ## Update the DEV and TEST environment
@@ -29,6 +29,8 @@ update: ## Update the DEV and TEST environment
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:migrations:migrate --env=test --no-interaction
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console doctrine:schema:validate --env=test
 	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) php bin/console cache:clear --env=test
+
+	$(DOCKER_COMPOSE) exec $(WEBSERVER_CONTAINER) chmod 777 -R ${CERTIFICATES_UPLOAD_DIRECTORY}
 
 	@echo "DEV is now up-to-date!"
 	@echo "TEST is now up-to-date!"

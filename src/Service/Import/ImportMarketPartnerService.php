@@ -15,16 +15,14 @@ use App\Repository\MarketPartnerRepository;
 use App\Service\Certificate\CertificateService;
 use DateTime;
 use Exception;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImportMarketPartnerService
 {
-    public const SECOND_PART_OF_FILE_NAME = ".cer.converted";
+    public const FILE_EXTENSION = ".cer.converted";
 
     public function __construct(
         private CertificateService $certificateService,
         private FileReader $fileReader,
-        private KernelInterface $appKernel,
         private MarketPartnerFactory $marketPartnerFactory,
         private MarketPartnerRepository $marketPartnerRepository,
         private MarketPartnerEmailRepository $partnerEmailRepository,
@@ -33,7 +31,7 @@ class ImportMarketPartnerService
     ) {
     }
 
-    public function import(array $marketPartner): void
+    public function import(array $marketPartner, string $importPath): void
     {
         $newMarketPartner = null;
         try {
@@ -44,10 +42,7 @@ class ImportMarketPartnerService
             $marketPartnerEmail = null;
 
             try {
-                $filePath = $this->appKernel->getProjectDir() .
-                    $_ENV["IMPORT_PUBLIC_CERTIFICATES_PATH"] .
-                    $marketPartner["partnerId"] .
-                    self::SECOND_PART_OF_FILE_NAME;
+                $filePath = $importPath. $marketPartner["partnerId"] . self::FILE_EXTENSION;
 
                 $certificate = $this->certificateService->decode(
                     $this->fileReader->getContent($filePath)
