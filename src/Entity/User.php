@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Api\Dto\User\UserAllResponse;
 use App\Repository\UserRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +14,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`users`')]
+#[ApiResource(
+    collectionOperations: [
+        'users_all' => [
+            'method' => 'GET',
+            'path'=>'/users',
+            'output' => UserAllResponse::class,
+            'normalization_context' => ['groups' => ['users-all:read']],
+        ],
+    ],
+    itemOperations: [
+        'users_single' => [
+            'method' => 'GET',
+            'path'=>'/users/{id}',
+        ],
+    ],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

@@ -1,0 +1,411 @@
+{% extends 'admin/base.html.twig' %}
+
+ {% block head_stylesheets %}
+     {{ parent() }}
+
+
+
+     <!-- BEGIN: Vendor CSS-->
+     <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/vendors.min.css' ~ asset_version) }}">
+     <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css' ~ asset_version) }}">
+     <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css' ~ asset_version) }}">
+     <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css' ~ asset_version) }}">
+     <!-- END: Vendor CSS-->
+
+     <!-- BEGIN: Page CSS-->
+     <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/css/core/menu/menu-types/vertical-menu.css' ~ asset_version) }}">
+     <!-- END: Page CSS-->
+
+     <!-- required viewer styles -->
+     <link rel="stylesheet" href="https://unpkg.com/bpmn-js@9.2.2/dist/assets/bpmn-js.css">
+
+     <!-- example styles -->
+     <style>
+         #canvas {
+             height: 100%;
+             padding: 0;
+             margin: 0;
+             width: 100%;
+         }
+
+         .diagram-note {
+             background-color: rgba(66, 180, 21, 0.7);
+             color: White;
+             border-radius: 5px;
+             font-family: Arial;
+             font-size: 12px;
+             padding: 5px;
+             min-height: 16px;
+             width: 50px;
+             text-align: center;
+         }
+
+         .needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
+             stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
+         }
+     </style>
+
+
+ {% endblock %}
+
+
+{% block content %}
+
+    <div class="page-header">
+
+        <div><h1 class="page-title">{{ 'User'|trans }}</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'Admin'|trans }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ 'User'|trans }}</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Responsive Datatable -->
+    <section id="responsive-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title">{{ 'User'|trans }}</h4>
+                    </div>
+                    <div class="card-datatable">
+                        <table id="responsiveUserTable" class="dt-responsive table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Username'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Username'|trans }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/ Responsive Datatable -->
+
+    <!-- Timeline Starts -->
+    <section class="basic-timeline">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Basic</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="timeline">
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <h6>12 Invoices have been paid</h6>
+                                        <span class="timeline-event-time">12 min ago</span>
+                                    </div>
+                                    <p>Invoices have been paid to the company.</p>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div id="canvas">
+
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary waves-effect"
+                                            data-bs-toggle="modal" data-bs-target="#xlarge" id="onshowbtn">
+                                        Extra Large Modal
+                                    </button>
+                                    <div class="modal fade text-start" id="xlarge" tabindex="-1" aria-labelledby="myModalLabel16" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel16">Extra Large Modal</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="canvas2">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <h6>Client Meeting</h6>
+                                        <span class="timeline-event-time">45 min ago</span>
+                                    </div>
+                                    <p>Project meeting with john @10:15am.</p>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div class="avatar">
+                                            <img src="../../../app-assets/images/avatars/12-small.png" alt="avatar" height="38" width="38" />
+                                        </div>
+                                        <div class="ms-50">
+                                            <h6 class="mb-0">John Doe (Client)</h6>
+                                            <span>CEO of Infibeam</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <h6>Financial Report</h6>
+                                        <span class="timeline-event-time">2 hours ago</span>
+                                    </div>
+                                    <p class="mb-50">Click the button below to read financial reports</p>
+                                    <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                                        Show Report
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <ul class="list-group list-group-flush mt-1">
+                                            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                                <span>Last Year's Profit : <span class="fw-bold">$20000</span></span>
+                                                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                                <span> This Year's Profit : <span class="fw-bold">$25000</span></span>
+                                                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                                <span> Last Year's Commission : <span class="fw-bold">$5000</span></span>
+                                                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                                <span> This Year's Commission : <span class="fw-bold">$7000</span></span>
+                                                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                                <span> This Year's Total Balance : <span class="fw-bold">$70000</span></span>
+                                                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <h6 class="mb-50">Interview Schedule</h6>
+                                        <span class="timeline-event-time">03:00 PM</span>
+                                    </div>
+                                    <p>Have to interview Katy Turner for the developer job.</p>
+                                    <hr />
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="avatar me-1">
+                                                <img src="../../../app-assets/images/avatars/1-small.png" alt="Avatar" height="32" width="32" />
+                                            </div>
+                                            <span>
+                                                            <p class="mb-0">Katy Turner</p>
+                                                            <span class="text-muted">Javascript Developer</span>
+                                                        </span>
+                                        </div>
+                                        <div class="d-flex align-items-center cursor-pointer mt-sm-0 mt-50">
+                                            <i data-feather="message-square" class="me-1"></i>
+                                            <i data-feather="phone-call"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                        <h6>Online Store</h6>
+                                        <span class="timeline-event-time">03:00PM</span>
+                                    </div>
+                                    <p>
+                                        Develop an online store of electronic devices for the provided layout, as well as develop a mobile
+                                        version of it. The must be compatible with any CMS.
+                                    </p>
+                                    <div class="d-flex justify-content-between flex-wrap flex-sm-row flex-column">
+                                        <div>
+                                            <p class="text-muted mb-50">Developers</p>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar bg-light-primary avatar-sm me-50">
+                                                    <span class="avatar-content">A</span>
+                                                </div>
+                                                <div class="avatar bg-light-success avatar-sm me-50">
+                                                    <span class="avatar-content">B</span>
+                                                </div>
+                                                <div class="avatar bg-light-danger avatar-sm">
+                                                    <span class="avatar-content">C</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-sm-0 mt-1">
+                                            <p class="text-muted mb-50">Deadline</p>
+                                            <p class="mb-0">20 Dec 2077</p>
+                                        </div>
+                                        <div class="mt-sm-0 mt-1">
+                                            <p class="text-muted mb-50">Budget</p>
+                                            <p class="mb-0">$50000</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-item">
+                                <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+                                <div class="timeline-event">
+                                    <div class="d-flex justify-content-between align-items-center mb-50">
+                                        <h6>Designing UI</h6>
+                                        <div>
+                                            <span class="badge rounded-pill badge-light-primary">Design</span>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        Our main goal is to design a new mobile application for our client. The customer wants a clean & flat
+                                        design.
+                                    </p>
+                                    <div>
+                                        <span class="text-muted">Participants</span>
+                                        <div class="avatar-group mt-50">
+                                            <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Vinnie Mostowy" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30" />
+                                            </div>
+                                            <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Elicia Rieske" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" height="30" width="30" />
+                                            </div>
+                                            <div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Julee Rossignol" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-10.jpg" alt="Avatar" height="30" width="30" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Timeline Ends -->
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js' ~ asset_version)}}"></script>
+
+    <script defer src="{{ asset('assets/app/js/user.js') }}"></script>
+
+    <!-- viewer distro (with pan and zoom) -->
+    <script src="https://unpkg.com/bpmn-js@9.2.2/dist/bpmn-navigated-viewer.development.js"></script>
+
+    <script>
+
+        var diagramUrl = 'https://cdn.staticaly.com/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
+
+        // viewer instance
+        var bpmnViewer = new BpmnJS({
+            container: '#canvas'
+        });
+
+        var bpmnViewer2 = new BpmnJS({
+            container: '#canvas2'
+        });
+
+
+        /**
+         * Open diagram in our viewer instance.
+         *
+         * @param {String} bpmnXML diagram to display
+         */
+        async function openDiagram(bpmnXML) {
+
+            // import diagram
+            try {
+
+                await bpmnViewer.importXML(bpmnXML);
+
+                // access viewer components
+                var canvas = bpmnViewer.get('canvas');
+                var overlays = bpmnViewer.get('overlays');
+
+
+                // zoom to fit full viewport
+                canvas.zoom('fit-viewport');
+
+                // attach an overlay to a node
+                overlays.add('SCAN_OK', 'note', {
+                    position: {
+                        bottom: 0,
+                        right: 0
+                    },
+                    html: '<div class="diagram-note">Mixed up the labels?</div>'
+                });
+
+                // add marker
+                canvas.addMarker('SCAN_OK', 'needs-discussion');
+            } catch (err) {
+
+                console.error('could not import BPMN 2.0 diagram', err);
+            }
+        }
+
+        async function openDiagram2(bpmnXML) {
+
+            // import diagram
+            try {
+
+                await bpmnViewer2.importXML(bpmnXML);
+
+                // access viewer components
+                var canvas = bpmnViewer2.get('canvas2');
+                var overlays = bpmnViewer2.get('overlays');
+
+
+                // zoom to fit full viewport
+                canvas.zoom('fit-viewport');
+
+                // attach an overlay to a node
+                overlays.add('SCAN_OK', 'note', {
+                    position: {
+                        bottom: 0,
+                        right: 0
+                    },
+                    html: '<div class="diagram-note">Mixed up the labels?</div>'
+                });
+
+                // add marker
+                canvas.addMarker('SCAN_OK', 'needs-discussion');
+            } catch (err) {
+
+                console.error('could not import BPMN 2.0 diagram', err);
+            }
+        }
+
+
+        // load external diagram file via AJAX and open it
+        $.get(diagramUrl, openDiagram, 'text');
+
+
+        var showModalTrigger = document.getElementById('xlarge');
+
+        showModalTrigger.addEventListener('show.bs.modal', function () {
+            $.get(diagramUrl, openDiagram2, 'text');
+        });
+
+
+    </script>
+
+
+{% endblock %}

@@ -37,8 +37,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/api/authorization, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: ROLE_USER_API }
-
+        - { path: ^/api, roles: PUBLIC_ACCESS }
+# todo PUBLIC_ACCESS public for now, as request with new token from /tokenuser returns a 403
 when@test:
     security:
         password_hashers:

@@ -1,4 +1,4 @@
-{% extends '@EasyAdmin/page/content.html.twig' %}
+<html class="loading dark-layout" lang="en" data-layout="dark-layout" data-textdirection="ltr">
 
 {% if app.request.server.get('DEPLOY_TIMESTAMP') is defined and app.request.server.get('DEPLOY_TIMESTAMP') != '{DEPLOY_TIMESTAMP}' %}
     {% set asset_version = '?version=' ~ app.request.server.get('DEPLOY_TIMESTAMP') %}
@@ -9,6 +9,7 @@
 {% block head_javascript %} {% endblock %}
 
 {% block head_stylesheets %}
+    <!--
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}" rel="stylesheet"/>
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css' ~ asset_version ) }}" rel="stylesheet"/>
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css' ~ asset_version ) }}" rel="stylesheet"/>
@@ -19,6 +20,32 @@
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/sidebar/sidebar.css' ~ asset_version ) }}" rel="stylesheet"/>
     <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/colors/color1.css' ~ asset_version ) }}" rel="stylesheet"/>
     <link href="{{ asset('assets/app/css/sidemenu.css' ~ asset_version ) }}" rel="stylesheet"/>
+-->
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/vendors/css/vendors.min.css' ~ asset_version ) }}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/bootstrap.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/bootstrap-extended.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/colors.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/components.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/dark-layout.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/bordered-layout.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/semi-dark-layout.css' ~ asset_version ) }}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/core/menu/menu-types/vertical-menu.css' ~ asset_version ) }}">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/custom.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/style.css' ~ asset_version ) }}">
+    -->
+
 {% endblock %}
 
 
@@ -28,16 +55,34 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="generator" content="MPSync App" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta name="description" content="MAKO DASHBOARD.">
+    <meta name="keywords" content="maco, app">
+    <meta name="author" content="CONUTI">
+    <title>Home - Vuexy - Bootstrap HTML admin template</title>
+    <link rel="apple-touch-icon" href="{{ asset('assets/app/img/conuti-logo-favicon.png' ~ asset_version ) }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/app/img/conuti-logo-favicon.png' ~ asset_version ) }}">
+
 {% endblock head_metas %}
 
 
 {% block body %}
-    <body class="app sidebar-mini">
+    <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 
-        <div class="page">
-            <div class="page-main">
+    {% include 'admin/page/pageheader.html.twig' %}
 
-                {% include 'admin/page/sidebar.html.twig' %}
+    {% include 'admin/page/sidebar.html.twig' %}
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+
+
 
                 <div class="app-content">
                     <div class="side-app">
@@ -45,14 +90,26 @@
                     </div>
                 </div>
 
-            </div>
         </div>
+    </div>
+    <!-- END: Content-->
+
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-dark">
+        <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <!-- END: Footer-->
 
         <script type="text/javascript">
             const jsGlobalData = {% if js_data.toJson() is not empty %}{{ js_data.toJson()|raw }}{% else %}""{% endif %};
         </script>
 
         {% block javascripts %}
+            <!--
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/js/jquery.min.js' ~ asset_version ) }}"></script>
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/js/popper.min.js' ~ asset_version ) }}"></script>
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/js/bootstrap.min.js' ~ asset_version ) }}"></script>
@@ -60,7 +117,36 @@
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/perfect-scrollbar.js' ~ asset_version ) }}"></script>
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/pscroll.js' ~ asset_version ) }}"></script>
             <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/sidemenu/sidemenu.js' ~ asset_version ) }}"></script>
+            -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <!-- BEGIN: Vendor JS-->
+            <script src="{{ asset('assets/app-assets/vendors/js/vendors.min.js' ~ asset_version ) }}"></script>
+            <!-- BEGIN Vendor JS-->
+
+            <!-- BEGIN: Page Vendor JS-->
+            <!-- END: Page Vendor JS-->
+
+            <!-- BEGIN: Theme JS-->
+            <script src="{{ asset('assets/app-assets/js/core/app-menu.js' ~ asset_version ) }}"></script>
+            <script src="{{ asset('assets/app-assets/js/core/app.js' ~ asset_version ) }}"></script>
+            <!-- END: Theme JS-->
+
+            <!-- BEGIN: Page JS-->
+            <!-- END: Page JS-->
+
+            <script>
+                $(window).on('load', function() {
+                    if (feather) {
+                        feather.replace({
+                            width: 14,
+                            height: 14
+                        });
+                    }
+                })
+            </script>
+
         {% endblock %}
 
     </body>
 {% endblock body %}
+</html>

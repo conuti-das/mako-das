@@ -1,75 +1,50 @@
-<div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
-<aside class="app-sidebar">
-    <div class="side-header">
-        <a class="header-brand1" href="{{ path('admin') }}">
-            <img src="{{ asset('assets/app/img/conuti-logo.png') }}" class="header-brand-img light-logo1" alt="logo"/>
-        </a>
-        <a aria-label="Hide Sidebar" class="app-sidebar__toggle ms-auto" data-bs-toggle="sidebar" href="#"></a>
+<!-- BEGIN: Main Menu-->
+<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item me-auto"><a class="navbar-brand" href="{{ path('admin') }}"><span class="brand-logo">
+                           <img src="{{ asset('assets/app/img/conuti-logo-white.png' ~ asset_version ) }}" />
+                    </span>
+                    <h2 class="brand-text">MAKO360</h2>
+                </a></li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+        </ul>
     </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            {% block main_menu_before %}{% endblock %}
 
-    {% block main_menu_before %}{% endblock %}
-    <ul class="side-menu pt-6">
-        {% block main_menu %}
-            {% for menuItem in ea.mainMenu.items %}
-                {% block menu_item %}
-                    <li class="slide">
-                        {{ _self.render_menu_item(menuItem) }}
-                    </li>
-                {% endblock menu_item %}
-            {% endfor %}
-        {% endblock main_menu %}
-    </ul>
-    {% block main_menu_after %}{% endblock %}
+                {% block main_menu %}
+                    {% for menuItem in ea.mainMenu.items %}
+                        {% block menu_item %}
+                        <li class=" nav-item">
+                            {{ _self.render_menu_item(menuItem) }}
+                        </li>
+                        {% endblock menu_item %}
+                    {% endfor %}
+                {% endblock main_menu %}
+
+            {% block main_menu_after %}{% endblock %}
 
 
-    {% macro render_menu_item(item) %}
-        <a href="{{ item.linkUrl }}" class="side-menu__item">
-            {% if item.icon is not empty %}<i class="side-menu__icon {{ item.icon }}"></i>{% endif %}
-            <span class="side-menu__label">
-                {{ item.label|trans|raw }}
-            </span>
-        </a>
-
-    {% endmacro %}
-
-</aside>
-
-<div class="mobile-header hor-mobile-header">
-    <div class="container-fluid">
-        <div class="d-flex">
-            <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
-            <a class="header-brand" href="{{ path('admin') }}">
-
-                <img src="{{ asset('assets/app/img/conuti-logo.png') }}"
-                     class="header-brand-img mobile-brand-logo" alt="logo">
-            </a>
-            <div class="d-flex order-lg-2 ms-auto header-right-icons">
-
-                <div class="mt-4">
-                    {% if ea.userMenu.isNameDisplayed %}
-                        {{ ea.userMenu.name }}
-                    {% endif %}
-                </div>
-
-                <button class="navbar-toggler navresponsive-toggler d-md-none"
-                        type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4"
-                        aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
-
-                </button>
-                <div class="dropdown profile-1">
-                    <a href="#" data-bs-toggle="dropdown" class="nav-link pe-2 leading-none d-flex">
-                        <span>
-                            <img src="{{ asset('assets/app/img/conuti-logo-favicon.png') }}"
-                                 alt="profile-user" class="avatar  profile-user brround cover-image">
+            {% macro render_menu_item(item) %}
+                <a href="{{ item.linkUrl }}" class="d-flex align-items-center">
+                    {% if item.icon is not empty %}<i data-feather="{{ item.icon }}"></i>{% endif %}
+                    <span class="menu-item text-truncate" data-i18n="{{ item.label|trans|raw }}">
+                            {{ item.label|trans|raw }}
                         </span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{{ path('app_logout') }}">
-                            <i class="dropdown-icon mdi  mdi-logout-variant"></i> Sign out
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </a>
+
+            {% endmacro %}
+            <li class=" nav-item">
+                <a class="d-flex align-items-center" href="#">
+                    <i data-feather="layout"></i><span class="menu-title text-truncate" data-i18n="Superadmin">Superadmin</span><span class="badge badge-light-danger rounded-pill ms-auto
+                    me-1">2</span>
+                </a>
+
+            </li>
+        </ul>
     </div>
 </div>
+<!-- END: Main Menu-->

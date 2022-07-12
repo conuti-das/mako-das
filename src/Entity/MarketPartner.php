@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'market_partners_all' => [
             'method' => 'GET',
             'path' => '/market-partners',
-            'output' => MarketPartnerAllResponse::class,
+ //           'output' => MarketPartnerAllResponse::class,
             'normalization_context' => ['groups' => ['market-partners-all:read']],
         ],
     ],
@@ -48,9 +48,11 @@ class MarketPartner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["market-partners-all:read"])]
     private int $id;
 
     #[ORM\Column(type: 'integer', length: 1)]
+    #[Groups(["market-partners-all:read"])]
     private int $active;
 
     #[ORM\Column(type: 'integer', length: 1)]
@@ -63,22 +65,26 @@ class MarketPartner
     private ?DateTimeInterface $updatedAt;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(["market-partners-email-all:read"])]
     private string $type;
 
     #[ORM\Column(type: 'string')]
+    #[Groups(["market-partners-all:read"])]
     private string $energy;
 
     #[ORM\Column(type: 'string')]
-    #[Groups(["market-partners-email-all:read"])]
+    #[Groups(["market-partners-email-all:read", "market-partners-all:read"])]
     private string $partnerId;
 
     #[ORM\Column(type: 'string', nullable: true)]
+    #[Groups(["market-partners-all:read"])]
     private ?string $partnerIdType;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $partnerIdGmsb;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["market-partners-all:read"])]
     private string $organization;
 
     #[ORM\Column(type: 'string')]

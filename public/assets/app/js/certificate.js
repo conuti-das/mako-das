@@ -94,5 +94,45 @@ $(document).ready(function () {
         $('#showSuccessMessage').val("");
     }
 
-    $('#certificateTable').DataTable({});
+
+});
+$(document).ready(async function () {
+    const getToken = async () => {
+        const data2 = await fetch('/tokenuser', {
+            method: 'GET',
+        });
+        const tokendata = await data2.json();
+
+        return tokendata.token;
+    };
+
+    $('#certificateTable').DataTable({
+        'serverSide': false,
+        'ajax': {
+            'url': '/api/market-partners',
+            'headers': {'Accept': "application/ld+json", "authorization": "Bearer" + " " + await getToken()},
+            'dataFilter': function (data) {
+                var json = JSON.parse(data);
+                json.recordsTotal = json['hydra:totalItems'];
+                json.recordTotal = json['hydra:totalItems'];
+                json.recordsFiltered = json['hydra:totalItems'];
+                json.data = json['hydra:member'];
+                console.log(json);
+                return JSON.stringify(json);
+            }
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'partnerId' },
+            { data: '@type' },
+            { data: 'organization' },
+            { data: 'partnerIdType' },
+            { data: 'energy' },
+            { data: 'active' },
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/de-DE.json'
+        }
+    });
+
 });

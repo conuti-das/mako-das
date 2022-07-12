@@ -2,10 +2,12 @@
 
 {% block head_stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/css/dataTables.bootstrap5.min.css'  ~ asset_version) }}"
-          type="text/css" rel="stylesheet"/>
-    <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/css/jquery.growl.css' ~ asset_version) }}"
-          type="text/css" rel="stylesheet"/>
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/vendors.min.css' ~ asset_version) }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css' ~ asset_version) }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css' ~ asset_version) }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css' ~ asset_version) }}">
+    <!-- END: Vendor CSS-->
     <link href="{{ asset('assets/app/css/certificateUploadModal.css' ~ asset_version) }}" type="text/css" rel="stylesheet"/>
     <link href="{{ asset('assets/app/css/certificates.css' ~ asset_version) }}" type="text/css" rel="stylesheet"/>
 {% endblock %}
@@ -21,69 +23,54 @@
             </ol>
         </div>
 
-        {% include 'admin/page/pageheader.html.twig' %}
-
     </div>
 
-    <div class="row">
-        <div class="col-md-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">{{ 'Certificates'|trans }}</h3>
-                    <div class="position-absolute top-1 end-0 pe-3">
-                        <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
-                                data-target="#certificationUploadModal">
-                            {{ 'Add Certificate'|trans }}
-                        </button>
+    <!-- Responsive Datatable -->
+    <section id="responsive-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title">{{ 'Certificates'|trans }}</h4>
+                        <div class="position-absolute top-1 end-0 pe-3">
+                            <button id="certificateModal" type="submit" class="btn btn-success" data-toggle="modal"
+                                    data-target="#certificationUploadModal">
+                                {{ 'Add Certificate'|trans }}
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="certificateTable" class="table table-striped table-bordered text-nowrap w-100">
+                    <div class="card-datatable">
+                        <table id="certificateTable" class="dt-responsive table">
                             <thead>
                             <tr>
-                                <th>{{ 'Id'|trans }}</th>
+                                <th>#</th>
                                 <th>{{ 'Partner Id'|trans }}</th>
-                                <th>{{ 'Email'|trans }}</th>
                                 <th>{{ 'Type'|trans }}</th>
-                                <th>{{ 'Certificate Expiration'|trans }}</th>
-                                <th>{{ 'Valid From'|trans }}</th>
-                                <th>{{ 'Valid Until'|trans }}</th>
                                 <th>{{ 'Organization'|trans }}</th>
                                 <th>{{ 'MP-Type'|trans }}</th>
                                 <th>{{ 'Energy'|trans }}</th>
                                 <th>{{ 'Active'|trans }}</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            {% for marketPartnerEmail in marketPartnerEmails %}
-                                <tr>
-                                    <td>{{ marketPartnerEmail.id}}</td>
-                                    <td>{{ marketPartnerEmail.marketpartner.partnerid }}</td>
-                                    <td>{{ marketPartnerEmail.email }}</td>
-                                    <td>{{ marketPartnerEmail.type }}</td>
-                                    <td>{{ marketPartnerEmail.sslCertificateExpiration|date('Y-m-d') }}</td>
-                                    <td>{{ marketPartnerEmail.activeFrom|date('Y-m-d') }}</td>
-                                    <td>{{ marketPartnerEmail.activeUntil|date('Y-m-d') }}</td>
-                                    <td>{{ marketPartnerEmail.marketPartner.organization }}</td>
-                                    <td>{{ marketPartnerEmail.marketPartner.type }}</td>
-                                    <td>{{ marketPartnerEmail.marketPartner.energy }}</td>
-                                    {% if (marketPartnerEmail.activeFrom|date('Y-m-d') <= nowDate) and
-                                          (marketPartnerEmail.activeUntil >= nowDate) %}
-                                        <td><div class="badge bg-success">{{ 'Active'|trans }}</div></td>
-                                    {% else %}
-                                        <td><div class="badge bg-danger"> {{ 'Inactive'|trans }}</div></td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>{{ 'Partner Id'|trans }}</th>
+                                <th>{{ 'Type'|trans }}</th>
+                                <th>{{ 'Organization'|trans }}</th>
+                                <th>{{ 'MP-Type'|trans }}</th>
+                                <th>{{ 'Energy'|trans }}</th>
+                                <th>{{ 'Active'|trans }}</th>
+                            </tr>
+                            </tfoot>
                         </table>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!--/ Responsive Datatable -->
+
 
     <input id="showSuccessMessage" type="hidden" value="{{ showSuccess }}"/>
 
@@ -93,19 +80,10 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script defer
-            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/jquery.dataTables.min.js' ~ asset_version) }}">
-    </script>
-    <script defer
-            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/js/dataTables.bootstrap5.min.js' ~ asset_version) }}">
-    </script>
-    <script defer
-            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/datatable/dataTables.responsive.min.js' ~ asset_version) }}">
-    </script>
-    <script defer src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/rainbow.js' ~ asset_version) }}">
-    </script>
-    <script defer
-            src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/notify/js/jquery.growl.js' ~ asset_version) }}">
-    </script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js' ~ asset_version) }}"></script>
+    <script src="{{asset('assets/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js' ~ asset_version)}}"></script>
     <script defer src="{{ asset('assets/app/js/certificate.js' ~ asset_version) }}"></script>
 {% endblock %}
