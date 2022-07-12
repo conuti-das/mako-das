@@ -22,7 +22,7 @@ class DasController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'home');
         yield MenuItem::linkToRoute('Certificates', 'file-text', 'certificates_all');
         yield MenuItem::linkToRoute('User', 'users', 'admin_user_list');
-        yield MenuItem::linkToRoute('Das', 'users', 'app_das');
+        yield MenuItem::linkToRoute('Messages', 'users', 'app_das');
 
     }
 }

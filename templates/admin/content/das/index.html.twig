@@ -53,10 +53,10 @@
 
     <div class="page-header">
 
-        <div><h1 class="page-title">{{ 'User'|trans }}</h1>
+        <div><h1 class="page-title">{{ 'Messages'|trans }}</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ path('admin') }}">{{ 'Admin'|trans }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ 'User'|trans }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ 'Messages'|trans }}</li>
             </ol>
         </div>
     </div>
@@ -67,20 +67,38 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header border-bottom">
-                        <h4 class="card-title">{{ 'User'|trans }}</h4>
+                        <h4 class="card-title">{{ 'Messages'|trans }}</h4>
                     </div>
                     <div class="card-datatable">
-                        <table id="responsiveUserTable" class="dt-responsive table">
+                        <table id="responsiveDasTable" class="dt-responsive table">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>{{ 'Username'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Sender'|trans }}</th>
+                                <th>{{ 'Receiver'|trans }}</th>
+                                <th>{{ 'Reference'|trans }}</th>
+                                <th>{{ 'Type'|trans }}</th>
+                                <th>{{ 'BusinessTransaction'|trans }}</th>
+                                <th>{{ 'Direction'|trans }}</th>
+                                <th>{{ 'Description'|trans }}</th>
+                                <th>{{ 'BusinessKey'|trans }}</th>
+                                <th>{{ 'Info'|trans }}</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>{{ 'Username'|trans }}</th>
+                                <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Sender'|trans }}</th>
+                                <th>{{ 'Receiver'|trans }}</th>
+                                <th>{{ 'Reference'|trans }}</th>
+                                <th>{{ 'Type'|trans }}</th>
+                                <th>{{ 'BusinessTransaction'|trans }}</th>
+                                <th>{{ 'Direction'|trans }}</th>
+                                <th>{{ 'Description'|trans }}</th>
+                                <th>{{ 'BusinessKey'|trans }}</th>
+                                <th>{{ 'Info'|trans }}</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -305,7 +323,7 @@
     <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js' ~ asset_version) }}"></script>
     <script src="{{asset('assets/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js' ~ asset_version)}}"></script>
 
-    <script defer src="{{ asset('assets/app/js/user.js') }}"></script>
+    <script defer src="{{ asset('assets/app/js/das.js') }}"></script>
 
     <!-- viewer distro (with pan and zoom) -->
     <script src="https://unpkg.com/bpmn-js@9.2.2/dist/bpmn-navigated-viewer.development.js"></script>
