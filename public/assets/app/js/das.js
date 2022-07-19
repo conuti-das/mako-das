@@ -48,4 +48,45 @@ $(document).ready(async function () {
         }
     });
 
+
+});
+
+$(document).ready(function() {
+    $('#reload').click(function() {
+        console.log('reload');
+        var table = $('#responsiveDasTable').DataTable();
+        table.ajax.reload();
+    });
+
+    $('#sendedi').click(function() {
+        let htmlMessage = $('#edi').val().replace(/(\r\n|\n|\r)/gm, "");
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://mako-dev.apps.conuti.de:8082/test/startProcess',
+            data: '{\n' +
+                '  "variables": {\n' +
+                '    "payload": {\n' +
+                '      "value": "'+ htmlMessage +'",\n' +
+                '      "type": "String"\n' +
+                '    }\n' +
+                '   }\n' +
+                '  }', // or JSON.stringify ({name: 'jonas'}),
+            success: function(data) {
+                var myModalEl = document.getElementById('sendMessageModal')
+                var modal = bootstrap.Modal.getInstance(myModalEl)
+                modal.toggle();
+
+
+                var toastLiveExample = document.getElementById('liveToast')
+                var toast = new bootstrap.Toast(toastLiveExample)
+
+                toast.show()
+
+                },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    });
+
 });

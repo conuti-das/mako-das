@@ -10,6 +10,7 @@
      <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css' ~ asset_version) }}">
      <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css' ~ asset_version) }}">
      <link rel="stylesheet" type="text/css" href="{{asset('assets/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css' ~ asset_version) }}">
+
      <!-- END: Vendor CSS-->
 
      <!-- BEGIN: Page CSS-->
@@ -68,6 +69,16 @@
                 <div class="card">
                     <div class="card-header border-bottom">
                         <h4 class="card-title">{{ 'Messages'|trans }}</h4>
+                        <div class="position-absolute top-1 end-0 pe-3">
+                            <button type="button" class="btn btn-outline-primary waves-effect"
+                                    data-bs-toggle="modal" data-bs-target="#sendMessageModal" id="onshowmessage">
+                                {{ 'Send Message'|trans }}
+                            </button>
+                            <button type="button" class="btn btn-outline-primary waves-effect"
+                                     id="reload">
+                                {{ 'Reload'|trans }}
+                            </button>
+                        </div>
                     </div>
                     <div class="card-datatable">
                         <table id="responsiveDasTable" class="dt-responsive table">
@@ -109,7 +120,77 @@
     </section>
     <!--/ Responsive Datatable -->
 
-    <!-- Timeline Starts -->
+    <!-- compose email -->
+    <div class="modal modal-sticky" id="sendMessageModal" data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content p-0">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'Compose Mail'|trans }}</h5>
+                    <div class="modal-actions">
+                        <a href="#" class="text-body me-75"><i data-feather="minus"></i></a>
+
+                        <a class="text-body" href="#" data-bs-dismiss="modal" aria-label="Close"><i data-feather="x"></i></a>
+                    </div>
+                </div>
+                <div class="modal-body flex-grow-1 p-0">
+                    <form class="compose-form">
+                        <div id="message-editor">
+
+                            <textarea cols="90" rows="45" id="edi" placeholder="">
+UNA:+.? '
+UNB+UNOC:3+9903913000003:500+9900580000002:500+220302:0924+DDBEBDCBDFXXXX'
+UNH+DDBEBDCBDFBHDJ+UTILMD:D:11A:UN:5.2d'
+BGM+E01+31552203021024069903913000003784575'
+DTM+137:202203020924?+00:303'
+NAD+MS+9903913000003::293'
+NAD+MR+9900580000002::293'
+IDE+24+37914922030210240699039130000030860'
+IMD++Z36+Z12'
+DTM+92:202202282300?+00:303'
+STS+7++E01'
+LOC+172+48395615332'
+RFF+Z13:11001'
+RFF+Z18'
+DTM+Z20:12:802'
+SEQ+Z01'
+QTY+31:3500:KWH'
+CCI+Z30++Z07'
+CCI+Z19++5aa7d83775510'
+CCI+++Z15'
+CCI+++Z88'
+CAV+Z74:::Z09'
+CAV+Z73:::Z11'
+SEQ+Z12'
+QTY+Z16:0:P1'
+SEQ+Z03'
+CCI+++E13'
+CAV+Z30:::926442721'
+NAD+Z09+++Bharambe:Shishir::::Z01'
+NAD+Z04+++Bharambe:Shishir::::Z01+Ahornweg::5+Schutterwald++77746+DE'
+NAD+DP++++Ahornweg::5+Schutterwald++77746+DE'
+NAD+Z05+++Bharambe:Shishir::::Z01+Ahornweg::5+Schutterwald++77746+DE'
+UNT+31+DDBEBDCBDFBHDJ'
+UNZ+1+DDBEBDCBDFBHDJ'
+                           </textarea>
+                        </div>
+                        <div class="compose-footer-wrapper">
+                            <div class="btn-wrapper d-flex align-items-center">
+                                <div class="btn-group dropup me-1">
+                                    <button type="button" id="sendedi" class="btn btn-primary">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ compose email -->
+
+
+
+
+    <!-- Timeline Starts
     <section class="basic-timeline">
         <div class="row">
             <div class="col-lg-12">
@@ -307,7 +388,20 @@
             </div>
         </div>
     </section>
-    <!-- Timeline Ends -->
+     Timeline Ends -->
+
+    <div class="toast-container position-fixed top-0 end-0 p-2" style="z-index: 15">
+        <div id="liveToast" class="toast toast-autohide fade" role="alert" aria-live="assertive"
+             aria-atomic="true" data-bs-autohide="false">
+            <div class="toast-header">
+                <img src="{{asset('assets/app/img/conuti-logo-white.png' ~ asset_version) }}" class="me-1" alt="Toast Image" height="18" width="25">
+                <strong class="me-auto">EDI Senden</strong>
+                <small class="text-muted">Gerade eben</small>
+                <button type="button" class="ms-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">Nachricht erfolgreich eingespielt.</div>
+        </div>
+    </div>
 
 
 
