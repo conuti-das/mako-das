@@ -56,5 +56,8 @@ Reference: DAR
 BusinessTransaction: Prüfi
 Direction: Richtung
 Description: Beschreibung
-BusinessKey: Schlüssel
+BusinessKey: BusinessKey
 Compose Mail: EDI Nachricht emfpangen
+Send Message: EDI Nachricht emfpangen
+Start: Start
+Reload: Aktualisieren

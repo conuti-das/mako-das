@@ -42,8 +42,21 @@
          }
 
          .needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
-             stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
+             stroke: rgba(66, 180, 21, 0.9) !important; /* color elements as red */
          }
+
+         .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+             fill: rgba(66, 180, 21, 0.3) !important; /* color elements as green */
+         }
+
+         .camundacanvas {
+             height: 100%;
+             padding: 0;
+             margin: 0;
+             width: 100%;
+             height: 770px;
+         }
+
      </style>
 
 
@@ -86,13 +99,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Start'|trans }}</th>
                                 <th>{{ 'Sender'|trans }}</th>
                                 <th>{{ 'Receiver'|trans }}</th>
                                 <th>{{ 'Reference'|trans }}</th>
                                 <th>{{ 'Type'|trans }}</th>
                                 <th>{{ 'BusinessTransaction'|trans }}</th>
                                 <th>{{ 'Direction'|trans }}</th>
-                                <th>{{ 'Description'|trans }}</th>
                                 <th>{{ 'BusinessKey'|trans }}</th>
                                 <th>{{ 'Info'|trans }}</th>
                             </tr>
@@ -101,13 +114,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ 'Status'|trans }}</th>
+                                <th>{{ 'Start'|trans }}</th>
                                 <th>{{ 'Sender'|trans }}</th>
                                 <th>{{ 'Receiver'|trans }}</th>
                                 <th>{{ 'Reference'|trans }}</th>
                                 <th>{{ 'Type'|trans }}</th>
                                 <th>{{ 'BusinessTransaction'|trans }}</th>
                                 <th>{{ 'Direction'|trans }}</th>
-                                <th>{{ 'Description'|trans }}</th>
                                 <th>{{ 'BusinessKey'|trans }}</th>
                                 <th>{{ 'Info'|trans }}</th>
                             </tr>
@@ -187,7 +200,64 @@ UNZ+1+DDBEBDCBDFBHDJ'
     </div>
     <!--/ compose email -->
 
+    <div class="modal fade text-start" id="xlarge" tabindex="-1" aria-labelledby="myModalLabel16" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel16">Prozessübersicht</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Prozessinformationen</h4>
+                        </div>
+                        <div class="card-body" style="min-height: 700px">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-fill" id="diagramhead" role="tablist" >
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab-fill" data-bs-toggle="tab"
+                                       href="#home-fill" role="tab" aria-controls="home-fill"
+                                       aria-selected="true">Verlauf</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content pt-1" id="diagramholder">
+                                <div class="tab-pane active" id="home-fill" role="tabpanel" aria-labelledby="home-tab-fill">
+                                    <p>
+
+
+                                    <section class="basic-timeline">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Gestartete Prozesse</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="timeline" id="prozesse">
+
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Timeline Starts
@@ -395,17 +465,32 @@ UNZ+1+DDBEBDCBDFBHDJ'
              aria-atomic="true" data-bs-autohide="false">
             <div class="toast-header">
                 <img src="{{asset('assets/app/img/conuti-logo-white.png' ~ asset_version) }}" class="me-1" alt="Toast Image" height="18" width="25">
-                <strong class="me-auto">EDI Senden</strong>
-                <small class="text-muted">Gerade eben</small>
+                <strong class="me-auto">Prozess gestartet</strong>
+                <small class="text-muted" id="toastid">Gerade eben</small>
                 <button type="button" class="ms-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            <div class="toast-body">Nachricht erfolgreich eingespielt.</div>
+            <div class="toast-body" id="toastbody">Nachricht erfolgreich eingespielt.</div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed top-0 end-0 p-2" style="z-index: 15">
+        <div id="liveToastError" class="toast toast-autohide fade" role="alert" aria-live="assertive"
+             aria-atomic="true" data-bs-autohide="false">
+            <div class="toast-header">
+                <img src="{{asset('assets/app/img/conuti-logo-white.png' ~ asset_version) }}" class="me-1" alt="Toast Image" height="18" width="25">
+                <strong class="me-auto">Prozess gestartet</strong>
+                <small class="text-muted" id="toasterrorid">Gerade eben</small>
+                <button type="button" class="ms-1 btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toasterrorbody">Nachricht erfolgreich eingespielt.</div>
         </div>
     </div>
 
 
 
-{% endblock %}
+
+
+    {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -416,108 +501,13 @@ UNZ+1+DDBEBDCBDFBHDJ'
     <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js' ~ asset_version) }}"></script>
     <script src="{{asset('assets/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.js' ~ asset_version) }}"></script>
     <script src="{{asset('assets/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js' ~ asset_version)}}"></script>
+    <script src="{{asset('assets/app-assets/js/scripts/components/components-navs.js' ~ asset_version)}}"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.12.1/dataRender/datetime.js"></script>
 
     <script defer src="{{ asset('assets/app/js/das.js') }}"></script>
 
     <!-- viewer distro (with pan and zoom) -->
     <script src="https://unpkg.com/bpmn-js@9.2.2/dist/bpmn-navigated-viewer.development.js"></script>
-
-    <script>
-
-        var diagramUrl = 'https://cdn.staticaly.com/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
-
-        // viewer instance
-        var bpmnViewer = new BpmnJS({
-            container: '#canvas'
-        });
-
-        var bpmnViewer2 = new BpmnJS({
-            container: '#canvas2'
-        });
-
-
-        /**
-         * Open diagram in our viewer instance.
-         *
-         * @param {String} bpmnXML diagram to display
-         */
-        async function openDiagram(bpmnXML) {
-
-            // import diagram
-            try {
-
-                await bpmnViewer.importXML(bpmnXML);
-
-                // access viewer components
-                var canvas = bpmnViewer.get('canvas');
-                var overlays = bpmnViewer.get('overlays');
-
-
-                // zoom to fit full viewport
-                canvas.zoom('fit-viewport');
-
-                // attach an overlay to a node
-                overlays.add('SCAN_OK', 'note', {
-                    position: {
-                        bottom: 0,
-                        right: 0
-                    },
-                    html: '<div class="diagram-note">Mixed up the labels?</div>'
-                });
-
-                // add marker
-                canvas.addMarker('SCAN_OK', 'needs-discussion');
-            } catch (err) {
-
-                console.error('could not import BPMN 2.0 diagram', err);
-            }
-        }
-
-        async function openDiagram2(bpmnXML) {
-
-            // import diagram
-            try {
-
-                await bpmnViewer2.importXML(bpmnXML);
-
-                // access viewer components
-                var canvas = bpmnViewer2.get('canvas2');
-                var overlays = bpmnViewer2.get('overlays');
-
-
-                // zoom to fit full viewport
-                canvas.zoom('fit-viewport');
-
-                // attach an overlay to a node
-                overlays.add('SCAN_OK', 'note', {
-                    position: {
-                        bottom: 0,
-                        right: 0
-                    },
-                    html: '<div class="diagram-note">Mixed up the labels?</div>'
-                });
-
-                // add marker
-                canvas.addMarker('SCAN_OK', 'needs-discussion');
-            } catch (err) {
-
-                console.error('could not import BPMN 2.0 diagram', err);
-            }
-        }
-
-
-        // load external diagram file via AJAX and open it
-        $.get(diagramUrl, openDiagram, 'text');
-
-
-        var showModalTrigger = document.getElementById('xlarge');
-
-        showModalTrigger.addEventListener('show.bs.modal', function () {
-            $.get(diagramUrl, openDiagram2, 'text');
-        });
-
-
-    </script>
-
 
 {% endblock %}

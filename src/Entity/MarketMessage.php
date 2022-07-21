@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MarketMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +14,7 @@ class MarketMessage
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: false)]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -46,6 +48,7 @@ class MarketMessage
     private $description;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ApiProperty(identifier: true)]
     private $businessKey;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
