@@ -1,60 +1,99 @@
 {% extends 'login.base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}MAKO.APP Login{% endblock %}
 
 {% block body %}
-    <div class="login-img">
-        <div class=page>
-            <div class="container mt-5">
-                <div class="col col-login mx-auto">
-                    <div class="text-center">
-                        <img src="{{ asset('assets/app/img/conuti-logo.png') }}" class="login-logo-img"
-                             alt="Conuti Logo">
-                    </div>
-                </div>
-                <div class="container-login100">
-                    <div class="wrap-login100 p-6">
-                        <form method="post" class="login100-form validate-form">
-                            {% if error %}
-                                <div class="alert alert-danger">
-                                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                                </div>
-                            {% endif %}
-                            {% if app.user %}
-                                <div class="mb-3">
-                                    You are logged in as {{ app.user.userIdentifier }},
-                                    <a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a>
-                                </div>
-                            {% else %}
-                                <span class="login100-form-title">MAKO.APP - Login</span>
-                                <div class="wrap-input100 validate-input">
 
-                                    <input type="text" value="{{ last_username }}" name="username"
-                                           id="inputUsername"
-                                           class="input100" autocomplete="username" required autofocus>
-                                    <span class="focus-input100"></span>
-                                    <span class="symbol-input100">
-                                        <i class="zmdi zmdi-email" aria-hidden="true"></i></span>
-                                    </span>
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="auth-wrapper auth-basic px-2">
+                    <div class="auth-inner my-2">
+                        <!-- Login basic -->
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="admin" class="brand-logo">
+                                    <img src="{{ asset('assets/app/img/conuti-logo.png') }}" class="login-logo-img"
+                                         alt="Conuti Logo" style="width: 170px;">
+                                    <h2 class="brand-text text-primary ms-1" style="padding-top: 50px;">MAKO.APP</h2>
+                                </a>
+
+                                <h4 class="card-title mb-1">{{ 'Welcome to'|trans }} {{ 'Test environment'|trans }} 👋</h4>
+
+                                <form method="post" class="login100-form auth-login-form mt-2 validate-form">
+                                        {% if error %}
+                                            <div class="alert alert-danger">
+                                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                                            </div>
+                                        {% endif %}
+                                        {% if app.user %}
+                                        <div class="mb-3">
+                                            {{ 'You are logged in as'|trans }} {{ app.user.userIdentifier }},
+                                            <a href="{{ path('app_logout') }}">{{ 'Logout'|trans }}</a>
+                                        </div>
+                                        {% else %}
+                                            <div class="mb-1">
+                                                <label for="login-email" class="form-label">{{ 'Email'|trans }}</label>
+                                                <input type="text" class="form-control" value="{{ last_username }}" name="username"
+                                                       id="inputUsername"
+                                                       autocomplete="username"
+                                                       placeholder="daniel@conuti.de" aria-describedby="login-email"
+                                                       tabindex="1" required autofocus />
+                                            </div>
+
+                                            <div class="mb-1">
+                                                <div class="d-flex justify-content-between">
+                                                    <label class="form-label" for="login-password">{{ 'Password'|trans }}</label>
+                                                </div>
+                                                <div class="input-group input-group-merge form-password-toggle">
+                                                    <input type="password" class="form-control form-control-merge" type="password" name="password" id="inputPassword" class="input100"
+                                                           autocomplete="current-password" tabindex="2"
+                                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" required />
+                                                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-1">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="remember-me" tabindex="3" />
+                                                    <label class="form-check-label" for="remember-me"> {{ 'Remember Me'|trans }} </label>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="_csrf_token"
+                                                   value="{{ csrf_token('authenticate') }}">
+                                            <button class="btn btn-lg btn-primary" style="margin-top: 10px;" type="submit">
+                                                {{ 'Sign in'|trans }}
+                                            </button>
+                                        {% endif %}
+                                </form>
+
+                                {% if not app.user %}
+                                <div class="divider my-2">
+                                    <div class="divider-text">{{ 'Or'|trans }}</div>
                                 </div>
-                                <div class="wrap-input100 validate-input">
-                                    <input type="password" name="password" id="inputPassword" class="input100"
-                                           autocomplete="current-password" required>
-                                    <span class="focus-input100"></span>
-                                    <span class="symbol-input100">
-                                        <i class="zmdi zmdi-lock" aria-hidden="true"></i>
-                                    </span>
+
+                                <div class="auth-footer-btn d-flex justify-content-center">
+
+                                    <a href="#" class="btn btn-microsoft"
+                                       data-bs-trigger="manual" data-bs-original-title="Aktuell nicht verfügbar">
+                                        <i data-feather="user"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-google" data-bs-trigger="manual" data-bs-original-title="Aktuell nicht verfügbar">
+                                        <i data-feather="mail"></i>
+                                    </a>
                                 </div>
-                                <input type="hidden" name="_csrf_token"
-                                       value="{{ csrf_token('authenticate') }}">
-                                <button class="btn btn-lg btn-primary" style="margin-top: 10px;" type="submit">
-                                    {{ 'Sign in'|trans }}
-                                </button>
-                            {% endif %}
-                        </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- /Login basic -->
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+    <!-- END: Content-->
 {% endblock %}

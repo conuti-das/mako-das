@@ -145,12 +145,12 @@ $(document).ready(async function () {
         var businessKey = button.data('id');
 
         i = 0;
-
+        $('#prozesse').html('');
         fetchProcess(businessKey).then(processeses => {
             processeses = processeses.reverse();
-            $.each( processeses, function( key, processes ) {
+            $.each( processeses, async function (key, processes) {
                 i++;
-console.log(processes);
+                console.log(processes);
                 statusclass = processes.state === 'COMPLETED' ? 'bg-primary' : 'bg-info';
                 var end = moment(processes.endTime);
                 var start = moment(processes.startTime);
@@ -159,37 +159,69 @@ console.log(processes);
                     '                  <span class="timeline-point timeline-point-indicator"></span>\n' +
                     '                             <div class="timeline-event">\n' +
                     '                                                    <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">\n' +
-                    '                                                       <h6>'+processes.processDefinitionName+'</h6>\n' +
-                    '                                                        <span class="timeline-event-time">'+start.fromNow()+'</span>\n' +
+                    '                                                       <h6>' + processes.processDefinitionName + '</h6>\n' +
+                    '                                                        <span class="timeline-event-time">' + start.fromNow() + '</span>\n' +
                     '                                  </div>\n' +
-                    '                                                  <p>'+start.format('DD.MM.YY HH:ss')+' -> '+end.format('DD.MM.YY HH:ss')+' </p>\n' +
-                    '                               <p><span><b>ProcessKey : </b>'+processes.processDefinitionKey+'</span> <span><b>ProcessId : </b>'+processes.id+'</span> <span><a href="http://mako-dev.apps.conuti.de:8050/camunda/app/cockpit/default/#/history/process-instance/' + processes.id + '" target="_blank">Prozess in Camunda öffnen</a></span></p>' +
+                    '                                                  <p>' + start.format('DD.MM.YY HH:ss') + ' -> ' + end.format('DD.MM.YY HH:ss') + ' </p>\n' +
+                    '                               <p><span><b>ProcessKey : </b>' + processes.processDefinitionKey + '</span> <span><b>ProcessId : </b>' + processes.id + '</span> <span><a href="http://mako-dev.apps.conuti.de:8050/camunda/app/cockpit/default/#/history/process-instance/' + processes.id + '" target="_blank">Prozess in Camunda öffnen</a></span></p>' +
                     '                                              <div class="d-flex flex-row align-items-center">\n' +
-                    '                                          <span class="badge badge-glow '+statusclass+'">'+processes.state+'</span>\n' +
-                    '                            </div>\n' +
-                    '                                   </div>\n' +
-                    '                      </li>');
+                    '                                          <span class="badge badge-glow ' + statusclass + '">' + processes.state + '</span>\n' +
+                    '');
+
+                $('#prozesse').append('  ' +
+                    '                <button class="btn btn-outline-primary btn-sm waves-effect collapsed"' +
+                    ' type="button" data-bs-toggle="collapse" data-bs-target="#collapseprocess' + i + '" aria-expanded="false" aria-controls="collapseprocess' + i + '"> Zeige Prozessvariablen</button>\n' +
+                    '                <button class="btn btn-outline-primary btn-sm waves-effect collapsed"' +
+                    ' type="button" data-bs-toggle="collapse" data-bs-target="#collapsevariables' + i + '" aria-expanded="false" aria-controls="collapsevariables' + i + '"> Zeige Prozess</button>\n' +
+                    '                <div class="collapse" id="collapseprocess' + i + '" style="">  <table id="history' + i + '" class="display" width="100%"></table>  </div>' +
+                    '                <div class="collapse" id="collapsevariables' + i + '" style="">  <div' +
+                    ' id="canvas' + i + '" class="camundacanvas"></div>  </div>');
 
 
-
-                $('#diagramhead').append('                <li class="nav-item">\n' +
-                    '                    <a class="nav-link" id="tab'+i+'" data-bs-toggle="tab" href="#tab'+i+'-fill" role="tab"\n' +
-                    '                       aria-controls="tab'+i+'-fill" aria-selected="true">'+processes.processDefinitionName+'</a>\n' +
-                    '                </li>');
-
-                $('#diagramholder').append('                <div class="tab-pane" id="tab'+i+'-fill" role="tabpanel" aria-labelledby="tab'+i+'-fill">\n' +
-                    '                    <p><div id="info'+i+'" style="height: 75px"></div>\n' +
-                    '                                    <div id="canvas'+i+'" class="camundacanvas" ' +
-                    '                                    </div>\n' +
-                    '                    </p>\n' +
-                    '                    <p>\n' +
-
-                    '                    </p>\n' +
-                    '                </div>');
-
-
+                $('#prozesse').append(
+                '       <h1>&nbsp;</h1>                     </div>\n' +
+                '                                   </div>\n' +
+                '                      </li>');
 
                 openDiagram(processes.processDefinitionKey, processes.id, i);
+
+                $('#history' + i).DataTable({
+                    'serverSide': false,
+                    'ajax': {
+                        'url': 'http://mako-dev.apps.conuti.de:8082/camunda/history/variable-instance?processInstanceId='+processes.id+'&sortBy=variableName&sortOrder=asc&deserializeValues=true',
+                        dataSrc:'',
+                        'dataFilter': function (data) {
+                            var json = JSON.parse(data);
+                            json.recordsTotal = json['hydra:totalItems'];
+                            json.recordTotal = json['hydra:totalItems'];
+                            json.recordsFiltered = json['hydra:totalItems'];
+                            json.data = json['hydra:member'];
+
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: [
+                        {data: 'name', title: 'Name'},
+                        {data: 'state', title: 'Status'},
+                        {
+                            data: 'createTime',
+                            render: $.fn.dataTable.render.moment(null, 'DD.MM.YY HH:mm:ss', 'de'),
+                            title: 'Erstellt'
+                        },
+                        {data: 'type', title: 'Typ'},
+                        {data: 'value', title: 'Wert'},
+                        { data: 'processDefinitionKey' , render : function ( data, type, row, meta ) {
+                                return type === 'display'  ? row["activityInstanceId"] === row["processInstanceId"] ? row["processDefinitionKey"] : 'Subprozess' : data;
+                            }, title: 'Erstellt in'},
+                        {data: 'errorMessage', title: 'Fehler'},
+                    ],
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/de-DE.json'
+                    },
+                    order: [[0, 'desc']],
+                });
+
+
             });
 
         });

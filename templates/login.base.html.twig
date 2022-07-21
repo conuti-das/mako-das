@@ -10,35 +10,78 @@
     {% endif %}
 
     {% block stylesheets %}
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.min.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/app/css/login.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/style.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/dark-style.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/skin-modes.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/single-page/css/main.css' ~ asset_version ) }}"
-              rel="stylesheet" type="text/css">
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/charts-c3/c3-chart.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/perfect-scrollbar.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/css/icons.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/css/bootstrap.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
-        <link href="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/colors/color1.css' ~ asset_version ) }}"
-              rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+        <!-- BEGIN: Vendor CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/vendors/css/vendors.min.css' ~ asset_version ) }}">
+        <!-- END: Vendor CSS-->
+
+        <!-- BEGIN: Theme CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/bootstrap.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/bootstrap-extended.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/colors.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/components.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/dark-layout.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/bordered-layout.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/themes/semi-dark-layout.css' ~ asset_version ) }}">
+
+        <!-- BEGIN: Page CSS-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/core/menu/menu-types/vertical-menu.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets//app-assets/css/plugins/forms/form-validation.css' ~ asset_version ) }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets//app-assets/css/pages/authentication.css' ~ asset_version ) }}">
+
+        <!-- END: Page CSS-->
+
+        <!-- BEGIN: Custom CSS
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/custom.css' ~ asset_version ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/app-assets/css/style.css' ~ asset_version ) }}">
+    -->
         <link rel="icon" href="{{ asset('assets/app/img/conuti-logo-favicon.png' ~ asset_version ) }}" type="image/png"
               sizes="16x16"/>
     {% endblock %}
 </head>
-<body>
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 {% block body %}{% endblock %}
+
+{% block javascripts %}
+    <!--
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/js/jquery.min.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/js/popper.min.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/bootstrap/js/bootstrap.min.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/sidebar/sidebar.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/perfect-scrollbar.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/p-scroll/pscroll.js' ~ asset_version ) }}"></script>
+            <script type="text/javascript" src="{{ asset('assets/bundles/volgh/BS5-HTML/HTML/volgh/assets/plugins/sidemenu/sidemenu.js' ~ asset_version ) }}"></script>
+            -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- BEGIN: Vendor JS-->
+    <script src="{{ asset('assets/app-assets/vendors/js/vendors.min.js' ~ asset_version ) }}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{{ asset('assets/app-assets/js/core/app-menu.js' ~ asset_version ) }}"></script>
+    <script src="{{ asset('assets/app-assets/js/core/app.js' ~ asset_version ) }}"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{{ asset('assets/app-assets/vendors/js/forms/validation/jquery.validate.min.js' ~ asset_version ) }}"></script>
+    <!-- END: Page Vendor JS-->
+
+    <script>
+        $(window).on('load', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+
+{% endblock %}
+
 </body>
 </html>
